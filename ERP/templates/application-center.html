@@ -1,0 +1,175 @@
+{% extends 'base_student.html' %}
+{% load static %}
+
+{% block title %}Application Center | ERP{% endblock %}
+
+{% block content %}
+<div class="col-12">
+  <div class="card border-0 shadow-sm mb-4">
+    <div class="card-header bg-primary text-white">
+      <h5 class="mb-0"><i class="bi bi-file-earmark-text me-2"></i>Application Center</h5>
+    </div>
+    <div class="card-body">
+      <p class="text-muted mb-4">Select the type of application you want to submit. All applications will be reviewed by the administration.</p>
+      
+      <!-- Application Type Cards -->
+      <div class="row g-3">
+        <div class="col-md-6 col-lg-4">
+          <div class="card border-primary h-100 shadow-sm" style="cursor: pointer;" onclick="window.location.href='{% url 'application-form' 'leave' %}'">
+            <div class="card-body text-center">
+              <i class="bi bi-calendar-x text-primary fs-1 mb-3"></i>
+              <h6 class="fw-bold">Leave Application</h6>
+              <p class="small text-muted mb-0">Apply for leave with proper reason</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-6 col-lg-4">
+          <div class="card border-success h-100 shadow-sm" style="cursor: pointer;" onclick="window.location.href='{% url 'application-form' 'bonafide' %}'">
+            <div class="card-body text-center">
+              <i class="bi bi-file-earmark-check text-success fs-1 mb-3"></i>
+              <h6 class="fw-bold">Bonafide Certificate</h6>
+              <p class="small text-muted mb-0">Request bonafide certificate</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-6 col-lg-4">
+          <div class="card border-info h-100 shadow-sm" style="cursor: pointer;" onclick="window.location.href='{% url 'application-form' 'character' %}'">
+            <div class="card-body text-center">
+              <i class="bi bi-person-badge text-info fs-1 mb-3"></i>
+              <h6 class="fw-bold">Character Certificate</h6>
+              <p class="small text-muted mb-0">HR / Character certificate request</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-6 col-lg-4">
+          <div class="card border-warning h-100 shadow-sm" style="cursor: pointer;" onclick="window.location.href='{% url 'application-form' 'attendance_report' %}'">
+            <div class="card-body text-center">
+              <i class="bi bi-clipboard-data text-warning fs-1 mb-3"></i>
+              <h6 class="fw-bold">Attendance Report</h6>
+              <p class="small text-muted mb-0">Request attendance report</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-6 col-lg-4">
+          <div class="card border-danger h-100 shadow-sm" style="cursor: pointer;" onclick="window.location.href='{% url 'application-form' 'marksheet' %}'">
+            <div class="card-body text-center">
+              <i class="bi bi-file-earmark-pdf text-danger fs-1 mb-3"></i>
+              <h6 class="fw-bold">Marksheet Request</h6>
+              <p class="small text-muted mb-0">Request marksheet / transcript</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-6 col-lg-4">
+          <div class="card border-primary h-100 shadow-sm" style="cursor: pointer;" onclick="window.location.href='{% url 'application-form' 'event_permission' %}'">
+            <div class="card-body text-center">
+              <i class="bi bi-calendar-event text-primary fs-1 mb-3"></i>
+              <h6 class="fw-bold">Event Permission</h6>
+              <p class="small text-muted mb-0">Request event participation permission</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-6 col-lg-4">
+          <div class="card border-success h-100 shadow-sm" style="cursor: pointer;" onclick="window.location.href='{% url 'application-form' 'internship_letter' %}'">
+            <div class="card-body text-center">
+              <i class="bi bi-briefcase text-success fs-1 mb-3"></i>
+              <h6 class="fw-bold">Internship Letter</h6>
+              <p class="small text-muted mb-0">Request internship letter / NOC</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-6 col-lg-4">
+          <div class="card border-info h-100 shadow-sm" style="cursor: pointer;" onclick="window.location.href='{% url 'application-form' 'fee_receipt' %}'">
+            <div class="card-body text-center">
+              <i class="bi bi-receipt text-info fs-1 mb-3"></i>
+              <h6 class="fw-bold">Fee Receipt</h6>
+              <p class="small text-muted mb-0">Fee receipt / Scholarship application</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-6 col-lg-4">
+          <div class="card border-warning h-100 shadow-sm" style="cursor: pointer;" onclick="window.location.href='{% url 'application-form' 'bus_hostel' %}'">
+            <div class="card-body text-center">
+              <i class="bi bi-house-door text-warning fs-1 mb-3"></i>
+              <h6 class="fw-bold">Bus/Hostel</h6>
+              <p class="small text-muted mb-0">Bus pass / Hostel application</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-6 col-lg-4">
+          <div class="card border-danger h-100 shadow-sm" style="cursor: pointer;" onclick="window.location.href='{% url 'application-form' 'id_card' %}'">
+            <div class="card-body text-center">
+              <i class="bi bi-card-text text-danger fs-1 mb-3"></i>
+              <h6 class="fw-bold">ID Card Request</h6>
+              <p class="small text-muted mb-0">IT/ID card reissue request</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Application Status -->
+  <div class="card border-0 shadow-sm">
+    <div class="card-header bg-info text-white">
+      <h5 class="mb-0"><i class="bi bi-list-check me-2"></i>My Applications</h5>
+    </div>
+    <div class="card-body">
+      {% if applications %}
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Application Type</th>
+              <th>Reason</th>
+              <th>Submitted Date</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for app in applications %}
+            <tr>
+              <td>{{ app.get_application_type_display }}</td>
+              <td>{{ app.reason }}</td>
+              <td>{{ app.created_at|date:"d M Y" }}</td>
+              <td>
+                {% if app.status == 'pending' %}
+                  <span class="badge bg-warning">Pending</span>
+                {% elif app.status == 'approved' %}
+                  <span class="badge bg-success">Approved</span>
+                {% elif app.status == 'rejected' %}
+                  <span class="badge bg-danger">Rejected</span>
+                {% else %}
+                  <span class="badge bg-info">In Process</span>
+                {% endif %}
+              </td>
+              <td>
+                <a href="{% url 'view-application' app.id %}" class="btn btn-sm btn-outline-primary">
+                  <i class="bi bi-eye me-1"></i>View
+                </a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <div class="text-center py-4">
+        <i class="bi bi-inbox fs-1 text-muted"></i>
+        <p class="text-muted mt-3">No applications submitted yet.</p>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}
+

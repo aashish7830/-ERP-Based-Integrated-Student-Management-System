@@ -1,0 +1,84 @@
+{% extends 'base_student.html' %}
+{% load static %}
+
+{% block title %}ERP Dashboard{% endblock %}
+
+{% block content %}
+<div class="col-12">
+  <div class="card border-0 shadow-sm">
+    <div class="card-body">
+      <h4 class="mb-3">Profile</h4>
+      <div id="profileGrid"></div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  // Profile-specific JavaScript - Use user from base template
+  function renderProfile() {
+    // Get user data from base template (already defined)
+    const sessStr = localStorage.getItem('erpSession') || sessionStorage.getItem('erpSession');
+    let sess;
+    try { sess = JSON.parse(sessStr || '{}'); } catch { sess = {}; }
+
+    // Extended demo users with full profile data
+    const demoUsers = [
+      { enrollment:'TCA2259093', password:'123456', name:'YASH JAIN', nameHi:'यश जैन', studentNo:'ST/045184', course:'BTECH-022', category:'GEN', admittedYear:'22-23', abcId:'850639866762', mentor:'—', dob:'11-Aug-2004', academicYear:'25-26', section:'B', fatherName:'NEERAJ JAIN', motherName:'BABITA JAIN', semesterYear:'VII', batch:'—', motherNameHi:'बबिता जैन', avatar:'https://i.pravatar.cc/100?img=68' },
+      { enrollment:'21BCA1234', password:'pass@123', name:'AARAV SHARMA', nameHi:'आरव शर्मा', studentNo:'ST/012345', course:'BCA-001', category:'OBC', admittedYear:'21-22', abcId:'780123456789', mentor:'Ms. Verma', dob:'02-Jan-2003', academicYear:'24-25', section:'A', fatherName:'RAHUL SHARMA', motherName:'SNEHA SHARMA', semesterYear:'V', batch:'B1', motherNameHi:'स्नेहा शर्मा', avatar:'https://i.pravatar.cc/100?img=12' }
+    ];
+
+    const user = demoUsers.find(u => u.enrollment === sess?.enrollment);
+    
+    if (user) {
+      const profileGrid = document.getElementById('profileGrid');
+      if (profileGrid) {
+        profileGrid.innerHTML = `
+          <div class="border rounded p-2 bg-light fw-semibold mb-2">Personal Information</div>
+          <div class="row g-2 align-items-center">
+            <div class="col-md-6">
+              <div class="row g-2">
+                <div class="col-5 text-secondary small">Enrolment No:</div><div class="col-7">${user.enrollment}</div>
+                <div class="col-5 text-secondary small">Student No:</div><div class="col-7">${user.studentNo}</div>
+                <div class="col-5 text-secondary small">Course:</div><div class="col-7">${user.course}</div>
+                <div class="col-5 text-secondary small">Category:</div><div class="col-7">${user.category}</div>
+                <div class="col-5 text-secondary small">Admitted Year:</div><div class="col-7">${user.admittedYear}</div>
+                <div class="col-5 text-secondary small">छात्र/छात्रा का नाम</div><div class="col-7">${user.nameHi}</div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="row g-2">
+                <div class="col-5 text-secondary small">ABC ID:</div><div class="col-7">${user.abcId}</div>
+                <div class="col-5 text-secondary small">Name:</div><div class="col-7">${user.name}</div>
+                <div class="col-5 text-secondary small">Section:</div><div class="col-7">${user.section}</div>
+                <div class="col-5 text-secondary small">Father Name:</div><div class="col-7">${user.fatherName}</div>
+                <div class="col-5 text-secondary small">Semester/Year:</div><div class="col-7">${user.semesterYear}</div>
+                <div class="col-5 text-secondary small">पिता का नाम</div><div class="col-7">${user.fatherName}</div>
+              </div>
+            </div>
+          </div>
+          <hr class="my-3" />
+          <div class="row g-2">
+            <div class="col-5 col-md-2 text-secondary small">Mentor:</div><div class="col-7 col-md-4">${user.mentor}</div>
+            <div class="col-5 col-md-2 text-secondary small">Date of Birth:</div><div class="col-7 col-md-4">${user.dob}</div>
+            <div class="col-5 col-md-2 text-secondary small">Academic Year:</div><div class="col-7 col-md-4">${user.academicYear}</div>
+            <div class="col-5 col-md-2 text-secondary small">Mother Name:</div><div class="col-7 col-md-4">${user.motherName}</div>
+            <div class="col-5 col-md-2 text-secondary small">Batch:</div><div class="col-7 col-md-4">${user.batch}</div>
+            <div class="col-5 col-md-2 text-secondary small">माता का नाम</div><div class="col-7 col-md-4">${user.motherNameHi}</div>
+          </div>
+        `;
+      }
+    }
+  }
+
+  // Run after base template scripts have loaded
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      setTimeout(renderProfile, 200);
+    });
+  } else {
+    setTimeout(renderProfile, 200);
+  }
+</script>
+{% endblock %}

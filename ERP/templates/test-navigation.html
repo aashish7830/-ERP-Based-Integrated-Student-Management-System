@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navigation Test | ERP</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="{% static 'styles.css' %}" />
+    <script src="{% static 'navigation.js' %}"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-white navbar-light shadow-sm">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="{% url 'index' %}">
+                <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f3eb.svg" width="30" class="me-2"/>
+                <span class="fw-bold brand-gradient">Institution ERP</span>
+            </a>
+            <div class="ms-auto d-flex align-items-center gap-3">
+                <div class="small">Test User</div>
+                <button class="btn btn-outline-secondary btn-sm"><i class="bi bi-box-arrow-right me-1"></i>Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="border-top" style="border-color:#f0ad00 !important"></div>
+
+    <div class="container my-4">
+        <div class="row">
+            <div class="col-12">
+                <h2>Dynamic Navigation Test</h2>
+                <p>This page demonstrates the dynamic navigation system.</p>
+                
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5>Main Navigation</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="nav nav-pills flex-wrap gap-2 py-2" id="moduleTabs">
+                            <!-- Dynamic navigation will be rendered here -->
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5>Navigation Management</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>Add New Navigation Item</h6>
+                                <div class="mb-3">
+                                    <input type="text" id="newNavId" class="form-control" placeholder="Navigation ID" />
+                                </div>
+                                <div class="mb-3">
+                                    <input type="text" id="newNavTitle" class="form-control" placeholder="Navigation Title" />
+                                </div>
+                                <div class="mb-3">
+                                    <input type="text" id="newNavHref" class="form-control" placeholder="Navigation URL" />
+                                </div>
+                                <button class="btn btn-primary" onclick="addNavigationItem()">Add Navigation Item</button>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Remove Navigation Item</h6>
+                                <div class="mb-3">
+                                    <select id="removeNavId" class="form-select">
+                                        <option value="">Select navigation item to remove</option>
+                                    </select>
+                                </div>
+                                <button class="btn btn-danger" onclick="removeNavigationItem()">Remove Navigation Item</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Current Navigation Configuration</h5>
+                    </div>
+                    <div class="card-body">
+                        <pre id="navConfig" class="bg-light p-3 rounded"></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Test functions for dynamic navigation
+        function addNavigationItem() {
+            const id = document.getElementById('newNavId').value;
+            const title = document.getElementById('newNavTitle').value;
+            const href = document.getElementById('newNavHref').value;
+            
+            if (id && title && href) {
+                const newItem = {
+                    id: id,
+                    title: title,
+                    href: href,
+                    icon: 'bi-link',
+                    active: false
+                };
+                
+                window.navigationManager.addNavigationItem(newItem);
+                window.navigationManager.renderMainNavigation();
+                updateRemoveOptions();
+                updateConfigDisplay();
+                
+                // Clear form
+                document.getElementById('newNavId').value = '';
+                document.getElementById('newNavTitle').value = '';
+                document.getElementById('newNavHref').value = '';
+            }
+        }
+        
+        function removeNavigationItem() {
+            const id = document.getElementById('removeNavId').value;
+            if (id) {
+                window.navigationManager.removeNavigationItem(id);
+                window.navigationManager.renderMainNavigation();
+                updateRemoveOptions();
+                updateConfigDisplay();
+            }
+        }
+        
+        function updateRemoveOptions() {
+            const select = document.getElementById('removeNavId');
+            const navItems = window.navigationManager.getAllNavigationItems();
+            
+            select.innerHTML = '<option value="">Select navigation item to remove</option>';
+            navItems.forEach(item => {
+                const option = document.createElement('option');
+                option.value = item.id;
+                option.textContent = item.title;
+                select.appendChild(option);
+            });
+        }
+        
+        function updateConfigDisplay() {
+            const config = window.navigationManager.getAllNavigationItems();
+            document.getElementById('navConfig').textContent = JSON.stringify(config, null, 2);
+        }
+        
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            updateRemoveOptions();
+            updateConfigDisplay();
+        });
+    </script>
+    <!-- Chatbot Component -->
+    {% include 'includes/chatbot.html' %}
+  </body>
+</html>
+
+

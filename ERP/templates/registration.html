@@ -1,0 +1,61 @@
+{% extends 'base_student.html' %}
+{% load static %}
+
+{% block title %}Semester Registration | ERP{% endblock %}
+
+{% block content %}
+<div class="card border-0 shadow-sm">
+        <div class="card-body">
+          <h4 class="mb-3">Semester Registration</h4>
+          <div class="row g-3">
+            <div class="col-md-4">
+              <label class="form-label">Semester</label>
+              <select class="form-select"><option>VII</option><option>VI</option></select>
+            </div>
+            <div class="col-md-8">
+              <label class="form-label">Subjects</label>
+              <div class="row g-2">
+                <div class="col-sm-6"><div class="form-check"><input class="form-check-input" type="checkbox" id="sub1" checked><label class="form-check-label" for="sub1">DBMS</label></div></div>
+                <div class="col-sm-6"><div class="form-check"><input class="form-check-input" type="checkbox" id="sub2" checked><label class="form-check-label" for="sub2">Operating Systems</label></div></div>
+                <div class="col-sm-6"><div class="form-check"><input class="form-check-input" type="checkbox" id="sub3"><label class="form-check-label" for="sub3">Networks</label></div></div>
+                <div class="col-sm-6"><div class="form-check"><input class="form-check-input" type="checkbox" id="sub4"><label class="form-check-label" for="sub4">AI Basics</label></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="text-end mt-3">
+            <button class="btn btn-primary"><i class="bi bi-check2-circle me-1"></i>Submit Registration</button>
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      const yearEl = document.getElementById('year'); if (yearEl) yearEl.textContent = new Date().getFullYear();
+      const sessStr = localStorage.getItem('erpSession') || sessionStorage.getItem('erpSession'); if (!sessStr) window.location.replace('/');
+      let sess; try { sess = JSON.parse(sessStr || '{}'); } catch { sess = {}; }
+      const demoUsers = [
+        { enrollment:'TCA2259093', name:'YASH JAIN', avatar:'https://i.pravatar.cc/100?img=68' },
+        { enrollment:'21BCA1234', name:'AARAV SHARMA', avatar:'https://i.pravatar.cc/100?img=12' }
+      ];
+      const user = demoUsers.find(u => u.enrollment === sess?.enrollment); if (!user) window.location.replace('/');
+      document.getElementById('userMini').innerHTML = `<div class=\"d-flex align-items-center gap-2\"><img src=\"${user.avatar}\" class=\"rounded-circle\" width=\"32\" height=\"32\"/><div><div class=\"fw-semibold\">${user.name}</div><div class=\"text-secondary\">${user.enrollment}</div></div></div>`;
+      document.getElementById('logoutBtn').addEventListener('click', () => { localStorage.removeItem('erpSession'); sessionStorage.removeItem('erpSession'); window.location.replace('/'); });
+        <script>
+      // Ensure navigation renders after page load
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+          if (window.navigationManager && document.getElementById('moduleTabs')) {
+            window.navigationManager.renderMainNavigation();
+          }
+        });
+      } else {
+        if (window.navigationManager && document.getElementById('moduleTabs')) {
+          window.navigationManager.renderMainNavigation();
+        }
+      }
+    </script>
+</script>
+{% endblock %}

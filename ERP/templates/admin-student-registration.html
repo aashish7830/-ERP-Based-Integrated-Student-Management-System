@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Admin • New Student Registration | ERP</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="{% static 'styles.css' %}" />
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg bg-white navbar-light shadow-sm">
+      <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="{% url 'index' %}">
+          <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f3eb.svg" width="30" class="me-2"/>
+          <span class="fw-bold brand-gradient">Institution ERP</span>
+        </a>
+        <div class="ms-auto d-flex align-items-center gap-2">
+          <button id="adminLogoutBtn" class="btn btn-outline-secondary btn-sm d-none"><i class="bi bi-box-arrow-right me-1"></i>Logout</button>
+        </div>
+      </div>
+    </nav>
+
+    <div class="border-top" style="border-color:#f0ad00 !important"></div>
+
+    <div class="container my-4" id="loginSection">
+      <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8">
+          <div class="card border-0 shadow-sm">
+            <div class="card-body p-4">
+              <h4 class="mb-3">Admin Login (College Authority)</h4>
+              <div class="alert alert-info small" role="alert">
+                Only authorized college staff can access the new student registration.
+              </div>
+              <form id="adminLoginForm" class="row g-3">
+                <div class="col-12">
+                  <label class="form-label">User ID</label>
+                  <input type="text" id="adminUser" class="form-control" placeholder="Enter admin user id" required />
+                </div>
+                <div class="col-12">
+                  <label class="form-label">Password</label>
+                  <input type="password" id="adminPass" class="form-control" placeholder="Enter password" required />
+                </div>
+                <div class="col-12 d-flex align-items-center justify-content-between">
+                  <div class="form-text">Hint (demo): user <code>collegeadmin</code>, pass <code>sih@2025</code></div>
+                  <button type="submit" class="btn btn-primary"><i class="bi bi-shield-lock me-1"></i>Login</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container my-4 d-none" id="registrationSection">
+      <div class="card border-0 shadow-sm">
+        <div class="card-body p-4">
+          <div class="d-flex align-items-center justify-content-between mb-3">
+            <h4 class="mb-0">New Student Registration</h4>
+            <span class="badge text-bg-success" id="adminNameBadge"></span>
+          </div>
+
+          <form id="studentForm" class="row g-3">
+            <div class="col-md-3">
+              <label class="form-label">Student Photo</label>
+              <div class="d-flex align-items-center gap-3">
+                <img id="photoPreview" src="https://via.placeholder.com/96x96?text=Photo" class="rounded border" width="96" height="96" alt="preview"/>
+                <div class="flex-grow-1">
+                  <input type="file" id="photoFile" class="form-control" accept="image/*" />
+                  <div class="form-text">JPG/PNG, max 1 MB</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Student Full Name</label>
+              <input type="text" class="form-control" id="fullName" required />
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Enrollment No.</label>
+              <input type="text" class="form-control" id="enrollment" placeholder="e.g., 21BCA1234" required />
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Email</label>
+              <input type="email" class="form-control" id="email" required />
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Phone</label>
+              <input type="tel" pattern="[0-9]{10}" class="form-control" id="phone" placeholder="10-digit" required />
+            </div>
+
+            <div class="col-md-4">
+              <label class="form-label">Department</label>
+              <select class="form-select" id="department" required>
+                <option value="" selected disabled>Choose...</option>
+                <option>Computer Science</option>
+                <option>Information Technology</option>
+                <option>Electronics</option>
+                <option>Mechanical</option>
+                <option>Civil</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Program</label>
+              <select class="form-select" id="program" required>
+                <option value="" selected disabled>Choose...</option>
+                <option>BCA</option>
+                <option>B.Tech</option>
+                <option>B.Sc</option>
+                <option>MCA</option>
+                <option>M.Tech</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Semester</label>
+              <select class="form-select" id="semester" required>
+                <option value="" selected disabled>Choose...</option>
+                <option>I</option>
+                <option>II</option>
+                <option>III</option>
+                <option>IV</option>
+                <option>V</option>
+                <option>VI</option>
+                <option>VII</option>
+                <option>VIII</option>
+              </select>
+            </div>
+
+            <div class="col-md-4">
+              <label class="form-label">Date of Birth</label>
+              <input type="date" class="form-control" id="dob" required />
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Admission Year</label>
+              <input type="number" min="2000" max="2100" class="form-control" id="admissionYear" placeholder="2025" required />
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Set Initial Password</label>
+              <input type="text" class="form-control" id="initPassword" placeholder="Temporary password" required />
+            </div>
+
+            <div class="col-12">
+              <label class="form-label">Address</label>
+              <textarea class="form-control" id="address" rows="2" required></textarea>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Guardian Name</label>
+              <input type="text" class="form-control" id="guardian" />
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Guardian Contact</label>
+              <input type="tel" pattern="[0-9]{10}" class="form-control" id="guardianPhone" placeholder="10-digit" />
+            </div>
+
+            <div class="col-12 d-flex justify-content-end gap-2 mt-2">
+              <button type="reset" class="btn btn-outline-secondary"><i class="bi bi-arrow-counterclockwise me-1"></i>Reset</button>
+              <button type="submit" class="btn btn-success"><i class="bi bi-person-plus me-1"></i>Register Student</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="mt-3 small text-secondary">
+        Tip: Registered records are stored locally for demo. Integrate an API in production.
+      </div>
+
+      <div class="card border-0 shadow-sm mt-4">
+        <div class="card-body p-3">
+          <h6 class="mb-3">Recently Registered (this browser)</h6>
+          <div class="table-responsive">
+            <table class="table table-sm align-middle">
+              <thead>
+                <tr>
+                  <th>Photo</th>
+                  <th>Enrollment</th>
+                  <th>Name</th>
+                  <th>Program</th>
+                  <th>Sem</th>
+                  <th>Email</th>
+                  <th>Phone</th>
+                </tr>
+              </thead>
+              <tbody id="recentTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer py-3 mt-4">
+      <div class="container small text-white-50 d-flex justify-content-between">
+        <div>© <span id="year"></span> Institution ERP</div>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      const yearEl = document.getElementById('year'); if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+      const ADMIN_CREDENTIALS = [
+        { username: 'collegeadmin', password: 'sih@2025', displayName: 'College Admin' }
+      ];
+
+      const loginSection = document.getElementById('loginSection');
+      const registrationSection = document.getElementById('registrationSection');
+      const adminLogoutBtn = document.getElementById('adminLogoutBtn');
+      const adminNameBadge = document.getElementById('adminNameBadge');
+
+      function getAdminSession() {
+        const s = sessionStorage.getItem('erpAdmin') || localStorage.getItem('erpAdmin');
+        try { return JSON.parse(s || '{}'); } catch { return {}; }
+      }
+      function setAdminSession(sess, persist=false) {
+        const str = JSON.stringify(sess);
+        if (persist) { localStorage.setItem('erpAdmin', str); }
+        else { sessionStorage.setItem('erpAdmin', str); }
+      }
+      function clearAdminSession() {
+        localStorage.removeItem('erpAdmin');
+        sessionStorage.removeItem('erpAdmin');
+      }
+
+      function toggleView(isLoggedIn) {
+        if (isLoggedIn) {
+          loginSection.classList.add('d-none');
+          registrationSection.classList.remove('d-none');
+          adminLogoutBtn.classList.remove('d-none');
+        } else {
+          registrationSection.classList.add('d-none');
+          loginSection.classList.remove('d-none');
+          adminLogoutBtn.classList.add('d-none');
+        }
+      }
+
+      function renderRecentTable() {
+        const tbody = document.getElementById('recentTableBody');
+        const data = JSON.parse(localStorage.getItem('registeredStudents') || '[]');
+        tbody.innerHTML = data.slice(-10).reverse().map(s => `
+          <tr>
+            <td>${s.photoDataUrl ? `<img src="${s.photoDataUrl}" alt="photo" width="32" height="32" class="rounded border"/>` : ''}</td>
+            <td>${s.enrollment}</td>
+            <td>${s.fullName}</td>
+            <td>${s.program}</td>
+            <td>${s.semester}</td>
+            <td>${s.email}</td>
+            <td>${s.phone}</td>
+          </tr>
+        `).join('');
+      }
+
+      const adminSess = getAdminSession();
+      if (adminSess && adminSess.username) {
+        adminNameBadge.textContent = adminSess.displayName || adminSess.username;
+        toggleView(true);
+        renderRecentTable();
+      } else {
+        toggleView(false);
+      }
+
+      document.getElementById('adminLoginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const username = document.getElementById('adminUser').value.trim();
+        const password = document.getElementById('adminPass').value;
+        const match = ADMIN_CREDENTIALS.find(c => c.username === username && c.password === password);
+        if (!match) {
+          alert('Invalid admin credentials');
+          return;
+        }
+        setAdminSession({ username: match.username, displayName: match.displayName }, false);
+        adminNameBadge.textContent = match.displayName || match.username;
+        toggleView(true);
+        renderRecentTable();
+      });
+
+      adminLogoutBtn.addEventListener('click', function() {
+        clearAdminSession();
+        toggleView(false);
+      });
+
+      let currentPhotoDataUrl = '';
+
+      function fileToDataUrlCompressed(file, maxSize = 256, quality = 0.8) {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => {
+            const img = new Image();
+            img.onload = () => {
+              const canvas = document.createElement('canvas');
+              const ctx = canvas.getContext('2d');
+              const { width: w, height: h } = img;
+              const scale = Math.min(maxSize / w, maxSize / h, 1);
+              const newW = Math.round(w * scale);
+              const newH = Math.round(h * scale);
+              canvas.width = newW;
+              canvas.height = newH;
+              ctx.drawImage(img, 0, 0, newW, newH);
+              try {
+                const dataUrl = canvas.toDataURL('image/jpeg', quality);
+                resolve(dataUrl);
+              } catch (e) {
+                resolve(canvas.toDataURL());
+              }
+            };
+            img.onerror = reject;
+            img.src = reader.result;
+          };
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        });
+      }
+
+      const photoFileInput = document.getElementById('photoFile');
+      const photoPreviewImg = document.getElementById('photoPreview');
+      photoFileInput.addEventListener('change', async (e) => {
+        const file = e.target.files && e.target.files[0];
+        if (!file) { return; }
+        if (file.size > 1024 * 1024) { // 1 MB
+          alert('Image too large. Please choose a file under 1 MB.');
+          e.target.value = '';
+          return;
+        }
+        try {
+          const dataUrl = await fileToDataUrlCompressed(file, 256, 0.85);
+          currentPhotoDataUrl = dataUrl;
+          photoPreviewImg.src = dataUrl;
+        } catch (err) {
+          alert('Failed to read image');
+        }
+      });
+
+      document.getElementById('studentForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const payload = {
+          fullName: document.getElementById('fullName').value.trim(),
+          enrollment: document.getElementById('enrollment').value.trim(),
+          email: document.getElementById('email').value.trim(),
+          phone: document.getElementById('phone').value.trim(),
+          department: document.getElementById('department').value,
+          program: document.getElementById('program').value,
+          semester: document.getElementById('semester').value,
+          dob: document.getElementById('dob').value,
+          admissionYear: document.getElementById('admissionYear').value,
+          initPassword: document.getElementById('initPassword').value,
+          address: document.getElementById('address').value.trim(),
+          guardian: document.getElementById('guardian').value.trim(),
+          guardianPhone: document.getElementById('guardianPhone').value.trim(),
+          photoDataUrl: currentPhotoDataUrl || '',
+          createdAt: new Date().toISOString()
+        };
+
+        // Basic validation: unique enrollment
+        const list = JSON.parse(localStorage.getItem('registeredStudents') || '[]');
+        if (list.some(s => s.enrollment.toLowerCase() === payload.enrollment.toLowerCase())) {
+          alert('Enrollment already exists');
+          return;
+        }
+
+        list.push(payload);
+        localStorage.setItem('registeredStudents', JSON.stringify(list));
+
+        alert(`Student registered!\nEnrollment: ${payload.enrollment}\nTemp Password: ${payload.initPassword}`);
+        (e.target).reset();
+        currentPhotoDataUrl = '';
+        photoPreviewImg.src = 'https://via.placeholder.com/96x96?text=Photo';
+        renderRecentTable();
+      });
+    </script>
+      <!-- Chatbot Component -->
+    {% include 'includes/chatbot.html' %}
+  </body>
+</html>
+
+

@@ -1,0 +1,1141 @@
+{% extends 'base_student.html' %}
+{% load static %}
+
+{% block title %}Hostel Management | ERP Portal{% endblock %}
+
+{% block content %}
+</div>
+
+        <!-- Hostel Overview Cards -->
+        <div class="col-12">
+          <div class="row g-3 mb-4">
+            <div class="col-md-3">
+              <div class="card border-0 shadow-sm h-100">
+                <div class="card-body text-center">
+                  <div class="icon-circle bg-primary-soft text-primary mx-auto mb-3">
+                    <i class="bi bi-house-door fs-4"></i>
+                  </div>
+                  <h5 class="fw-bold mb-1">Total Rooms</h5>
+                  <div class="h4 text-primary mb-0">156</div>
+                  <small class="text-secondary">Across 4 Hostels</small>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="card border-0 shadow-sm h-100">
+                <div class="card-body text-center">
+                  <div class="icon-circle bg-success-soft text-success mx-auto mb-3">
+                    <i class="bi bi-person-check fs-4"></i>
+                  </div>
+                  <h5 class="fw-bold mb-1">Occupied</h5>
+                  <div class="h4 text-success mb-0">142</div>
+                  <small class="text-secondary">91% Occupancy</small>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="card border-0 shadow-sm h-100">
+                <div class="card-body text-center">
+                  <div class="icon-circle bg-warning-soft text-warning mx-auto mb-3">
+                    <i class="bi bi-door-open fs-4"></i>
+                  </div>
+                  <h5 class="fw-bold mb-1">Available</h5>
+                  <div class="h4 text-warning mb-0">14</div>
+                  <small class="text-secondary">Ready for Allocation</small>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="card border-0 shadow-sm h-100">
+                <div class="card-body text-center">
+                  <div class="icon-circle bg-info-soft text-info mx-auto mb-3">
+                    <i class="bi bi-people fs-4"></i>
+                  </div>
+                  <h5 class="fw-bold mb-1">Total Students</h5>
+                  <div class="h4 text-info mb-0">284</div>
+                  <small class="text-secondary">Currently Residing</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hostel Information -->
+        <div class="col-lg-8">
+          <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white border-0 pb-0">
+              <h4 class="mb-3"><i class="bi bi-building me-2"></i>Hostel Information</h4>
+            </div>
+            <div class="card-body">
+              <div class="row g-4">
+                <div class="col-md-6">
+                  <div class="d-flex align-items-start gap-3 mb-3">
+                    <div class="icon-circle bg-primary-soft text-primary">
+                      <i class="bi bi-building"></i>
+                    </div>
+                    <div>
+                      <h6 class="fw-bold mb-1">Boys Hostel - Block A</h6>
+                      <p class="text-secondary small mb-1">Modern 3-story building with 45 rooms</p>
+                      <div class="d-flex gap-3 small">
+                        <span><i class="bi bi-person me-1"></i>90 Students</span>
+                        <span><i class="bi bi-door-open me-1"></i>5 Available</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="d-flex align-items-start gap-3 mb-3">
+                    <div class="icon-circle bg-success-soft text-success">
+                      <i class="bi bi-building"></i>
+                    </div>
+                    <div>
+                      <h6 class="fw-bold mb-1">Girls Hostel - Block B</h6>
+                      <p class="text-secondary small mb-1">Secure 4-story building with 60 rooms</p>
+                      <div class="d-flex gap-3 small">
+                        <span><i class="bi bi-person me-1"></i>120 Students</span>
+                        <span><i class="bi bi-door-open me-1"></i>6 Available</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="d-flex align-items-start gap-3 mb-3">
+                    <div class="icon-circle bg-warning-soft text-warning">
+                      <i class="bi bi-building"></i>
+                    </div>
+                    <div>
+                      <h6 class="fw-bold mb-1">Boys Hostel - Block C</h6>
+                      <p class="text-secondary small mb-1">New construction with 30 rooms</p>
+                      <div class="d-flex gap-3 small">
+                        <span><i class="bi bi-person me-1"></i>58 Students</span>
+                        <span><i class="bi bi-door-open me-1"></i>2 Available</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="d-flex align-items-start gap-3 mb-3">
+                    <div class="icon-circle bg-info-soft text-info">
+                      <i class="bi bi-building"></i>
+                    </div>
+                    <div>
+                      <h6 class="fw-bold mb-1">Girls Hostel - Block D</h6>
+                      <p class="text-secondary small mb-1">Premium facility with 21 rooms</p>
+                      <div class="d-flex gap-3 small">
+                        <span><i class="bi bi-person me-1"></i>16 Students</span>
+                        <span><i class="bi bi-door-open me-1"></i>1 Available</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="col-lg-4">
+          <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white border-0 pb-0">
+              <h5 class="mb-3"><i class="bi bi-lightning me-2"></i>Quick Actions</h5>
+            </div>
+            <div class="card-body">
+              <div class="d-grid gap-2">
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#roomRequestModal">
+                  <i class="bi bi-house-add me-2"></i>Request Room Allocation
+                </button>
+                <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#feePaymentModal">
+                  <i class="bi bi-credit-card me-2"></i>Pay Hostel Fees
+                </button>
+                <button class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#maintenanceModal">
+                  <i class="bi bi-tools me-2"></i>Report Maintenance
+                </button>
+                <button class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#visitorModal">
+                  <i class="bi bi-person-plus me-2"></i>Register Visitor
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Hostel Rules -->
+          <div class="card border-0 shadow-sm mt-3">
+            <div class="card-header bg-white border-0 pb-0">
+              <h5 class="mb-3"><i class="bi bi-shield-check me-2"></i>Important Rules</h5>
+            </div>
+            <div class="card-body">
+              <ul class="list-unstyled small">
+                <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Curfew: 10:00 PM</li>
+                <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>No smoking/alcohol</li>
+                <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Visitor registration required</li>
+                <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Keep rooms clean</li>
+                <li class="mb-0"><i class="bi bi-check-circle text-success me-2"></i>Follow mess timings</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Room Allocation Status -->
+        <div class="col-12">
+          <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white border-0 pb-0">
+              <h4 class="mb-3"><i class="bi bi-grid me-2"></i>Room Allocation Status</h4>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-hover">
+                  <thead class="table-light">
+                    <tr>
+                      <th>Room No</th>
+                      <th>Block</th>
+                      <th>Capacity</th>
+                      <th>Occupied</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>A-101</strong></td>
+                      <td>Block A</td>
+                      <td>2</td>
+                      <td>2</td>
+                      <td><span class="badge bg-success">Occupied</span></td>
+                      <td><button class="btn btn-sm btn-outline-primary">View Details</button></td>
+                    </tr>
+                    <tr>
+                      <td><strong>A-102</strong></td>
+                      <td>Block A</td>
+                      <td>2</td>
+                      <td>1</td>
+                      <td><span class="badge bg-warning">Partially Occupied</span></td>
+                      <td><button class="btn btn-sm btn-outline-primary">View Details</button></td>
+                    </tr>
+                    <tr>
+                      <td><strong>A-103</strong></td>
+                      <td>Block A</td>
+                      <td>2</td>
+                      <td>0</td>
+                      <td><span class="badge bg-secondary">Available</span></td>
+                      <td><button class="btn btn-sm btn-primary">Allocate</button></td>
+                    </tr>
+                    <tr>
+                      <td><strong>B-201</strong></td>
+                      <td>Block B</td>
+                      <td>2</td>
+                      <td>2</td>
+                      <td><span class="badge bg-success">Occupied</span></td>
+                      <td><button class="btn btn-sm btn-outline-primary">View Details</button></td>
+                    </tr>
+                    <tr>
+                      <td><strong>C-301</strong></td>
+                      <td>Block C</td>
+                      <td>2</td>
+                      <td>0</td>
+                      <td><span class="badge bg-secondary">Available</span></td>
+                      <td><button class="btn btn-sm btn-primary">Allocate</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hostel Facilities -->
+        <div class="col-12">
+          <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white border-0 pb-0">
+              <h4 class="mb-3"><i class="bi bi-star me-2"></i>Hostel Facilities</h4>
+            </div>
+            <div class="card-body">
+              <div class="row g-3">
+                <div class="col-md-3">
+                  <div class="d-flex align-items-center gap-3 p-3 border rounded">
+                    <i class="bi bi-wifi text-primary fs-4"></i>
+                    <div>
+                      <div class="fw-semibold">WiFi Internet</div>
+                      <div class="text-secondary small">High-speed campus WiFi</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="d-flex align-items-center gap-3 p-3 border rounded">
+                    <i class="bi bi-cup-hot text-success fs-4"></i>
+                    <div>
+                      <div class="fw-semibold">Mess Facility</div>
+                      <div class="text-secondary small">3 meals daily</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="d-flex align-items-center gap-3 p-3 border rounded">
+                    <i class="bi bi-water text-info fs-4"></i>
+                    <div>
+                      <div class="fw-semibold">Laundry</div>
+                      <div class="text-secondary small">Washing machines</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="d-flex align-items-center gap-3 p-3 border rounded">
+                    <i class="bi bi-shield-check text-warning fs-4"></i>
+                    <div>
+                      <div class="fw-semibold">Security</div>
+                      <div class="text-secondary small">24/7 CCTV & Guards</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="d-flex align-items-center gap-3 p-3 border rounded">
+                    <i class="bi bi-book text-danger fs-4"></i>
+                    <div>
+                      <div class="fw-semibold">Study Room</div>
+                      <div class="text-secondary small">Quiet study spaces</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="d-flex align-items-center gap-3 p-3 border rounded">
+                    <i class="bi bi-tv text-secondary fs-4"></i>
+                    <div>
+                      <div class="fw-semibold">Common Room</div>
+                      <div class="text-secondary small">TV & Recreation</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="d-flex align-items-center gap-3 p-3 border rounded">
+                    <i class="bi bi-hospital text-primary fs-4"></i>
+                    <div>
+                      <div class="fw-semibold">Medical</div>
+                      <div class="text-secondary small">First aid & doctor</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="d-flex align-items-center gap-3 p-3 border rounded">
+                    <i class="bi bi-bus-front text-success fs-4"></i>
+                    <div>
+                      <div class="fw-semibold">Transport</div>
+                      <div class="text-secondary small">College bus service</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Room Request Modal -->
+    <div class="modal fade" id="roomRequestModal" tabindex="-1" aria-labelledby="roomRequestLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="roomRequestLabel">Request Room Allocation</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="mb-3">
+                <label class="form-label">Preferred Block</label>
+                <select class="form-select" required>
+                  <option value="">Select Block</option>
+                  <option value="A">Block A (Boys)</option>
+                  <option value="B">Block B (Girls)</option>
+                  <option value="C">Block C (Boys)</option>
+                  <option value="D">Block D (Girls)</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Room Type</label>
+                <select class="form-select" required>
+                  <option value="">Select Type</option>
+                  <option value="single">Single Occupancy</option>
+                  <option value="double">Double Occupancy</option>
+                  <option value="triple">Triple Occupancy</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Reason for Request</label>
+                <textarea class="form-control" rows="3" placeholder="Please specify your reason for hostel accommodation..."></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary">Submit Request</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fee Payment Modal -->
+    <div class="modal fade" id="feePaymentModal" tabindex="-1" aria-labelledby="feePaymentLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="feePaymentLabel">Hostel Fee Payment</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row g-3">
+              <div class="col-12">
+                <div class="alert alert-info">
+                  <i class="bi bi-info-circle me-2"></i>
+                  <strong>Current Fee Status:</strong> ₹25,000 per semester
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Payment Amount</label>
+                <input type="number" class="form-control" value="25000" readonly>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Payment Method</label>
+                <select class="form-select">
+                  <option value="online">Online Payment</option>
+                  <option value="card">Credit/Debit Card</option>
+                  <option value="upi">UPI</option>
+                  <option value="netbanking">Net Banking</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-success">Proceed to Payment</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Maintenance Modal -->
+    <div class="modal fade" id="maintenanceModal" tabindex="-1" aria-labelledby="maintenanceLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="maintenanceLabel">Report Maintenance Issue</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="mb-3">
+                <label class="form-label">Issue Type</label>
+                <select class="form-select" required>
+                  <option value="">Select Issue</option>
+                  <option value="electrical">Electrical</option>
+                  <option value="plumbing">Plumbing</option>
+                  <option value="furniture">Furniture</option>
+                  <option value="wifi">WiFi/Internet</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Room Number</label>
+                <input type="text" class="form-control" placeholder="e.g., A-101" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Description</label>
+                <textarea class="form-control" rows="3" placeholder="Describe the issue in detail..."></textarea>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Priority</label>
+                <select class="form-select">
+                  <option value="low">Low</option>
+                  <option value="medium" selected>Medium</option>
+                  <option value="high">High</option>
+                  <option value="urgent">Urgent</option>
+                </select>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-warning">Submit Report</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Visitor Registration Modal -->
+    <div class="modal fade" id="visitorModal" tabindex="-1" aria-labelledby="visitorLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="visitorLabel">Register Visitor</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="mb-3">
+                <label class="form-label">Visitor Name</label>
+                <input type="text" class="form-control" placeholder="Enter visitor's full name" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Relation</label>
+                <select class="form-select" required>
+                  <option value="">Select Relation</option>
+                  <option value="parent">Parent</option>
+                  <option value="sibling">Sibling</option>
+                  <option value="friend">Friend</option>
+                  <option value="relative">Relative</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Phone Number</label>
+                <input type="tel" class="form-control" placeholder="Enter phone number" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Visit Date & Time</label>
+                <input type="datetime-local" class="form-control" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Purpose of Visit</label>
+                <textarea class="form-control" rows="2" placeholder="Briefly describe the purpose..."></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-info">Register Visitor</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+{% endblock %}
+
+{% block extra_js %}
+<link rel="icon" href="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f393.svg" />
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg bg-white navbar-light shadow-sm">
+      <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="{% url 'index' %}">
+          <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f3eb.svg" width="30" class="me-2"/>
+          <span class="fw-bold brand-gradient">Institution ERP</span>
+        </a>
+        <div class="ms-auto d-flex align-items-center gap-3">
+          <div id="userMini" class="small"></div>
+          <button id="logoutBtn" class="btn btn-outline-secondary btn-sm"><i class="bi bi-box-arrow-right me-1"></i>Logout</button>
+        </div>
+      </div>
+    </nav>
+
+    <div class="border-top" style="border-color:#f0ad00 !important"></div>
+
+    <div class="container my-4">
+      <div class="row g-3">
+        <!-- Navigation Tabs -->
+        <div class="col-12">
+          <ul class="nav nav-pills flex-wrap gap-2 py-2" id="moduleTabs">
+            <!-- Dynamic navigation will be rendered here -->
+          </ul>
+        </div>
+
+        <!-- Hostel Overview Cards -->
+        <div class="col-12">
+          <div class="row g-3 mb-4">
+            <div class="col-md-3">
+              <div class="card border-0 shadow-sm h-100">
+                <div class="card-body text-center">
+                  <div class="icon-circle bg-primary-soft text-primary mx-auto mb-3">
+                    <i class="bi bi-house-door fs-4"></i>
+                  </div>
+                  <h5 class="fw-bold mb-1">Total Rooms</h5>
+                  <div class="h4 text-primary mb-0">156</div>
+                  <small class="text-secondary">Across 4 Hostels</small>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="card border-0 shadow-sm h-100">
+                <div class="card-body text-center">
+                  <div class="icon-circle bg-success-soft text-success mx-auto mb-3">
+                    <i class="bi bi-person-check fs-4"></i>
+                  </div>
+                  <h5 class="fw-bold mb-1">Occupied</h5>
+                  <div class="h4 text-success mb-0">142</div>
+                  <small class="text-secondary">91% Occupancy</small>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="card border-0 shadow-sm h-100">
+                <div class="card-body text-center">
+                  <div class="icon-circle bg-warning-soft text-warning mx-auto mb-3">
+                    <i class="bi bi-door-open fs-4"></i>
+                  </div>
+                  <h5 class="fw-bold mb-1">Available</h5>
+                  <div class="h4 text-warning mb-0">14</div>
+                  <small class="text-secondary">Ready for Allocation</small>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="card border-0 shadow-sm h-100">
+                <div class="card-body text-center">
+                  <div class="icon-circle bg-info-soft text-info mx-auto mb-3">
+                    <i class="bi bi-people fs-4"></i>
+                  </div>
+                  <h5 class="fw-bold mb-1">Total Students</h5>
+                  <div class="h4 text-info mb-0">284</div>
+                  <small class="text-secondary">Currently Residing</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hostel Information -->
+        <div class="col-lg-8">
+          <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white border-0 pb-0">
+              <h4 class="mb-3"><i class="bi bi-building me-2"></i>Hostel Information</h4>
+            </div>
+            <div class="card-body">
+              <div class="row g-4">
+                <div class="col-md-6">
+                  <div class="d-flex align-items-start gap-3 mb-3">
+                    <div class="icon-circle bg-primary-soft text-primary">
+                      <i class="bi bi-building"></i>
+                    </div>
+                    <div>
+                      <h6 class="fw-bold mb-1">Boys Hostel - Block A</h6>
+                      <p class="text-secondary small mb-1">Modern 3-story building with 45 rooms</p>
+                      <div class="d-flex gap-3 small">
+                        <span><i class="bi bi-person me-1"></i>90 Students</span>
+                        <span><i class="bi bi-door-open me-1"></i>5 Available</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="d-flex align-items-start gap-3 mb-3">
+                    <div class="icon-circle bg-success-soft text-success">
+                      <i class="bi bi-building"></i>
+                    </div>
+                    <div>
+                      <h6 class="fw-bold mb-1">Girls Hostel - Block B</h6>
+                      <p class="text-secondary small mb-1">Secure 4-story building with 60 rooms</p>
+                      <div class="d-flex gap-3 small">
+                        <span><i class="bi bi-person me-1"></i>120 Students</span>
+                        <span><i class="bi bi-door-open me-1"></i>6 Available</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="d-flex align-items-start gap-3 mb-3">
+                    <div class="icon-circle bg-warning-soft text-warning">
+                      <i class="bi bi-building"></i>
+                    </div>
+                    <div>
+                      <h6 class="fw-bold mb-1">Boys Hostel - Block C</h6>
+                      <p class="text-secondary small mb-1">New construction with 30 rooms</p>
+                      <div class="d-flex gap-3 small">
+                        <span><i class="bi bi-person me-1"></i>58 Students</span>
+                        <span><i class="bi bi-door-open me-1"></i>2 Available</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="d-flex align-items-start gap-3 mb-3">
+                    <div class="icon-circle bg-info-soft text-info">
+                      <i class="bi bi-building"></i>
+                    </div>
+                    <div>
+                      <h6 class="fw-bold mb-1">Girls Hostel - Block D</h6>
+                      <p class="text-secondary small mb-1">Premium facility with 21 rooms</p>
+                      <div class="d-flex gap-3 small">
+                        <span><i class="bi bi-person me-1"></i>16 Students</span>
+                        <span><i class="bi bi-door-open me-1"></i>1 Available</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="col-lg-4">
+          <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white border-0 pb-0">
+              <h5 class="mb-3"><i class="bi bi-lightning me-2"></i>Quick Actions</h5>
+            </div>
+            <div class="card-body">
+              <div class="d-grid gap-2">
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#roomRequestModal">
+                  <i class="bi bi-house-add me-2"></i>Request Room Allocation
+                </button>
+                <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#feePaymentModal">
+                  <i class="bi bi-credit-card me-2"></i>Pay Hostel Fees
+                </button>
+                <button class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#maintenanceModal">
+                  <i class="bi bi-tools me-2"></i>Report Maintenance
+                </button>
+                <button class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#visitorModal">
+                  <i class="bi bi-person-plus me-2"></i>Register Visitor
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Hostel Rules -->
+          <div class="card border-0 shadow-sm mt-3">
+            <div class="card-header bg-white border-0 pb-0">
+              <h5 class="mb-3"><i class="bi bi-shield-check me-2"></i>Important Rules</h5>
+            </div>
+            <div class="card-body">
+              <ul class="list-unstyled small">
+                <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Curfew: 10:00 PM</li>
+                <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>No smoking/alcohol</li>
+                <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Visitor registration required</li>
+                <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Keep rooms clean</li>
+                <li class="mb-0"><i class="bi bi-check-circle text-success me-2"></i>Follow mess timings</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Room Allocation Status -->
+        <div class="col-12">
+          <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white border-0 pb-0">
+              <h4 class="mb-3"><i class="bi bi-grid me-2"></i>Room Allocation Status</h4>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-hover">
+                  <thead class="table-light">
+                    <tr>
+                      <th>Room No</th>
+                      <th>Block</th>
+                      <th>Capacity</th>
+                      <th>Occupied</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>A-101</strong></td>
+                      <td>Block A</td>
+                      <td>2</td>
+                      <td>2</td>
+                      <td><span class="badge bg-success">Occupied</span></td>
+                      <td><button class="btn btn-sm btn-outline-primary">View Details</button></td>
+                    </tr>
+                    <tr>
+                      <td><strong>A-102</strong></td>
+                      <td>Block A</td>
+                      <td>2</td>
+                      <td>1</td>
+                      <td><span class="badge bg-warning">Partially Occupied</span></td>
+                      <td><button class="btn btn-sm btn-outline-primary">View Details</button></td>
+                    </tr>
+                    <tr>
+                      <td><strong>A-103</strong></td>
+                      <td>Block A</td>
+                      <td>2</td>
+                      <td>0</td>
+                      <td><span class="badge bg-secondary">Available</span></td>
+                      <td><button class="btn btn-sm btn-primary">Allocate</button></td>
+                    </tr>
+                    <tr>
+                      <td><strong>B-201</strong></td>
+                      <td>Block B</td>
+                      <td>2</td>
+                      <td>2</td>
+                      <td><span class="badge bg-success">Occupied</span></td>
+                      <td><button class="btn btn-sm btn-outline-primary">View Details</button></td>
+                    </tr>
+                    <tr>
+                      <td><strong>C-301</strong></td>
+                      <td>Block C</td>
+                      <td>2</td>
+                      <td>0</td>
+                      <td><span class="badge bg-secondary">Available</span></td>
+                      <td><button class="btn btn-sm btn-primary">Allocate</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hostel Facilities -->
+        <div class="col-12">
+          <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white border-0 pb-0">
+              <h4 class="mb-3"><i class="bi bi-star me-2"></i>Hostel Facilities</h4>
+            </div>
+            <div class="card-body">
+              <div class="row g-3">
+                <div class="col-md-3">
+                  <div class="d-flex align-items-center gap-3 p-3 border rounded">
+                    <i class="bi bi-wifi text-primary fs-4"></i>
+                    <div>
+                      <div class="fw-semibold">WiFi Internet</div>
+                      <div class="text-secondary small">High-speed campus WiFi</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="d-flex align-items-center gap-3 p-3 border rounded">
+                    <i class="bi bi-cup-hot text-success fs-4"></i>
+                    <div>
+                      <div class="fw-semibold">Mess Facility</div>
+                      <div class="text-secondary small">3 meals daily</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="d-flex align-items-center gap-3 p-3 border rounded">
+                    <i class="bi bi-water text-info fs-4"></i>
+                    <div>
+                      <div class="fw-semibold">Laundry</div>
+                      <div class="text-secondary small">Washing machines</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="d-flex align-items-center gap-3 p-3 border rounded">
+                    <i class="bi bi-shield-check text-warning fs-4"></i>
+                    <div>
+                      <div class="fw-semibold">Security</div>
+                      <div class="text-secondary small">24/7 CCTV & Guards</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="d-flex align-items-center gap-3 p-3 border rounded">
+                    <i class="bi bi-book text-danger fs-4"></i>
+                    <div>
+                      <div class="fw-semibold">Study Room</div>
+                      <div class="text-secondary small">Quiet study spaces</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="d-flex align-items-center gap-3 p-3 border rounded">
+                    <i class="bi bi-tv text-secondary fs-4"></i>
+                    <div>
+                      <div class="fw-semibold">Common Room</div>
+                      <div class="text-secondary small">TV & Recreation</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="d-flex align-items-center gap-3 p-3 border rounded">
+                    <i class="bi bi-hospital text-primary fs-4"></i>
+                    <div>
+                      <div class="fw-semibold">Medical</div>
+                      <div class="text-secondary small">First aid & doctor</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="d-flex align-items-center gap-3 p-3 border rounded">
+                    <i class="bi bi-bus-front text-success fs-4"></i>
+                    <div>
+                      <div class="fw-semibold">Transport</div>
+                      <div class="text-secondary small">College bus service</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Room Request Modal -->
+    <div class="modal fade" id="roomRequestModal" tabindex="-1" aria-labelledby="roomRequestLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="roomRequestLabel">Request Room Allocation</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="mb-3">
+                <label class="form-label">Preferred Block</label>
+                <select class="form-select" required>
+                  <option value="">Select Block</option>
+                  <option value="A">Block A (Boys)</option>
+                  <option value="B">Block B (Girls)</option>
+                  <option value="C">Block C (Boys)</option>
+                  <option value="D">Block D (Girls)</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Room Type</label>
+                <select class="form-select" required>
+                  <option value="">Select Type</option>
+                  <option value="single">Single Occupancy</option>
+                  <option value="double">Double Occupancy</option>
+                  <option value="triple">Triple Occupancy</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Reason for Request</label>
+                <textarea class="form-control" rows="3" placeholder="Please specify your reason for hostel accommodation..."></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary">Submit Request</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fee Payment Modal -->
+    <div class="modal fade" id="feePaymentModal" tabindex="-1" aria-labelledby="feePaymentLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="feePaymentLabel">Hostel Fee Payment</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row g-3">
+              <div class="col-12">
+                <div class="alert alert-info">
+                  <i class="bi bi-info-circle me-2"></i>
+                  <strong>Current Fee Status:</strong> ₹25,000 per semester
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Payment Amount</label>
+                <input type="number" class="form-control" value="25000" readonly>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Payment Method</label>
+                <select class="form-select">
+                  <option value="online">Online Payment</option>
+                  <option value="card">Credit/Debit Card</option>
+                  <option value="upi">UPI</option>
+                  <option value="netbanking">Net Banking</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-success">Proceed to Payment</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Maintenance Modal -->
+    <div class="modal fade" id="maintenanceModal" tabindex="-1" aria-labelledby="maintenanceLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="maintenanceLabel">Report Maintenance Issue</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="mb-3">
+                <label class="form-label">Issue Type</label>
+                <select class="form-select" required>
+                  <option value="">Select Issue</option>
+                  <option value="electrical">Electrical</option>
+                  <option value="plumbing">Plumbing</option>
+                  <option value="furniture">Furniture</option>
+                  <option value="wifi">WiFi/Internet</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Room Number</label>
+                <input type="text" class="form-control" placeholder="e.g., A-101" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Description</label>
+                <textarea class="form-control" rows="3" placeholder="Describe the issue in detail..."></textarea>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Priority</label>
+                <select class="form-select">
+                  <option value="low">Low</option>
+                  <option value="medium" selected>Medium</option>
+                  <option value="high">High</option>
+                  <option value="urgent">Urgent</option>
+                </select>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-warning">Submit Report</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Visitor Registration Modal -->
+    <div class="modal fade" id="visitorModal" tabindex="-1" aria-labelledby="visitorLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="visitorLabel">Register Visitor</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="mb-3">
+                <label class="form-label">Visitor Name</label>
+                <input type="text" class="form-control" placeholder="Enter visitor's full name" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Relation</label>
+                <select class="form-select" required>
+                  <option value="">Select Relation</option>
+                  <option value="parent">Parent</option>
+                  <option value="sibling">Sibling</option>
+                  <option value="friend">Friend</option>
+                  <option value="relative">Relative</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Phone Number</label>
+                <input type="tel" class="form-control" placeholder="Enter phone number" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Visit Date & Time</label>
+                <input type="datetime-local" class="form-control" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Purpose of Visit</label>
+                <textarea class="form-control" rows="2" placeholder="Briefly describe the purpose..."></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-info">Register Visitor</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer py-3 mt-4">
+      <div class="container small text-white-50 d-flex justify-content-between">
+        <div>© <span id="year"></span> Institution ERP</div>
+        <div><a class="text-white-50" href="https://portal3.tmu.ac.in/" target="_blank" rel="noopener">Reference: TMU i-Zone</a></div>
+      </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <script>
+      const yearEl = document.getElementById('year');
+      if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+      // Check authentication
+      const sessStr = localStorage.getItem('erpSession') || sessionStorage.getItem('erpSession');
+      if (!sessStr) {
+        window.location.replace('/');
+      }
+      let sess;
+      try { sess = JSON.parse(sessStr || '{}'); } catch { sess = {}; }
+
+      // Demo user data
+      const demoUsers = [
+        { enrollment:'TCA2259093', password:'123456', name:'YASH JAIN', nameHi:'यश जैन', studentNo:'ST/045184', course:'BTECH-022', category:'GEN', admittedYear:'22-23', abcId:'850639866762', mentor:'—', dob:'11-Aug-2004', academicYear:'25-26', section:'B', fatherName:'NEERAJ JAIN', motherName:'BABITA JAIN', semesterYear:'VII', batch:'—', motherNameHi:'बबिता जैन', avatar:'https://i.pravatar.cc/100?img=68' },
+        { enrollment:'21BCA1234', password:'pass@123', name:'AARAV SHARMA', nameHi:'आरव शर्मा', studentNo:'ST/012345', course:'BCA-001', category:'OBC', admittedYear:'21-22', abcId:'780123456789', mentor:'Ms. Verma', dob:'02-Jan-2003', academicYear:'24-25', section:'A', fatherName:'RAHUL SHARMA', motherName:'SNEHA SHARMA', semesterYear:'V', batch:'B1', motherNameHi:'स्नेहा शर्मा', avatar:'https://i.pravatar.cc/100?img=12' }
+      ];
+
+      const user = demoUsers.find(u => u.enrollment === sess?.enrollment);
+      if (!user) {
+        window.location.replace('/');
+      }
+
+      // Render user info
+      const userMini = document.getElementById('userMini');
+      userMini.innerHTML = `<div class="d-flex align-items-center gap-2">
+        <img src="${user.avatar}" class="rounded-circle" width="36" height="36"/>
+        <div>
+          <div class="fw-semibold">${user.name}</div>
+          <div class="text-secondary">${user.enrollment}</div>
+        </div>
+      </div>`;
+
+      // Logout functionality
+      const logoutBtn = document.getElementById('logoutBtn');
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', () => {
+          localStorage.removeItem('erpSession');
+          sessionStorage.removeItem('erpSession');
+          window.location.replace('/');
+        });
+      }
+
+      // Modal form submissions
+      document.querySelectorAll('button[type="button"]').forEach(btn => {
+        if (btn.textContent.includes('Submit') || btn.textContent.includes('Proceed') || btn.textContent.includes('Register')) {
+          btn.addEventListener('click', () => {
+            // Show success message
+            const alert = document.createElement('div');
+            alert.className = 'alert alert-success alert-dismissible fade show position-fixed';
+            alert.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+            alert.innerHTML = `
+              <i class="bi bi-check-circle me-2"></i>
+              Request submitted successfully!
+              <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            document.body.appendChild(alert);
+            
+            // Auto dismiss after 3 seconds
+            setTimeout(() => {
+              if (alert.parentNode) {
+                alert.remove();
+              }
+            }, 3000);
+            
+            // Close modal
+            const modal = btn.closest('.modal');
+            if (modal) {
+              const modalInstance = bootstrap.Modal.getInstance(modal);
+              if (modalInstance) {
+                modalInstance.hide();
+              }
+            }
+          });
+        }
+      });
+        <script>
+      // Ensure navigation renders after page load
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+          if (window.navigationManager && document.getElementById('moduleTabs')) {
+            window.navigationManager.renderMainNavigation();
+          }
+        });
+      } else {
+        if (window.navigationManager && document.getElementById('moduleTabs')) {
+          window.navigationManager.renderMainNavigation();
+        }
+      }
+    </script>
+</script>
+{% endblock %}

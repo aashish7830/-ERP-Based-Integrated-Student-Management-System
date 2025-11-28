@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>University Organizational Structure | Institution</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="{% static 'styles.css' %}" />
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg bg-white navbar-light shadow-sm sticky-top">
+      <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="{% url 'index' %}">
+          <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f3eb.svg" width="30" class="me-2"/>
+          <span class="fw-bold brand-gradient">Institution</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav" aria-controls="nav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="nav">
+          <ul class="navbar-nav ms-auto align-items-lg-center">
+            <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'college-info' %}">College Info</a></li>
+            <li class="nav-item"><a class="nav-link active" href="{% url 'university-structure' %}">University Structure</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <header class="py-5 bg-light">
+      <div class="container">
+        <div class="text-center">
+          <h1 class="fw-bold mb-3">World University Organizational Structure</h1>
+          <p class="lead text-secondary">Complete hierarchy and organizational framework of the university</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- 1. University Level Structure -->
+    <section id="university-level" class="py-5">
+      <div class="container">
+        <div class="d-flex align-items-center justify-content-between mb-4">
+          <h2 class="fw-bold mb-0"><i class="bi bi-building me-2 text-primary"></i>1. University Level Structure</h2>
+        </div>
+        
+        <div class="row g-4">
+          <div class="col-lg-8">
+            <div class="card border-0 shadow-sm">
+              <div class="card-body">
+                <h5 class="fw-bold mb-4">World University</h5>
+                <div class="org-tree">
+                  <div class="d-flex align-items-center mb-3">
+                    <div class="icon-circle bg-primary-soft text-primary me-3">
+                      <i class="bi bi-building"></i>
+                    </div>
+                    <div>
+                      <div class="fw-bold">World University</div>
+                      <div class="text-secondary small">Main Institution</div>
+                    </div>
+                  </div>
+                  
+                  <div class="ms-5">
+                    <div class="border-start border-2 border-primary ps-3 mb-3">
+                      <div class="fw-semibold mb-2">Board of Trustees / Governing Council</div>
+                      
+                      <div class="ms-3">
+                        <div class="d-flex align-items-center mb-2">
+                          <i class="bi bi-person-badge text-primary me-2"></i>
+                          <span>Chancellor / President (Head of University)</span>
+                        </div>
+                        <div class="d-flex align-items-center mb-2">
+                          <i class="bi bi-person-badge text-success me-2"></i>
+                          <span>Vice Chancellor / Provost (Second Head)</span>
+                        </div>
+                        <div class="d-flex align-items-center mb-2">
+                          <i class="bi bi-person-badge text-info me-2"></i>
+                          <span>Registrar (Administration Head)</span>
+                        </div>
+                        <div class="d-flex align-items-center mb-2">
+                          <i class="bi bi-person-badge text-warning me-2"></i>
+                          <span>Finance Officer / CFO</span>
+                        </div>
+                        <div class="d-flex align-items-center mb-2">
+                          <i class="bi bi-person-badge text-danger me-2"></i>
+                          <span>Dean of Academics, Research, Students, etc.</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body">
+                <h6 class="fw-bold mb-3">Quick Stats</h6>
+                <div class="d-flex flex-column gap-3">
+                  <div>
+                    <div class="text-secondary small">Total Faculties</div>
+                    <div class="h4 text-primary mb-0">8</div>
+                  </div>
+                  <div>
+                    <div class="text-secondary small">Total Departments</div>
+                    <div class="h4 text-success mb-0">40+</div>
+                  </div>
+                  <div>
+                    <div class="text-secondary small">Total Students</div>
+                    <div class="h4 text-info mb-0">5,000-15,000</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Constituent Faculties -->
+    <section id="faculties" class="py-5 bg-light">
+      <div class="container">
+        <h2 class="fw-bold mb-4"><i class="bi bi-mortarboard me-2 text-primary"></i>2. Constituent Faculties / Colleges</h2>
+        
+        <div class="row g-4">
+          <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body text-center">
+                <div class="icon-circle bg-primary-soft text-primary mx-auto mb-3">
+                  <i class="bi bi-gear fs-4"></i>
+                </div>
+                <h6 class="fw-bold">Faculty of Engineering</h6>
+                <p class="text-secondary small mb-0">Multiple engineering departments</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body text-center">
+                <div class="icon-circle bg-success-soft text-success mx-auto mb-3">
+                  <i class="bi bi-flask fs-4"></i>
+                </div>
+                <h6 class="fw-bold">Faculty of Science</h6>
+                <p class="text-secondary small mb-0">Pure and applied sciences</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body text-center">
+                <div class="icon-circle bg-info-soft text-info mx-auto mb-3">
+                  <i class="bi bi-graph-up fs-4"></i>
+                </div>
+                <h6 class="fw-bold">Faculty of Management</h6>
+                <p class="text-secondary small mb-0">Business and management</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body text-center">
+                <div class="icon-circle bg-warning-soft text-warning mx-auto mb-3">
+                  <i class="bi bi-book fs-4"></i>
+                </div>
+                <h6 class="fw-bold">Faculty of Humanities</h6>
+                <p class="text-secondary small mb-0">Arts and humanities</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body text-center">
+                <div class="icon-circle bg-danger-soft text-danger mx-auto mb-3">
+                  <i class="bi bi-heart-pulse fs-4"></i>
+                </div>
+                <h6 class="fw-bold">Faculty of Medical Sciences</h6>
+                <p class="text-secondary small mb-0">Medical and health sciences</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body text-center">
+                <div class="icon-circle bg-secondary-soft text-secondary mx-auto mb-3">
+                  <i class="bi bi-scale fs-4"></i>
+                </div>
+                <h6 class="fw-bold">Faculty of Law</h6>
+                <p class="text-secondary small mb-0">Legal studies</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body text-center">
+                <div class="icon-circle bg-primary-soft text-primary mx-auto mb-3">
+                  <i class="bi bi-palette fs-4"></i>
+                </div>
+                <h6 class="fw-bold">Faculty of Arts & Design</h6>
+                <p class="text-secondary small mb-0">Creative arts</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body text-center">
+                <div class="icon-circle bg-success-soft text-success mx-auto mb-3">
+                  <i class="bi bi-mortarboard fs-4"></i>
+                </div>
+                <h6 class="fw-bold">Faculty of Education</h6>
+                <p class="text-secondary small mb-0">Teacher education</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Departments Under Each Faculty -->
+    <section id="departments" class="py-5">
+      <div class="container">
+        <h2 class="fw-bold mb-4"><i class="bi bi-diagram-3 me-2 text-primary"></i>3. Departments Under Each Faculty</h2>
+        
+        <div class="accordion" id="facultyAccordion">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="engHeading">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#engCollapse" aria-expanded="true">
+                <i class="bi bi-gear me-2 text-primary"></i>Faculty of Engineering
+              </button>
+            </h2>
+            <div id="engCollapse" class="accordion-collapse collapse show" data-bs-parent="#facultyAccordion">
+              <div class="accordion-body">
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <div class="d-flex align-items-center p-2 border rounded">
+                      <i class="bi bi-laptop text-primary me-2"></i>
+                      <span>Department of Computer Science & Engineering</span>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="d-flex align-items-center p-2 border rounded">
+                      <i class="bi bi-gear-wide text-success me-2"></i>
+                      <span>Department of Mechanical Engineering</span>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="d-flex align-items-center p-2 border rounded">
+                      <i class="bi bi-building text-info me-2"></i>
+                      <span>Department of Civil Engineering</span>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="d-flex align-items-center p-2 border rounded">
+                      <i class="bi bi-lightning text-warning me-2"></i>
+                      <span>Department of Electrical Engineering</span>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="d-flex align-items-center p-2 border rounded">
+                      <i class="bi bi-cpu text-danger me-2"></i>
+                      <span>Department of Electronics & Communication Engineering</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="mt-3 p-3 bg-light rounded">
+                  <small class="text-secondary"><i class="bi bi-info-circle me-1"></i>Each department has a Head of Department (HOD) who manages the department.</small>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="scienceHeading">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#scienceCollapse">
+                <i class="bi bi-flask me-2 text-success"></i>Faculty of Science
+              </button>
+            </h2>
+            <div id="scienceCollapse" class="accordion-collapse collapse" data-bs-parent="#facultyAccordion">
+              <div class="accordion-body">
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <div class="d-flex align-items-center p-2 border rounded">
+                      <i class="bi bi-calculator text-primary me-2"></i>
+                      <span>Department of Mathematics</span>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="d-flex align-items-center p-2 border rounded">
+                      <i class="bi bi-atom text-success me-2"></i>
+                      <span>Department of Physics</span>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="d-flex align-items-center p-2 border rounded">
+                      <i class="bi bi-flask text-info me-2"></i>
+                      <span>Department of Chemistry</span>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="d-flex align-items-center p-2 border rounded">
+                      <i class="bi bi-tree text-warning me-2"></i>
+                      <span>Department of Biology</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Department Level Structure -->
+    <section id="dept-structure" class="py-5 bg-light">
+      <div class="container">
+        <h2 class="fw-bold mb-4"><i class="bi bi-people me-2 text-primary"></i>4. Department Level Structure</h2>
+        
+        <div class="row g-4">
+          <div class="col-lg-8">
+            <div class="card border-0 shadow-sm">
+              <div class="card-body">
+                <h5 class="fw-bold mb-4">Example: Department of Computer Science & Engineering</h5>
+                <div class="org-tree">
+                  <div class="d-flex align-items-center mb-3">
+                    <div class="icon-circle bg-primary-soft text-primary me-3">
+                      <i class="bi bi-laptop"></i>
+                    </div>
+                    <div>
+                      <div class="fw-bold">Department of Computer Science & Engineering</div>
+                    </div>
+                  </div>
+                  
+                  <div class="ms-5">
+                    <div class="border-start border-2 border-primary ps-3">
+                      <div class="d-flex align-items-center mb-2">
+                        <i class="bi bi-person-badge text-primary me-2"></i>
+                        <span>Head of Department (HOD) - 1</span>
+                      </div>
+                      <div class="d-flex align-items-center mb-2">
+                        <i class="bi bi-person-check text-success me-2"></i>
+                        <span>Professors - 2-4</span>
+                      </div>
+                      <div class="d-flex align-items-center mb-2">
+                        <i class="bi bi-person-check text-info me-2"></i>
+                        <span>Associate Professors - 3-5</span>
+                      </div>
+                      <div class="d-flex align-items-center mb-2">
+                        <i class="bi bi-person-check text-warning me-2"></i>
+                        <span>Assistant Professors - 5-10</span>
+                      </div>
+                      <div class="d-flex align-items-center mb-2">
+                        <i class="bi bi-person-check text-secondary me-2"></i>
+                        <span>Lab Instructors - 2-4</span>
+                      </div>
+                      <div class="d-flex align-items-center mb-2">
+                        <i class="bi bi-tools text-danger me-2"></i>
+                        <span>Technical Assistant / Lab Technician - 1-3</span>
+                      </div>
+                      <div class="d-flex align-items-center mb-2">
+                        <i class="bi bi-file-earmark-text text-primary me-2"></i>
+                        <span>Department Clerk / Office Assistant - 1-2</span>
+                      </div>
+                      <div class="d-flex align-items-center mb-2">
+                        <i class="bi bi-mortarboard text-success me-2"></i>
+                        <span>Students (UG + PG + PhD) - 300-600</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body">
+                <h6 class="fw-bold mb-3">Department Statistics</h6>
+                <div class="d-flex flex-column gap-3">
+                  <div>
+                    <div class="text-secondary small">Faculty + Staff</div>
+                    <div class="h5 text-primary mb-0">15-25</div>
+                    <small class="text-secondary">per department</small>
+                  </div>
+                  <div>
+                    <div class="text-secondary small">Students</div>
+                    <div class="h5 text-success mb-0">300-600</div>
+                    <small class="text-secondary">per department</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Administrative Departments -->
+    <section id="admin-depts" class="py-5">
+      <div class="container">
+        <h2 class="fw-bold mb-4"><i class="bi bi-briefcase me-2 text-primary"></i>5. Administrative Departments (Non-Teaching Units)</h2>
+        
+        <div class="table-responsive">
+          <table class="table table-hover align-middle">
+            <thead class="table-light">
+              <tr>
+                <th>Department Name</th>
+                <th>Main Work</th>
+                <th>Approx Staff</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><i class="bi bi-file-earmark-text text-primary me-2"></i><strong>Registrar Office</strong></td>
+                <td>Student records, certificates, exams</td>
+                <td><span class="badge bg-primary">5-10</span></td>
+                <td><a href="{% url 'registrar-office' %}" class="btn btn-sm btn-outline-primary"><i class="bi bi-box-arrow-up-right me-1"></i>View</a></td>
+              </tr>
+              <tr>
+                <td><i class="bi bi-cash-coin text-success me-2"></i><strong>Finance & Accounts</strong></td>
+                <td>Fees, salary, budget</td>
+                <td><span class="badge bg-success">5-8</span></td>
+                <td>
+                  <a href="{% url 'fees' %}" class="btn btn-sm btn-outline-success me-1"><i class="bi bi-cash me-1"></i>Fees</a>
+                  <a href="{% url 'account-office-portal' %}" class="btn btn-sm btn-outline-success"><i class="bi bi-briefcase me-1"></i>Portal</a>
+                </td>
+              </tr>
+              <tr>
+                <td><i class="bi bi-people text-info me-2"></i><strong>Human Resources (HR)</strong></td>
+                <td>Staff recruitment, payroll</td>
+                <td><span class="badge bg-info">3-6</span></td>
+                <td><a href="{% url 'hr-department' %}" class="btn btn-sm btn-outline-info"><i class="bi bi-box-arrow-up-right me-1"></i>View</a></td>
+              </tr>
+              <tr>
+                <td><i class="bi bi-person-plus text-warning me-2"></i><strong>Admissions Office</strong></td>
+                <td>New admissions, entrance exams</td>
+                <td><span class="badge bg-warning">4-8</span></td>
+                <td>
+                  <a href="{% url 'registration' %}" class="btn btn-sm btn-outline-warning me-1"><i class="bi bi-person-plus me-1"></i>Register</a>
+                  <a href="{% url 'admin-student-registration' %}" class="btn btn-sm btn-outline-warning"><i class="bi bi-shield-lock me-1"></i>Admin</a>
+                </td>
+              </tr>
+              <tr>
+                <td><i class="bi bi-clipboard-check text-danger me-2"></i><strong>Examination Cell</strong></td>
+                <td>Exam scheduling, result processing</td>
+                <td><span class="badge bg-danger">6-10</span></td>
+                <td>
+                  <a href="{% url 'examination' %}" class="btn btn-sm btn-outline-danger me-1"><i class="bi bi-clipboard-check me-1"></i>Exams</a>
+                  <a href="{% url 'result' %}" class="btn btn-sm btn-outline-danger"><i class="bi bi-trophy me-1"></i>Results</a>
+                </td>
+              </tr>
+              <tr>
+                <td><i class="bi bi-laptop text-primary me-2"></i><strong>IT Department</strong></td>
+                <td>Website, ERP system, network</td>
+                <td><span class="badge bg-primary">5-10</span></td>
+                <td><a href="{% url 'it-department' %}" class="btn btn-sm btn-outline-primary"><i class="bi bi-box-arrow-up-right me-1"></i>View</a></td>
+              </tr>
+              <tr>
+                <td><i class="bi bi-book text-success me-2"></i><strong>Library Department</strong></td>
+                <td>Library management</td>
+                <td><span class="badge bg-success">4-6</span></td>
+                <td><a href="{% url 'library' %}" class="btn btn-sm btn-outline-success"><i class="bi bi-book me-1"></i>View</a></td>
+              </tr>
+              <tr>
+                <td><i class="bi bi-house-door text-info me-2"></i><strong>Hostel Administration</strong></td>
+                <td>Hostel management</td>
+                <td><span class="badge bg-info">4-8</span></td>
+                <td><a href="{% url 'hostel' %}" class="btn btn-sm btn-outline-info"><i class="bi bi-house-door me-1"></i>View</a></td>
+              </tr>
+              <tr>
+                <td><i class="bi bi-bus-front text-warning me-2"></i><strong>Transport Department</strong></td>
+                <td>Bus/vehicle management</td>
+                <td><span class="badge bg-warning">3-5</span></td>
+                <td><a href="{% url 'transport-fee' %}" class="btn btn-sm btn-outline-warning"><i class="bi bi-bus-front me-1"></i>View</a></td>
+              </tr>
+              <tr>
+                <td><i class="bi bi-shield-check text-danger me-2"></i><strong>Maintenance & Security</strong></td>
+                <td>Campus maintenance, guards</td>
+                <td><span class="badge bg-danger">10-20</span></td>
+                <td><a href="{% url 'maintenance-security' %}" class="btn btn-sm btn-outline-danger"><i class="bi bi-box-arrow-up-right me-1"></i>View</a></td>
+              </tr>
+              <tr>
+                <td><i class="bi bi-briefcase text-primary me-2"></i><strong>CRC / T&P (Placement Cell)</strong></td>
+                <td>Placement, internships</td>
+                <td><span class="badge bg-primary">5-10</span></td>
+                <td>
+                  <a href="{% url 'placement' %}" class="btn btn-sm btn-outline-primary me-1"><i class="bi bi-briefcase me-1"></i>Placements</a>
+                  <a href="{% url 'crc-portal' %}" class="btn btn-sm btn-outline-primary"><i class="bi bi-door-open me-1"></i>Portal</a>
+                </td>
+              </tr>
+              <tr>
+                <td><i class="bi bi-heart text-success me-2"></i><strong>Student Welfare / Counseling Cell</strong></td>
+                <td>Student support</td>
+                <td><span class="badge bg-success">3-5</span></td>
+                <td><a href="{% url 'student-welfare' %}" class="btn btn-sm btn-outline-success"><i class="bi bi-box-arrow-up-right me-1"></i>View</a></td>
+              </tr>
+              <tr>
+                <td><i class="bi bi-lightbulb text-info me-2"></i><strong>Research & Innovation Cell</strong></td>
+                <td>Research projects, funding</td>
+                <td><span class="badge bg-info">3-6</span></td>
+                <td><a href="{% url 'research-innovation' %}" class="btn btn-sm btn-outline-info"><i class="bi bi-box-arrow-up-right me-1"></i>View</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. Academic Hierarchy -->
+    <section id="academic-hierarchy" class="py-5 bg-light">
+      <div class="container">
+        <div class="d-flex align-items-center justify-content-between mb-4">
+          <h2 class="fw-bold mb-0"><i class="bi bi-diagram-2 me-2 text-primary"></i>6. Academic Hierarchy (Teaching Side)</h2>
+          <a href="{% url 'faculty-portal' %}" class="btn btn-primary"><i class="bi bi-mortarboard me-1"></i>Faculty Portal</a>
+        </div>
+        
+        <div class="row g-4">
+          <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body text-center">
+                <div class="icon-circle bg-primary-soft text-primary mx-auto mb-3">
+                  <i class="bi bi-person-badge fs-4"></i>
+                </div>
+                <h6 class="fw-bold">Level 1</h6>
+                <div class="fw-semibold text-primary mb-2">Head of Department (HOD)</div>
+                <div class="text-secondary small">1 per department</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body text-center">
+                <div class="icon-circle bg-success-soft text-success mx-auto mb-3">
+                  <i class="bi bi-person-check fs-4"></i>
+                </div>
+                <h6 class="fw-bold">Level 2</h6>
+                <div class="fw-semibold text-success mb-2">Professor</div>
+                <div class="text-secondary small">2-4 per department</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body text-center">
+                <div class="icon-circle bg-info-soft text-info mx-auto mb-3">
+                  <i class="bi bi-person-check fs-4"></i>
+                </div>
+                <h6 class="fw-bold">Level 3</h6>
+                <div class="fw-semibold text-info mb-2">Associate Professor</div>
+                <div class="text-secondary small">3-5 per department</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body text-center">
+                <div class="icon-circle bg-warning-soft text-warning mx-auto mb-3">
+                  <i class="bi bi-person-check fs-4"></i>
+                </div>
+                <h6 class="fw-bold">Level 4</h6>
+                <div class="fw-semibold text-warning mb-2">Assistant Professor / Lecturer</div>
+                <div class="text-secondary small">5-10 per department</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body text-center">
+                <div class="icon-circle bg-secondary-soft text-secondary mx-auto mb-3">
+                  <i class="bi bi-person-check fs-4"></i>
+                </div>
+                <h6 class="fw-bold">Level 5</h6>
+                <div class="fw-semibold text-secondary mb-2">Teaching Assistant / Research Scholar</div>
+                <div class="text-secondary small">2-5 per department</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. Top Management Hierarchy -->
+    <section id="top-management" class="py-5">
+      <div class="container">
+        <h2 class="fw-bold mb-4"><i class="bi bi-trophy me-2 text-primary"></i>7. Top Management Hierarchy (University Level)</h2>
+        
+        <div class="table-responsive">
+          <table class="table table-hover align-middle">
+            <thead class="table-light">
+              <tr>
+                <th>Position</th>
+                <th>Role</th>
+                <th>Approx No.</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><i class="bi bi-person-badge text-primary me-2"></i><strong>Chancellor / President</strong></td>
+                <td>Overall head of university</td>
+                <td><span class="badge bg-primary">1</span></td>
+              </tr>
+              <tr>
+                <td><i class="bi bi-person-badge text-success me-2"></i><strong>Vice Chancellor / Provost</strong></td>
+                <td>Academic + admin operations</td>
+                <td><span class="badge bg-success">1-2</span></td>
+              </tr>
+              <tr>
+                <td><i class="bi bi-person-badge text-info me-2"></i><strong>Registrar</strong></td>
+                <td>Record & administration head</td>
+                <td><span class="badge bg-info">1</span></td>
+              </tr>
+              <tr>
+                <td><i class="bi bi-person-badge text-warning me-2"></i><strong>Dean (of each faculty)</strong></td>
+                <td>Head of faculty</td>
+                <td><span class="badge bg-warning">6-10</span></td>
+              </tr>
+              <tr>
+                <td><i class="bi bi-clipboard-check text-danger me-2"></i><strong>Controller of Examination</strong></td>
+                <td>Exam system head</td>
+                <td><span class="badge bg-danger">1</span></td>
+              </tr>
+              <tr>
+                <td><i class="bi bi-cash-coin text-primary me-2"></i><strong>Finance Officer / CFO</strong></td>
+                <td>Budget & accounts</td>
+                <td><span class="badge bg-primary">1</span></td>
+              </tr>
+              <tr>
+                <td><i class="bi bi-gear text-success me-2"></i><strong>Director (CRC / Research / IT)</strong></td>
+                <td>Specialized cells head</td>
+                <td><span class="badge bg-success">3-5 total</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. Support Cells / Committees -->
+    <section id="support-cells" class="py-5 bg-light">
+      <div class="container">
+        <h2 class="fw-bold mb-4"><i class="bi bi-shield-check me-2 text-primary"></i>8. Support Cells / Committees</h2>
+        
+        <div class="row g-3">
+          <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                  <div class="d-flex align-items-center">
+                    <i class="bi bi-award text-primary me-3 fs-4"></i>
+                    <div>
+                      <div class="fw-semibold">IQAC</div>
+                      <div class="text-secondary small">Internal Quality Assurance Cell</div>
+                    </div>
+                  </div>
+                </div>
+                <a href="{% url 'iqac' %}" class="btn btn-sm btn-outline-primary w-100 mt-2"><i class="bi bi-box-arrow-up-right me-1"></i>View</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                  <div class="d-flex align-items-center">
+                    <i class="bi bi-shield-exclamation text-success me-3 fs-4"></i>
+                    <div>
+                      <div class="fw-semibold">Disciplinary Committee</div>
+                      <div class="text-secondary small">Student discipline management</div>
+                    </div>
+                  </div>
+                </div>
+                <a href="{% url 'disciplinary-committee' %}" class="btn btn-sm btn-outline-success w-100 mt-2"><i class="bi bi-box-arrow-up-right me-1"></i>View</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                  <div class="d-flex align-items-center">
+                    <i class="bi bi-shield-x text-danger me-3 fs-4"></i>
+                    <div>
+                      <div class="fw-semibold">Anti-Ragging Cell</div>
+                      <div class="text-secondary small">Prevent ragging incidents</div>
+                    </div>
+                  </div>
+                </div>
+                <a href="{% url 'anti-ragging' %}" class="btn btn-sm btn-outline-danger w-100 mt-2"><i class="bi bi-box-arrow-up-right me-1"></i>View</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                  <div class="d-flex align-items-center">
+                    <i class="bi bi-gender-ambiguous text-info me-3 fs-4"></i>
+                    <div>
+                      <div class="fw-semibold">Women's Cell</div>
+                      <div class="text-secondary small">Gender equality & safety</div>
+                    </div>
+                  </div>
+                </div>
+                <a href="{% url 'womens-cell' %}" class="btn btn-sm btn-outline-info w-100 mt-2"><i class="bi bi-box-arrow-up-right me-1"></i>View</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                  <div class="d-flex align-items-center">
+                    <i class="bi bi-music-note text-warning me-3 fs-4"></i>
+                    <div>
+                      <div class="fw-semibold">Cultural Committee</div>
+                      <div class="text-secondary small">Cultural events & activities</div>
+                    </div>
+                  </div>
+                </div>
+                <a href="{% url 'cultural-committee' %}" class="btn btn-sm btn-outline-warning w-100 mt-2"><i class="bi bi-box-arrow-up-right me-1"></i>View</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                  <div class="d-flex align-items-center">
+                    <i class="bi bi-trophy text-primary me-3 fs-4"></i>
+                    <div>
+                      <div class="fw-semibold">Sports Committee</div>
+                      <div class="text-secondary small">Sports & athletics</div>
+                    </div>
+                  </div>
+                </div>
+                <a href="{% url 'sports-committee' %}" class="btn btn-sm btn-outline-primary w-100 mt-2"><i class="bi bi-box-arrow-up-right me-1"></i>View</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                  <div class="d-flex align-items-center">
+                    <i class="bi bi-people text-success me-3 fs-4"></i>
+                    <div>
+                      <div class="fw-semibold">Alumni Relations</div>
+                      <div class="text-secondary small">Alumni network & engagement</div>
+                    </div>
+                  </div>
+                </div>
+                <a href="{% url 'alumni-relations' %}" class="btn btn-sm btn-outline-success w-100 mt-2"><i class="bi bi-box-arrow-up-right me-1"></i>View</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                  <div class="d-flex align-items-center">
+                    <i class="bi bi-flag text-info me-3 fs-4"></i>
+                    <div>
+                      <div class="fw-semibold">NSS / NCC Units</div>
+                      <div class="text-secondary small">National Service Scheme</div>
+                    </div>
+                  </div>
+                </div>
+                <a href="{% url 'nss-ncc' %}" class="btn btn-sm btn-outline-info w-100 mt-2"><i class="bi bi-box-arrow-up-right me-1"></i>View</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. People Distribution -->
+    <section id="people-distribution" class="py-5">
+      <div class="container">
+        <h2 class="fw-bold mb-4"><i class="bi bi-bar-chart me-2 text-primary"></i>9. Approximate People Distribution in a Medium University</h2>
+        
+        <div class="row g-4">
+          <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body text-center">
+                <div class="icon-circle bg-primary-soft text-primary mx-auto mb-3">
+                  <i class="bi bi-trophy fs-4"></i>
+                </div>
+                <h6 class="fw-bold">University Top Management</h6>
+                <div class="h4 text-primary mb-0">10-15</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body text-center">
+                <div class="icon-circle bg-success-soft text-success mx-auto mb-3">
+                  <i class="bi bi-mortarboard fs-4"></i>
+                </div>
+                <h6 class="fw-bold">Academic Faculty</h6>
+                <div class="h4 text-success mb-0">300-600</div>
+                <small class="text-secondary">All Departments</small>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body text-center">
+                <div class="icon-circle bg-info-soft text-info mx-auto mb-3">
+                  <i class="bi bi-briefcase fs-4"></i>
+                </div>
+                <h6 class="fw-bold">Administrative Staff</h6>
+                <div class="h4 text-info mb-0">150-250</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body text-center">
+                <div class="icon-circle bg-warning-soft text-warning mx-auto mb-3">
+                  <i class="bi bi-tools fs-4"></i>
+                </div>
+                <h6 class="fw-bold">Technical & Support Staff</h6>
+                <div class="h4 text-warning mb-0">100-200</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body text-center">
+                <div class="icon-circle bg-danger-soft text-danger mx-auto mb-3">
+                  <i class="bi bi-people fs-4"></i>
+                </div>
+                <h6 class="fw-bold">Students</h6>
+                <div class="h4 text-danger mb-0">5,000-15,000</div>
+                <small class="text-secondary">UG + PG + PhD</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10. Optional Specialized Departments -->
+    <section id="specialized-depts" class="py-5 bg-light">
+      <div class="container">
+        <h2 class="fw-bold mb-4"><i class="bi bi-star me-2 text-primary"></i>10. Optional Specialized Departments (In Big Universities)</h2>
+        
+        <div class="row g-3">
+          <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body">
+                <div class="d-flex align-items-center mb-2">
+                  <i class="bi bi-lightbulb text-primary me-3 fs-4"></i>
+                  <div>
+                    <div class="fw-semibold">Innovation & Startup Cell</div>
+                    <div class="text-secondary small">Entrepreneurship support</div>
+                  </div>
+                </div>
+                <a href="{% url 'innovation-startup' %}" class="btn btn-sm btn-outline-primary w-100 mt-2"><i class="bi bi-box-arrow-up-right me-1"></i>View</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body">
+                <div class="d-flex align-items-center mb-2">
+                  <i class="bi bi-globe text-success me-3 fs-4"></i>
+                  <div>
+                    <div class="fw-semibold">International Relations Office</div>
+                    <div class="text-secondary small">Global partnerships</div>
+                  </div>
+                </div>
+                <a href="{% url 'international-relations' %}" class="btn btn-sm btn-outline-success w-100 mt-2"><i class="bi bi-box-arrow-up-right me-1"></i>View</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body">
+                <div class="d-flex align-items-center mb-2">
+                  <i class="bi bi-laptop text-info me-3 fs-4"></i>
+                  <div>
+                    <div class="fw-semibold">Online Learning / MOOCs</div>
+                    <div class="text-secondary small">E-learning platform</div>
+                  </div>
+                </div>
+                <a href="{% url 'online-learning' %}" class="btn btn-sm btn-outline-info w-100 mt-2"><i class="bi bi-box-arrow-up-right me-1"></i>View</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body">
+                <div class="d-flex align-items-center mb-2">
+                  <i class="bi bi-scale text-warning me-3 fs-4"></i>
+                  <div>
+                    <div class="fw-semibold">Legal Cell</div>
+                    <div class="text-secondary small">Legal compliance</div>
+                  </div>
+                </div>
+                <a href="{% url 'legal-cell' %}" class="btn btn-sm btn-outline-warning w-100 mt-2"><i class="bi bi-box-arrow-up-right me-1"></i>View</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body">
+                <div class="d-flex align-items-center mb-2">
+                  <i class="bi bi-megaphone text-danger me-3 fs-4"></i>
+                  <div>
+                    <div class="fw-semibold">Public Relations (PR) Office</div>
+                    <div class="text-secondary small">Media & communications</div>
+                  </div>
+                </div>
+                <a href="{% url 'pr-office' %}" class="btn btn-sm btn-outline-danger w-100 mt-2"><i class="bi bi-box-arrow-up-right me-1"></i>View</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body">
+                <div class="d-flex align-items-center mb-2">
+                  <i class="bi bi-hospital text-primary me-3 fs-4"></i>
+                  <div>
+                    <div class="fw-semibold">Medical / Health Center</div>
+                    <div class="text-secondary small">Healthcare services</div>
+                  </div>
+                </div>
+                <a href="{% url 'medical-center' %}" class="btn btn-sm btn-outline-primary w-100 mt-2"><i class="bi bi-box-arrow-up-right me-1"></i>View</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body">
+                <div class="d-flex align-items-center mb-2">
+                  <i class="bi bi-tree text-success me-3 fs-4"></i>
+                  <div>
+                    <div class="fw-semibold">Environmental Sustainability</div>
+                    <div class="text-secondary small">Green campus initiatives</div>
+                  </div>
+                </div>
+                <a href="{% url 'environmental-sustainability' %}" class="btn btn-sm btn-outline-success w-100 mt-2"><i class="bi bi-box-arrow-up-right me-1"></i>View</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer py-4">
+      <div class="container d-flex flex-column flex-lg-row justify-content-between align-items-center gap-3">
+        <div class="small text-white-50">© <span id="year"></span> Institution. All rights reserved.</div>
+        <div class="d-flex gap-3 small">
+          <a class="text-white-50 hover-white" href="{% url 'index' %}">Home</a>
+          <a class="text-white-50 hover-white" href="{% url 'college-info' %}">College Info</a>
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      const yearEl = document.getElementById('year');
+      if (yearEl) yearEl.textContent = new Date().getFullYear();
+    </script>
+      <!-- Chatbot Component -->
+    {% include 'includes/chatbot.html' %}
+  </body>
+</html>
+
+
+

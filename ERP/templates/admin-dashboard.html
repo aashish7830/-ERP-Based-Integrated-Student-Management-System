@@ -1,0 +1,1722 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Admin Dashboard | ERP</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="{% static 'styles.css' %}" />
+    <script src="{% static 'navigation.js' %}"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg bg-white navbar-light shadow-sm">
+      <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="{% url 'index' %}">
+          <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f3eb.svg" width="30" class="me-2"/>
+          <span class="fw-bold brand-gradient">Institution ERP</span>
+        </a>
+        <div class="ms-auto d-flex align-items-center gap-3">
+          <div id="userMini" class="small"></div>
+          <button id="logoutBtn" class="btn btn-outline-secondary btn-sm"><i class="bi bi-box-arrow-right me-1"></i>Logout</button>
+        </div>
+      </div>
+    </nav>
+
+    <div class="border-top" style="border-color:#f0ad00 !important"></div>
+
+    <div class="container my-4">
+      <div class="row g-4">
+        <div class="col-12">
+          <div class="card border-0 shadow-sm">
+            <div class="card-body">
+              <h4 class="mb-3">Admin Dashboard</h4>
+              <div class="row g-3">
+                <div class="col-md-3">
+                  <div class="card bg-primary text-white">
+                    <div class="card-body text-center">
+                      <i class="bi bi-people fs-1 mb-2"></i>
+                      <h5>Total Students</h5>
+                      <h3>12,450</h3>
+                      <small>+5% from last month</small>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="card bg-success text-white">
+                    <div class="card-body text-center">
+                      <i class="bi bi-person-badge fs-1 mb-2"></i>
+                      <h5>Faculty</h5>
+                      <h3>650</h3>
+                      <small>+2% from last month</small>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="card bg-warning text-white">
+                    <div class="card-body text-center">
+                      <i class="bi bi-cash-coin fs-1 mb-2"></i>
+                      <h5>Revenue</h5>
+                      <h3>₹2.5Cr</h3>
+                      <small>+8% from last month</small>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="card bg-info text-white">
+                    <div class="card-body text-center">
+                      <i class="bi bi-graph-up fs-1 mb-2"></i>
+                      <h5>Growth</h5>
+                      <h3>15%</h3>
+                      <small>Year over year</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-8">
+          <div class="card border-0 shadow-sm">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="mb-0">Recent Activities</h5>
+                <a href="{% url 'admin-placement-approval' %}" class="btn btn-sm btn-outline-primary">
+                  <i class="bi bi-briefcase me-1"></i>Placement Updates
+                </a>
+              </div>
+              <div class="list-group list-group-flush">
+                <div class="list-group-item d-flex justify-content-between align-items-start">
+                  <div class="ms-2 me-auto">
+                    <div class="fw-bold">New Student Registration</div>
+                    <div class="text-secondary small">AARAV SHARMA (21BCA1234) registered for BCA program</div>
+                  </div>
+                  <small class="text-muted">2 hours ago</small>
+                </div>
+                <div class="list-group-item d-flex justify-content-between align-items-start">
+                  <div class="ms-2 me-auto">
+                    <div class="fw-bold">Fee Payment Received</div>
+                    <div class="text-secondary small">YASH JAIN (TCA2259093) paid semester fees ₹52,000</div>
+                  </div>
+                  <small class="text-muted">4 hours ago</small>
+                </div>
+                <div class="list-group-item d-flex justify-content-between align-items-start">
+                  <div class="ms-2 me-auto">
+                    <div class="fw-bold">Faculty Added</div>
+                    <div class="text-secondary small">Dr. Neha Gupta joined Computer Science department</div>
+                  </div>
+                  <small class="text-muted">1 day ago</small>
+                </div>
+                <div class="list-group-item d-flex justify-content-between align-items-start">
+                  <div class="ms-2 me-auto">
+                    <div class="fw-bold">Exam Schedule Updated</div>
+                    <div class="text-secondary small">Internal examination dates published for Semester VII</div>
+                  </div>
+                  <small class="text-muted">2 days ago</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="card border-0 shadow-sm">
+            <div class="card-body">
+              <h5 class="mb-3">Quick Actions</h5>
+              <div class="d-grid gap-2">
+                <a href="{% url 'admin-student-registration' %}" class="btn btn-outline-primary">
+                  <i class="bi bi-person-plus me-2"></i>Register Student
+                </a>
+                <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#feeModal">
+                  <i class="bi bi-cash-coin me-2"></i>Manage Fees
+                </button>
+                <button class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#examModal">
+                  <i class="bi bi-calendar-event me-2"></i>Schedule Exam
+                </button>
+                <button class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#noticeModal">
+                  <i class="bi bi-megaphone me-2"></i>Post Notice
+                </button>
+                <a href="{% url 'admin-attendance-dashboard' %}" class="btn btn-outline-success">
+                  <i class="bi bi-calendar-check me-2"></i>Attendance Dashboard
+                </a>
+                <a href="{% url 'admin-placement-approval' %}" class="btn btn-outline-warning">
+                  <i class="bi bi-briefcase me-2"></i>Approve Placements
+                </a>
+                <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#reportModal">
+                  <i class="bi bi-file-earmark-bar-graph me-2"></i>Generate Report
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- University Structure & Departments - Flowchart Style -->
+        <div class="col-12">
+          <div class="card border-0 shadow-sm">
+            <div class="card-body">
+              <h5 class="mb-4"><i class="bi bi-diagram-3 me-2"></i>University Structure & Departments (Flowchart View)</h5>
+              
+              <style>
+                .flowchart-container {
+                  position: relative;
+                  padding: 40px 20px;
+                  overflow-x: auto;
+                }
+                .flowchart-level {
+                  display: flex;
+                  justify-content: center;
+                  align-items: flex-start;
+                  gap: 20px;
+                  margin-bottom: 30px;
+                  flex-wrap: wrap;
+                  position: relative;
+                }
+                .flowchart-node {
+                  background: white;
+                  border: 2px solid #dee2e6;
+                  border-radius: 8px;
+                  padding: 15px;
+                  min-width: 180px;
+                  text-align: center;
+                  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                  transition: all 0.3s;
+                  position: relative;
+                  z-index: 2;
+                }
+                .flowchart-node:hover {
+                  transform: translateY(-5px);
+                  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+                }
+                .flowchart-node.top-level {
+                  border-color: #0d6efd;
+                  background: linear-gradient(135deg, #e7f1ff 0%, #ffffff 100%);
+                }
+                .flowchart-node.school-level {
+                  border-color: #198754;
+                  background: linear-gradient(135deg, #d1e7dd 0%, #ffffff 100%);
+                }
+                .flowchart-node.dept-level {
+                  border-color: #6c757d;
+                  background: #f8f9fa;
+                  font-size: 0.85rem;
+                  padding: 10px;
+                  min-width: 140px;
+                }
+                .flowchart-connector {
+                  position: absolute;
+                  border-left: 2px solid #6c757d;
+                  height: 30px;
+                  left: 50%;
+                  top: -30px;
+                  z-index: 1;
+                }
+                .flowchart-connector.horizontal {
+                  border-top: 2px solid #6c757d;
+                  border-left: none;
+                  width: 100%;
+                  height: 2px;
+                  top: -15px;
+                  left: 0;
+                }
+                .flowchart-title {
+                  font-weight: bold;
+                  font-size: 0.9rem;
+                  margin-bottom: 5px;
+                  color: #212529;
+                }
+                .flowchart-subtitle {
+                  font-size: 0.75rem;
+                  color: #6c757d;
+                }
+                .flowchart-icon {
+                  font-size: 1.5rem;
+                  margin-bottom: 8px;
+                }
+                .flowchart-badge {
+                  display: inline-block;
+                  padding: 4px 8px;
+                  border-radius: 4px;
+                  font-size: 0.7rem;
+                  margin: 2px;
+                }
+              </style>
+
+              <div class="flowchart-container">
+                <!-- Level 1: Governing Bodies -->
+                <div class="flowchart-level">
+                  <div class="flowchart-node top-level">
+                    <div class="flowchart-icon text-primary"><i class="bi bi-person-badge"></i></div>
+                    <div class="flowchart-title">Chancellor</div>
+                    <div class="flowchart-subtitle">Ceremonial Head</div>
+                  </div>
+                  <div class="flowchart-node top-level">
+                    <div class="flowchart-icon text-success"><i class="bi bi-person-check"></i></div>
+                    <div class="flowchart-title">Vice-Chancellor</div>
+                    <div class="flowchart-subtitle">Executive Head</div>
+                  </div>
+                  <div class="flowchart-node top-level">
+                    <div class="flowchart-icon text-info"><i class="bi bi-file-earmark-text"></i></div>
+                    <div class="flowchart-title">Registrar</div>
+                    <div class="flowchart-subtitle">Administrative Head</div>
+                  </div>
+                  <div class="flowchart-node top-level">
+                    <div class="flowchart-icon text-warning"><i class="bi bi-mortarboard"></i></div>
+                    <div class="flowchart-title">Deans</div>
+                    <div class="flowchart-subtitle">Faculty Leaders</div>
+                  </div>
+                </div>
+
+                <!-- Level 2: Schools/Faculties -->
+                <div class="flowchart-level">
+                  <div class="flowchart-node school-level" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#schoolModal" data-school="engineering">
+                    <div class="flowchart-icon text-primary"><i class="bi bi-cpu"></i></div>
+                    <div class="flowchart-title">🎓 School of Engineering</div>
+                    <div class="flowchart-subtitle">10 Departments</div>
+                  </div>
+                  <div class="flowchart-node school-level" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#schoolModal" data-school="science">
+                    <div class="flowchart-icon text-info"><i class="bi bi-flask"></i></div>
+                    <div class="flowchart-title">🔬 School of Science</div>
+                    <div class="flowchart-subtitle">10 Departments</div>
+                  </div>
+                  <div class="flowchart-node school-level" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#schoolModal" data-school="arts">
+                    <div class="flowchart-icon text-warning"><i class="bi bi-book"></i></div>
+                    <div class="flowchart-title">🎨 School of Arts & Humanities</div>
+                    <div class="flowchart-subtitle">9 Departments</div>
+                  </div>
+                  <div class="flowchart-node school-level" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#schoolModal" data-school="commerce">
+                    <div class="flowchart-icon text-success"><i class="bi bi-briefcase"></i></div>
+                    <div class="flowchart-title">💼 School of Commerce & Management</div>
+                    <div class="flowchart-subtitle">6 Departments</div>
+                  </div>
+                  <div class="flowchart-node school-level" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#schoolModal" data-school="agriculture">
+                    <div class="flowchart-icon text-success"><i class="bi bi-tree"></i></div>
+                    <div class="flowchart-title">🌾 School of Agriculture</div>
+                    <div class="flowchart-subtitle">9 Departments</div>
+                  </div>
+                  <div class="flowchart-node school-level" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#schoolModal" data-school="law">
+                    <div class="flowchart-icon text-danger"><i class="bi bi-shield-check"></i></div>
+                    <div class="flowchart-title">⚖️ School of Law</div>
+                    <div class="flowchart-subtitle">8 Departments</div>
+                  </div>
+                  <div class="flowchart-node school-level" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#schoolModal" data-school="medical">
+                    <div class="flowchart-icon text-danger"><i class="bi bi-heart-pulse"></i></div>
+                    <div class="flowchart-title">🩺 School of Medical Sciences</div>
+                    <div class="flowchart-subtitle">12 Departments</div>
+                  </div>
+                  <div class="flowchart-node school-level" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#schoolModal" data-school="pharmacy">
+                    <div class="flowchart-icon text-primary"><i class="bi bi-capsule"></i></div>
+                    <div class="flowchart-title">💊 School of Pharmacy</div>
+                    <div class="flowchart-subtitle">5 Departments</div>
+                  </div>
+                  <div class="flowchart-node school-level" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#schoolModal" data-school="education">
+                    <div class="flowchart-icon text-info"><i class="bi bi-mortarboard"></i></div>
+                    <div class="flowchart-title">🎓 School of Education</div>
+                    <div class="flowchart-subtitle">6 Departments</div>
+                  </div>
+                  <div class="flowchart-node school-level" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#schoolModal" data-school="computer">
+                    <div class="flowchart-icon text-primary"><i class="bi bi-laptop"></i></div>
+                    <div class="flowchart-title">💻 School of Computer Applications</div>
+                    <div class="flowchart-subtitle">6 Departments</div>
+                  </div>
+                  <div class="flowchart-node school-level" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#schoolModal" data-school="social">
+                    <div class="flowchart-icon text-warning"><i class="bi bi-people"></i></div>
+                    <div class="flowchart-title">🧠 School of Social Sciences</div>
+                    <div class="flowchart-subtitle">7 Departments</div>
+                  </div>
+                </div>
+
+                <!-- Level 3: Sample Departments (Expandable) -->
+                <div class="flowchart-level">
+                  <div class="flowchart-node dept-level">
+                    <div class="flowchart-title">CSE</div>
+                    <div class="flowchart-subtitle">Computer Science</div>
+                  </div>
+                  <div class="flowchart-node dept-level">
+                    <div class="flowchart-title">ECE</div>
+                    <div class="flowchart-subtitle">Electronics</div>
+                  </div>
+                  <div class="flowchart-node dept-level">
+                    <div class="flowchart-title">ME</div>
+                    <div class="flowchart-subtitle">Mechanical</div>
+                  </div>
+                  <div class="flowchart-node dept-level">
+                    <div class="flowchart-title">Physics</div>
+                    <div class="flowchart-subtitle">Science</div>
+                  </div>
+                  <div class="flowchart-node dept-level">
+                    <div class="flowchart-title">Chemistry</div>
+                    <div class="flowchart-subtitle">Science</div>
+                  </div>
+                  <div class="flowchart-node dept-level">
+                    <div class="flowchart-title">Hindi</div>
+                    <div class="flowchart-subtitle">Arts</div>
+                  </div>
+                  <div class="flowchart-node dept-level">
+                    <div class="flowchart-title">English</div>
+                    <div class="flowchart-subtitle">Arts</div>
+                  </div>
+                  <div class="flowchart-node dept-level">
+                    <div class="flowchart-title">Commerce</div>
+                    <div class="flowchart-subtitle">Business</div>
+                  </div>
+                  <div class="flowchart-node dept-level">
+                    <div class="flowchart-title">MBA</div>
+                    <div class="flowchart-subtitle">Management</div>
+                  </div>
+                  <div class="flowchart-node dept-level">
+                    <div class="flowchart-title">BCA</div>
+                    <div class="flowchart-subtitle">Computer Apps</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="alert alert-info mt-4">
+                <i class="bi bi-info-circle me-2"></i>
+                <strong>Note:</strong> Click on any school below to view detailed departments and programs.
+              </div>
+              
+              <!-- Governing Bodies -->
+              <div class="mb-4">
+                <h6 class="text-primary mb-3"><i class="bi bi-shield-check me-2"></i>1. Governing Bodies (Top Level)</h6>
+                <div class="row g-3">
+                  <div class="col-md-3">
+                    <div class="card border-primary h-100">
+                      <div class="card-body text-center">
+                        <i class="bi bi-person-badge fs-1 text-primary mb-2"></i>
+                        <h6 class="fw-bold">Chancellor</h6>
+                        <small class="text-secondary">Ceremonial Head</small>
+                        <div class="mt-2">
+                          <a href="{% url 'chancellor-president-portal' %}" class="btn btn-sm btn-outline-primary">View Portal</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="card border-success h-100">
+                      <div class="card-body text-center">
+                        <i class="bi bi-person-check fs-1 text-success mb-2"></i>
+                        <h6 class="fw-bold">Vice-Chancellor</h6>
+                        <small class="text-secondary">Executive Head</small>
+                        <div class="mt-2">
+                          <a href="{% url 'vice-chancellor-portal' %}" class="btn btn-sm btn-outline-success">View Portal</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="card border-info h-100">
+                      <div class="card-body text-center">
+                        <i class="bi bi-file-earmark-text fs-1 text-info mb-2"></i>
+                        <h6 class="fw-bold">Registrar</h6>
+                        <small class="text-secondary">Administrative Head</small>
+                        <div class="mt-2">
+                          <a href="{% url 'registrar-portal' %}" class="btn btn-sm btn-outline-info">View Portal</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="card border-warning h-100">
+                      <div class="card-body text-center">
+                        <i class="bi bi-mortarboard fs-1 text-warning mb-2"></i>
+                        <h6 class="fw-bold">Deans</h6>
+                        <small class="text-secondary">Faculty Leaders</small>
+                        <div class="mt-2">
+                          <a href="{% url 'dean-academics-portal' %}" class="btn btn-sm btn-outline-warning">View Portal</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Faculties / Schools -->
+              <div class="mb-4">
+                <h6 class="text-success mb-3"><i class="bi bi-building me-2"></i>2. Faculties / Schools</h6>
+                <div class="row g-3">
+                  <div class="col-md-4 col-lg-3">
+                    <div class="card border h-100" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#schoolModal" data-school="engineering">
+                      <div class="card-body">
+                        <i class="bi bi-cpu text-primary fs-4 mb-2"></i>
+                        <h6 class="fw-bold">School of Engineering</h6>
+                        <small class="text-secondary">10 Departments</small>
+                        <div class="mt-2">
+                          <small class="text-primary"><i class="bi bi-arrow-right-circle"></i> Click to view</small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-lg-3">
+                    <div class="card border h-100" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#schoolModal" data-school="science">
+                      <div class="card-body">
+                        <i class="bi bi-flask text-info fs-4 mb-2"></i>
+                        <h6 class="fw-bold">School of Science</h6>
+                        <small class="text-secondary">10 Departments</small>
+                        <div class="mt-2">
+                          <small class="text-info"><i class="bi bi-arrow-right-circle"></i> Click to view</small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-lg-3">
+                    <div class="card border h-100" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#schoolModal" data-school="arts">
+                      <div class="card-body">
+                        <i class="bi bi-book text-warning fs-4 mb-2"></i>
+                        <h6 class="fw-bold">School of Arts & Humanities</h6>
+                        <small class="text-secondary">9 Departments</small>
+                        <div class="mt-2">
+                          <small class="text-warning"><i class="bi bi-arrow-right-circle"></i> Click to view</small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-lg-3">
+                    <div class="card border h-100" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#schoolModal" data-school="commerce">
+                      <div class="card-body">
+                        <i class="bi bi-briefcase text-success fs-4 mb-2"></i>
+                        <h6 class="fw-bold">School of Commerce & Management</h6>
+                        <small class="text-secondary">6 Departments</small>
+                        <div class="mt-2">
+                          <small class="text-success"><i class="bi bi-arrow-right-circle"></i> Click to view</small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-lg-3">
+                    <div class="card border h-100" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#schoolModal" data-school="agriculture">
+                      <div class="card-body">
+                        <i class="bi bi-tree text-success fs-4 mb-2"></i>
+                        <h6 class="fw-bold">School of Agriculture</h6>
+                        <small class="text-secondary">9 Departments</small>
+                        <div class="mt-2">
+                          <small class="text-success"><i class="bi bi-arrow-right-circle"></i> Click to view</small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-lg-3">
+                    <div class="card border h-100" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#schoolModal" data-school="law">
+                      <div class="card-body">
+                        <i class="bi bi-shield-check text-danger fs-4 mb-2"></i>
+                        <h6 class="fw-bold">School of Law</h6>
+                        <small class="text-secondary">8 Departments</small>
+                        <div class="mt-2">
+                          <small class="text-danger"><i class="bi bi-arrow-right-circle"></i> Click to view</small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-lg-3">
+                    <div class="card border h-100" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#schoolModal" data-school="medical">
+                      <div class="card-body">
+                        <i class="bi bi-heart-pulse text-danger fs-4 mb-2"></i>
+                        <h6 class="fw-bold">School of Medical Sciences</h6>
+                        <small class="text-secondary">12 Departments</small>
+                        <div class="mt-2">
+                          <small class="text-danger"><i class="bi bi-arrow-right-circle"></i> Click to view</small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-lg-3">
+                    <div class="card border h-100" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#schoolModal" data-school="pharmacy">
+                      <div class="card-body">
+                        <i class="bi bi-capsule text-primary fs-4 mb-2"></i>
+                        <h6 class="fw-bold">School of Pharmacy</h6>
+                        <small class="text-secondary">5 Departments</small>
+                        <div class="mt-2">
+                          <small class="text-primary"><i class="bi bi-arrow-right-circle"></i> Click to view</small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-lg-3">
+                    <div class="card border h-100" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#schoolModal" data-school="education">
+                      <div class="card-body">
+                        <i class="bi bi-mortarboard text-info fs-4 mb-2"></i>
+                        <h6 class="fw-bold">School of Education</h6>
+                        <small class="text-secondary">6 Departments</small>
+                        <div class="mt-2">
+                          <small class="text-info"><i class="bi bi-arrow-right-circle"></i> Click to view</small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-lg-3">
+                    <div class="card border h-100" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#schoolModal" data-school="computer">
+                      <div class="card-body">
+                        <i class="bi bi-laptop text-primary fs-4 mb-2"></i>
+                        <h6 class="fw-bold">School of Computer Applications</h6>
+                        <small class="text-secondary">6 Departments</small>
+                        <div class="mt-2">
+                          <small class="text-primary"><i class="bi bi-arrow-right-circle"></i> Click to view</small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-lg-3">
+                    <div class="card border h-100" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#schoolModal" data-school="social">
+                      <div class="card-body">
+                        <i class="bi bi-people text-warning fs-4 mb-2"></i>
+                        <h6 class="fw-bold">School of Social Sciences</h6>
+                        <small class="text-secondary">7 Departments</small>
+                        <div class="mt-2">
+                          <small class="text-warning"><i class="bi bi-arrow-right-circle"></i> Click to view</small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Departments Under Schools -->
+             
+
+              <!-- Academic Sections -->
+              <div class="mb-3">
+                <h6 class="text-danger mb-3"><i class="bi bi-gear me-2"></i>4. Academic Sections</h6>
+                <div class="row g-3">
+                  <div class="col-md-4 col-lg-3">
+                    <div class="card border-danger h-100">
+                      <div class="card-body text-center">
+                        <i class="bi bi-clipboard-check text-danger fs-4 mb-2"></i>
+                        <h6 class="fw-bold">Examination Cell</h6>
+                        <a href="{% url 'examination' %}" class="btn btn-sm btn-outline-danger mt-2">View</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-lg-3">
+                    <div class="card border-primary h-100">
+                      <div class="card-body text-center">
+                        <i class="bi bi-person-plus text-primary fs-4 mb-2"></i>
+                        <h6 class="fw-bold">Admission Cell</h6>
+                        <a href="{% url 'registration' %}" class="btn btn-sm btn-outline-primary mt-2">View</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-lg-3">
+                    <div class="card border-success h-100">
+                      <div class="card-body text-center">
+                        <i class="bi bi-briefcase text-success fs-4 mb-2"></i>
+                        <h6 class="fw-bold">Training & Placement Cell</h6>
+                        <a href="{% url 'placement' %}" class="btn btn-sm btn-outline-success mt-2">View</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-lg-3">
+                    <div class="card border-info h-100">
+                      <div class="card-body text-center">
+                        <i class="bi bi-book text-info fs-4 mb-2"></i>
+                        <h6 class="fw-bold">Library</h6>
+                        <a href="{% url 'library' %}" class="btn btn-sm btn-outline-info mt-2">View</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-lg-3">
+                    <div class="card border-warning h-100">
+                      <div class="card-body text-center">
+                        <i class="bi bi-lightbulb text-warning fs-4 mb-2"></i>
+                        <h6 class="fw-bold">Research & Development Cell</h6>
+                        <a href="{% url 'research-innovation' %}" class="btn btn-sm btn-outline-warning mt-2">View</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-lg-3">
+                    <div class="card border-primary h-100">
+                      <div class="card-body text-center">
+                        <i class="bi bi-trophy text-primary fs-4 mb-2"></i>
+                        <h6 class="fw-bold">Sports & Cultural Cell</h6>
+                        <a href="{% url 'sports-committee' %}" class="btn btn-sm btn-outline-primary mt-2">View</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-lg-3">
+                    <div class="card border-success h-100">
+                      <div class="card-body text-center">
+                        <i class="bi bi-house-door text-success fs-4 mb-2"></i>
+                        <h6 class="fw-bold">Hostel Management</h6>
+                        <a href="{% url 'hostel' %}" class="btn btn-sm btn-outline-success mt-2">View</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-lg-3">
+                    <div class="card border-info h-100">
+                      <div class="card-body text-center">
+                        <i class="bi bi-cash-coin text-info fs-4 mb-2"></i>
+                        <h6 class="fw-bold">Finance & Accounts</h6>
+                        <a href="{% url 'account-office-portal' %}" class="btn btn-sm btn-outline-info mt-2">View</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-lg-3">
+                    <div class="card border-warning h-100">
+                      <div class="card-body text-center">
+                        <i class="bi bi-people text-warning fs-4 mb-2"></i>
+                        <h6 class="fw-bold">Human Resource (HR)</h6>
+                        <a href="{% url 'hr-department' %}" class="btn btn-sm btn-outline-warning mt-2">View</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Student Statistics (Keep existing) -->
+        <div class="col-12">
+          <div class="card border-0 shadow-sm">
+            <div class="card-body">
+              <h5 class="mb-3">Student Statistics</h5>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <div class="table-responsive">
+                    <table class="table table-sm">
+                      <thead>
+                        <tr>
+                          <th>Program</th>
+                          <th>Students</th>
+                          <th>%</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>B.Tech</td>
+                          <td>8,500</td>
+                          <td>68%</td>
+                        </tr>
+                        <tr>
+                          <td>BCA</td>
+                          <td>2,200</td>
+                          <td>18%</td>
+                        </tr>
+                        <tr>
+                          <td>MCA</td>
+                          <td>1,200</td>
+                          <td>10%</td>
+                        </tr>
+                        <tr>
+                          <td>MBA</td>
+                          <td>550</td>
+                          <td>4%</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="table-responsive">
+                    <table class="table table-sm">
+                      <thead>
+                        <tr>
+                          <th>Department</th>
+                          <th>Faculty</th>
+                          <th>Students</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Computer Science</td>
+                          <td>180</td>
+                          <td>4,200</td>
+                        </tr>
+                        <tr>
+                          <td>Information Technology</td>
+                          <td>120</td>
+                          <td>2,800</td>
+                        </tr>
+                        <tr>
+                          <td>Electronics</td>
+                          <td>100</td>
+                          <td>2,100</td>
+                        </tr>
+                        <tr>
+                          <td>Mechanical</td>
+                          <td>90</td>
+                          <td>1,800</td>
+                        </tr>
+                        <tr>
+                          <td>Management</td>
+                          <td>80</td>
+                          <td>1,550</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fee Management Modal -->
+    <div class="modal fade" id="feeModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Fee Management</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Program</label>
+                <select class="form-select">
+                  <option>B.Tech</option>
+                  <option>BCA</option>
+                  <option>MCA</option>
+                  <option>MBA</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Semester</label>
+                <select class="form-select">
+                  <option>I</option>
+                  <option>II</option>
+                  <option>III</option>
+                  <option>IV</option>
+                  <option>V</option>
+                  <option>VI</option>
+                  <option>VII</option>
+                  <option>VIII</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Tuition Fee</label>
+                <input type="number" class="form-control" placeholder="Enter amount">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Hostel Fee</label>
+                <input type="number" class="form-control" placeholder="Enter amount">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Exam Fee</label>
+                <input type="number" class="form-control" placeholder="Enter amount">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Library Fee</label>
+                <input type="number" class="form-control" placeholder="Enter amount">
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-success">Update Fees</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Exam Schedule Modal -->
+    <div class="modal fade" id="examModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Schedule Examination</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Exam Type</label>
+                <select class="form-select">
+                  <option>Internal</option>
+                  <option>External</option>
+                  <option>Mid Term</option>
+                  <option>Final</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Semester</label>
+                <select class="form-select">
+                  <option>VII</option>
+                  <option>VI</option>
+                  <option>V</option>
+                  <option>IV</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Start Date</label>
+                <input type="date" class="form-control">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">End Date</label>
+                <input type="date" class="form-control">
+              </div>
+              <div class="col-12">
+                <label class="form-label">Subjects</label>
+                <div class="row g-2">
+                  <div class="col-md-6">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="sub1" checked>
+                      <label class="form-check-label" for="sub1">Database Management System</label>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="sub2" checked>
+                      <label class="form-check-label" for="sub2">Operating Systems</label>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="sub3">
+                      <label class="form-check-label" for="sub3">Computer Networks</label>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="sub4">
+                      <label class="form-check-label" for="sub4">Software Engineering</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-warning">Schedule Exam</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notice Modal -->
+    <div class="modal fade" id="noticeModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Post Notice</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="mb-3">
+                <label class="form-label">Notice Type</label>
+                <select class="form-select">
+                  <option>General</option>
+                  <option>Academic</option>
+                  <option>Fee Related</option>
+                  <option>Examination</option>
+                  <option>Emergency</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Title</label>
+                <input type="text" class="form-control" placeholder="Enter notice title">
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Message</label>
+                <textarea class="form-control" rows="4" placeholder="Enter notice message"></textarea>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Target Audience</label>
+                <select class="form-select">
+                  <option>All Students</option>
+                  <option>All Faculty</option>
+                  <option>Specific Department</option>
+                  <option>Specific Program</option>
+                </select>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-info">Post Notice</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Report Modal -->
+    <div class="modal fade" id="reportModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Generate Report</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label class="form-label">Report Type</label>
+              <select class="form-select">
+                <option>Student Enrollment Report</option>
+                <option>Fee Collection Report</option>
+                <option>Attendance Report</option>
+                <option>Examination Report</option>
+                <option>Faculty Performance Report</option>
+                <option>Financial Report</option>
+              </select>
+            </div>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">From Date</label>
+                <input type="date" class="form-control">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">To Date</label>
+                <input type="date" class="form-control">
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Format</label>
+              <select class="form-select">
+                <option>PDF</option>
+                <option>Excel</option>
+                <option>CSV</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-danger">Generate Report</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HOD Details Modal -->
+    <div class="modal fade" id="hodDetailsModal" tabindex="-1" aria-labelledby="hodDetailsModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header bg-info text-white">
+            <h5 class="modal-title" id="hodDetailsModalLabel">
+              <i class="bi bi-person-badge me-2"></i>HOD (CSE) - Details & Faculty Hierarchy
+            </h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <!-- HOD Personal Details -->
+            <div class="card border-info mb-4">
+              <div class="card-header bg-info text-white">
+                <h6 class="mb-0"><i class="bi bi-person-circle me-2"></i>HOD Information</h6>
+              </div>
+              <div class="card-body">
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <div class="d-flex align-items-center mb-3">
+                      <div class="bg-info text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 80px; height: 80px;">
+                        <i class="bi bi-person fs-1"></i>
+                      </div>
+                      <div>
+                        <h5 class="mb-0">Dr. Rajesh Kumar</h5>
+                        <p class="text-muted mb-0">Head of Department</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <table class="table table-sm">
+                      <tr>
+                        <td><strong>Email:</strong></td>
+                        <td>hod.cse@university.edu</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Phone:</strong></td>
+                        <td>+91-9876543210</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Office:</strong></td>
+                        <td>Block A, Room 201</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Qualification:</strong></td>
+                        <td>Ph.D. (Computer Science)</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Experience:</strong></td>
+                        <td>20+ Years</td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+                <div class="mt-3">
+                  <h6 class="text-info">Responsibilities & Work:</h6>
+                  <ul class="list-unstyled">
+                    <li><i class="bi bi-check-circle text-success me-2"></i>Overall department administration and management</li>
+                    <li><i class="bi bi-check-circle text-success me-2"></i>Academic planning and curriculum development</li>
+                    <li><i class="bi bi-check-circle text-success me-2"></i>Faculty recruitment and performance evaluation</li>
+                    <li><i class="bi bi-check-circle text-success me-2"></i>Student affairs and grievance handling</li>
+                    <li><i class="bi bi-check-circle text-success me-2"></i>Research coordination and industry collaboration</li>
+                    <li><i class="bi bi-check-circle text-success me-2"></i>Budget planning and resource allocation</li>
+                    <li><i class="bi bi-check-circle text-success me-2"></i>Examination and evaluation oversight</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <!-- Faculty Hierarchy -->
+            <div class="card border-primary">
+              <div class="card-header bg-primary text-white">
+                <h6 class="mb-0"><i class="bi bi-diagram-3 me-2"></i>Faculty Hierarchy Structure</h6>
+              </div>
+              <div class="card-body" style="background: #f8f9fa;">
+                <div class="text-center mb-4">
+                  <div class="bg-info text-white p-3 rounded shadow-sm" style="display: inline-block; min-width: 200px;">
+                    <strong>HOD</strong>
+                  </div>
+                </div>
+                
+                <div class="text-center mb-3">
+                  <i class="bi bi-arrow-down fs-4 text-info"></i>
+                </div>
+
+                <!-- Three Main Faculty Levels -->
+                <div class="row g-3 mb-4">
+                  <div class="col-md-4">
+                    <button class="btn btn-light border p-3 rounded shadow-sm w-100 text-center" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#professorsModal">
+                      <strong class="text-primary">Professors</strong>
+                      <i class="bi bi-arrow-right-circle ms-2 text-primary"></i>
+                    </button>
+                    <div class="text-center mt-2">
+                      <i class="bi bi-arrow-down text-secondary"></i>
+                    </div>
+                    <button class="btn btn-white border p-2 rounded mt-2 w-100 text-start" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#seniorLabInchargesModal">
+                      <small class="text-muted">Senior Lab Incharges</small>
+                      <i class="bi bi-arrow-right-circle ms-2"></i>
+                    </button>
+                    <div class="text-center mt-2">
+                      <i class="bi bi-arrow-down text-secondary"></i>
+                    </div>
+                    <button class="btn btn-white border p-2 rounded mt-2 w-100 text-start" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#labAssistantsModal">
+                      <small class="text-muted">Lab Assistants / Tech Staff</small>
+                      <i class="bi bi-arrow-right-circle ms-2"></i>
+                    </button>
+                    <div class="text-center mt-2">
+                      <i class="bi bi-arrow-down text-secondary"></i>
+                    </div>
+                    <button class="btn btn-white border p-2 rounded mt-2 w-100 text-start" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#researchScholarsModal">
+                      <small class="text-muted">Students / Research Scholars</small>
+                      <i class="bi bi-arrow-right-circle ms-2"></i>
+                    </button>
+                  </div>
+                  
+                  <div class="col-md-4">
+                    <button class="btn btn-light border p-3 rounded shadow-sm w-100 text-center" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#associateProfessorsModal">
+                      <strong class="text-success">Associate Professors</strong>
+                      <i class="bi bi-arrow-right-circle ms-2 text-success"></i>
+                    </button>
+                    <div class="text-center mt-2">
+                      <i class="bi bi-arrow-down text-secondary"></i>
+                    </div>
+                    <button class="btn btn-white border p-2 rounded mt-2 w-100 text-start" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#curriculumInchargeModal">
+                      <small class="text-muted">Faculty Incharge of Curriculum / Exams</small>
+                      <i class="bi bi-arrow-right-circle ms-2"></i>
+                    </button>
+                    <div class="text-center mt-2">
+                      <i class="bi bi-arrow-down text-secondary"></i>
+                    </div>
+                    <button class="btn btn-white border p-2 rounded mt-2 w-100 text-start" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#teachingAssistantsModal">
+                      <small class="text-muted">Teaching Assistants / Mentors</small>
+                      <i class="bi bi-arrow-right-circle ms-2"></i>
+                    </button>
+                  </div>
+                  
+                  <div class="col-md-4">
+                    <button class="btn btn-light border p-3 rounded shadow-sm w-100 text-center" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#assistantProfessorsModal">
+                      <strong class="text-warning">Assistant Professors / Lecturers</strong>
+                      <i class="bi bi-arrow-right-circle ms-2 text-warning"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Faculty Count Summary -->
+                <div class="row g-2 mt-4">
+                  <div class="col-md-3">
+                    <button class="card border-primary w-100" style="cursor: pointer; border: 2px solid #0d6efd !important;" data-bs-toggle="modal" data-bs-target="#professorsModal">
+                      <div class="card-body text-center p-2">
+                        <h5 class="text-primary mb-0">5</h5>
+                        <small>Professors</small>
+                        <i class="bi bi-arrow-right-circle ms-1 text-primary"></i>
+                      </div>
+                    </button>
+                  </div>
+                  <div class="col-md-3">
+                    <button class="card border-success w-100" style="cursor: pointer; border: 2px solid #198754 !important;" data-bs-toggle="modal" data-bs-target="#associateProfessorsModal">
+                      <div class="card-body text-center p-2">
+                        <h5 class="text-success mb-0">8</h5>
+                        <small>Associate Professors</small>
+                        <i class="bi bi-arrow-right-circle ms-1 text-success"></i>
+                      </div>
+                    </button>
+                  </div>
+                  <div class="col-md-3">
+                    <button class="card border-warning w-100" style="cursor: pointer; border: 2px solid #ffc107 !important;" data-bs-toggle="modal" data-bs-target="#assistantProfessorsModal">
+                      <div class="card-body text-center p-2">
+                        <h5 class="text-warning mb-0">12</h5>
+                        <small>Assistant Professors</small>
+                        <i class="bi bi-arrow-right-circle ms-1 text-warning"></i>
+                      </div>
+                    </button>
+                  </div>
+                  <div class="col-md-3">
+                    <button class="card border-info w-100" style="cursor: pointer; border: 2px solid #0dcaf0 !important;" data-bs-toggle="modal" data-bs-target="#supportStaffModal">
+                      <div class="card-body text-center p-2">
+                        <h5 class="text-info mb-0">15</h5>
+                        <small>Support Staff</small>
+                        <i class="bi bi-arrow-right-circle ms-1 text-info"></i>
+                      </div>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-info">
+              <i class="bi bi-envelope me-1"></i>Contact HOD
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CSE Department Structure Modal -->
+    <div class="modal fade" id="cseStructureModal" tabindex="-1" aria-labelledby="cseStructureModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header bg-primary text-white">
+            <h5 class="modal-title" id="cseStructureModalLabel">
+              <i class="bi bi-diagram-3 me-2"></i>Computer Science Engineering (CSE) Department – Full Structure
+            </h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" style="background: #f8f9fa;">
+            <div class="cse-flowchart-container" style="font-family: 'Courier New', monospace; font-size: 0.85rem;">
+              <!-- Top Level: CSE Department -->
+              <div class="text-center mb-3">
+                <div class="bg-primary text-white p-3 rounded shadow-sm" style="display: inline-block; min-width: 300px;">
+                  <strong>Computer Science Engineering</strong><br>
+                  <small>(CSE Department)</small>
+                </div>
+              </div>
+              
+              <!-- Arrow Down -->
+              <div class="text-center mb-2">
+                <i class="bi bi-arrow-down fs-4 text-primary"></i>
+              </div>
+              
+              <!-- HOD Level -->
+              <div class="text-center mb-4">
+                <button class="btn btn-info text-white p-3 rounded shadow-sm" style="min-width: 250px; font-size: 1rem;" data-bs-toggle="modal" data-bs-target="#hodDetailsModal">
+                  <strong>HOD (CSE)</strong>
+                  <i class="bi bi-arrow-right-circle ms-2"></i>
+                </button>
+              </div>
+              
+              <!-- Arrow Down -->
+              <div class="text-center mb-2">
+                <i class="bi bi-arrow-down fs-4 text-info"></i>
+              </div>
+              
+              <!-- Five Main Sections -->
+              <div class="row g-3 mb-4">
+                <div class="col-md-4">
+                  <div class="bg-light border p-2 rounded shadow-sm text-center">
+                    <strong>Faculty Team</strong>
+                  </div>
+                  <div class="text-center mt-2">
+                    <i class="bi bi-arrow-down text-secondary"></i>
+                  </div>
+                  <div class="bg-white border p-2 rounded mt-2">
+                    <small>• Lectures</small><br>
+                    <small>• Lab Sessions</small>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="bg-light border p-2 rounded shadow-sm text-center">
+                    <strong>Technical Staff</strong>
+                  </div>
+                  <div class="text-center mt-2">
+                    <i class="bi bi-arrow-down text-secondary"></i>
+                  </div>
+                  <div class="bg-white border p-2 rounded mt-2">
+                    <small>• Lab Management</small><br>
+                    <small>• Software Setup</small><br>
+                    <small>• Server Mgmt</small>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="bg-light border p-2 rounded shadow-sm text-center">
+                    <strong>Academic Section</strong>
+                  </div>
+                  <div class="text-center mt-2">
+                    <i class="bi bi-arrow-down text-secondary"></i>
+                  </div>
+                  <div class="bg-white border p-2 rounded mt-2">
+                    <small>• Syllabus Planning</small><br>
+                    <small>• Time-table</small><br>
+                    <small>• Curriculum Update</small>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="bg-light border p-2 rounded shadow-sm text-center">
+                    <strong>Examination Cell</strong>
+                  </div>
+                  <div class="text-center mt-2">
+                    <i class="bi bi-arrow-down text-secondary"></i>
+                  </div>
+                  <div class="bg-white border p-2 rounded mt-2">
+                    <small>• Internal Exams</small><br>
+                    <small>• Practical/Viva</small><br>
+                    <small>• Marks Upload</small>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="bg-light border p-2 rounded shadow-sm text-center">
+                    <strong>R&D Cell</strong>
+                  </div>
+                  <div class="text-center mt-2">
+                    <i class="bi bi-arrow-down text-secondary"></i>
+                  </div>
+                  <div class="bg-white border p-2 rounded mt-2">
+                    <small>• Research Projects</small><br>
+                    <small>• AI/ML/IoT Works</small><br>
+                    <small>• Hackathons</small>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Training & Placement Cell -->
+              <div class="row mb-4">
+                <div class="col-12">
+                  <div class="bg-warning text-dark p-2 rounded shadow-sm text-center">
+                    <strong>Training & Placement Cell</strong>
+                  </div>
+                  <div class="text-center mt-2">
+                    <i class="bi bi-arrow-down fs-4 text-warning"></i>
+                  </div>
+                  <div class="bg-white border p-2 rounded mt-2 text-center">
+                    <small>• Internships / Placements</small><br>
+                    <small>• Workshops / Interviews</small>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Industry Collaboration -->
+              <div class="row mb-4">
+                <div class="col-12">
+                  <div class="bg-success text-white p-2 rounded shadow-sm text-center">
+                    <strong>Industry Collaboration</strong>
+                  </div>
+                  <div class="text-center mt-2">
+                    <i class="bi bi-arrow-down fs-4 text-success"></i>
+                  </div>
+                  <div class="bg-white border p-2 rounded mt-2 text-center">
+                    <small>• MoUs / Guest Lectures</small><br>
+                    <small>• Industrial Visits</small>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Student Clubs -->
+              <div class="row">
+                <div class="col-12">
+                  <div class="bg-dark text-white p-2 rounded shadow-sm text-center">
+                    <strong>Student Clubs</strong>
+                  </div>
+                  <div class="text-center mt-2">
+                    <i class="bi bi-arrow-down fs-4 text-dark"></i>
+                  </div>
+                  <div class="bg-white border p-3 rounded mt-2">
+                    <div class="row g-2">
+                      <div class="col-md-3">
+                        <span class="badge bg-primary">Coding Club</span>
+                      </div>
+                      <div class="col-md-3">
+                        <span class="badge bg-info">AI-ML Club</span>
+                      </div>
+                      <div class="col-md-3">
+                        <span class="badge bg-success">WebDev Club</span>
+                      </div>
+                      <div class="col-md-3">
+                        <span class="badge bg-danger">CyberSec Club</span>
+                      </div>
+                      <div class="col-md-3">
+                        <span class="badge bg-warning text-dark">Robotics Club</span>
+                      </div>
+                    </div>
+                    <div class="mt-2 text-center">
+                      <small class="text-secondary">Events, Workshops, Competitions</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- School Departments Modal -->
+    <div class="modal fade" id="schoolModal" tabindex="-1" aria-labelledby="schoolModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header bg-primary text-white">
+            <h5 class="modal-title" id="schoolModalLabel">
+              <i class="bi bi-cpu me-2"></i>School of Engineering
+            </h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-4">
+              <h6 class="text-primary mb-3"><i class="bi bi-list-ul me-2"></i>Departments:</h6>
+              <div class="row g-2" id="departmentsList">
+                <div class="col-md-6">
+                  <button class="btn btn-outline-primary w-100 text-start p-2 border rounded" data-bs-toggle="modal" data-bs-target="#cseStructureModal">
+                    <i class="bi bi-diagram-3 me-2"></i>
+                    <strong>Computer Science Engineering (CSE)</strong>
+                    <i class="bi bi-arrow-right float-end"></i>
+                  </button>
+                </div>
+                <div class="col-md-6">
+                  <div class="d-flex align-items-center p-2 border rounded">
+                    <i class="bi bi-check-circle-fill text-success me-2"></i>
+                    <span>Information Technology (IT)</span>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="d-flex align-items-center p-2 border rounded">
+                    <i class="bi bi-check-circle-fill text-success me-2"></i>
+                    <span>Electronics & Communication Engineering (ECE)</span>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="d-flex align-items-center p-2 border rounded">
+                    <i class="bi bi-check-circle-fill text-success me-2"></i>
+                    <span>Electrical Engineering (EE)</span>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="d-flex align-items-center p-2 border rounded">
+                    <i class="bi bi-check-circle-fill text-success me-2"></i>
+                    <span>Mechanical Engineering (ME)</span>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="d-flex align-items-center p-2 border rounded">
+                    <i class="bi bi-check-circle-fill text-success me-2"></i>
+                    <span>Civil Engineering (CE)</span>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="d-flex align-items-center p-2 border rounded">
+                    <i class="bi bi-check-circle-fill text-success me-2"></i>
+                    <span>AI & Machine Learning (AI/ML)</span>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="d-flex align-items-center p-2 border rounded">
+                    <i class="bi bi-check-circle-fill text-success me-2"></i>
+                    <span>Data Science</span>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="d-flex align-items-center p-2 border rounded">
+                    <i class="bi bi-check-circle-fill text-success me-2"></i>
+                    <span>Robotics & Automation</span>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="d-flex align-items-center p-2 border rounded">
+                    <i class="bi bi-check-circle-fill text-success me-2"></i>
+                    <span>Chemical Engineering</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <h6 class="text-primary mb-3"><i class="bi bi-mortarboard me-2"></i>Programs:</h6>
+              <div class="d-flex flex-wrap gap-2">
+                <span class="badge bg-primary">B.Tech</span>
+                <span class="badge bg-primary">M.Tech</span>
+                <span class="badge bg-primary">PhD</span>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer py-3 mt-4">
+      <div class="container small text-white-50 d-flex justify-content-between">
+        <div>© <span id="year"></span> Institution ERP</div>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      const yearEl = document.getElementById('year');
+      if (yearEl) yearEl.textContent = new Date().getFullYear();
+      
+      // Demo admin data
+      const adminData = {
+        name: 'College Admin',
+        role: 'Administrator',
+        avatar: 'https://i.pravatar.cc/100?img=1'
+      };
+      
+      document.getElementById('userMini').innerHTML = `
+        <div class="d-flex align-items-center gap-2">
+          <img src="${adminData.avatar}" class="rounded-circle" width="32" height="32"/>
+          <div>
+            <div class="fw-semibold">${adminData.name}</div>
+            <div class="text-secondary">${adminData.role}</div>
+          </div>
+        </div>
+      `;
+      
+      document.getElementById('logoutBtn').addEventListener('click', () => {
+        window.location.replace('/');
+      });
+
+      // School Departments Data
+      const schoolDepartments = {
+        engineering: {
+          name: 'School of Engineering',
+          icon: 'bi-cpu',
+          color: 'primary',
+          departments: [
+            'Computer Science Engineering (CSE)',
+            'Information Technology (IT)',
+            'Electronics & Communication Engineering (ECE)',
+            'Electrical Engineering (EE)',
+            'Mechanical Engineering (ME)',
+            'Civil Engineering (CE)',
+            'AI & Machine Learning (AI/ML)',
+            'Data Science',
+            'Robotics & Automation',
+            'Chemical Engineering'
+          ],
+          programs: ['B.Tech', 'M.Tech', 'PhD']
+        },
+        science: {
+          name: 'School of Science',
+          icon: 'bi-flask',
+          color: 'info',
+          departments: [
+            'Physics',
+            'Chemistry',
+            'Mathematics',
+            'Zoology',
+            'Botany',
+            'Biotechnology',
+            'Microbiology',
+            'Environmental Science',
+            'Biochemistry',
+            'Geology / Earth Science'
+          ],
+          programs: ['B.Sc', 'M.Sc', 'PhD']
+        },
+        arts: {
+          name: 'School of Arts & Humanities',
+          icon: 'bi-book',
+          color: 'warning',
+          departments: [
+            'Hindi',
+            'English',
+            'Sanskrit',
+            'Urdu / Persian',
+            'History',
+            'Geography',
+            'Philosophy',
+            'Performing Arts (Music/Dance)',
+            'Fine Arts (Drawing/Painting)'
+          ],
+          programs: ['BA', 'MA', 'PhD']
+        },
+        commerce: {
+          name: 'School of Commerce & Management',
+          icon: 'bi-briefcase',
+          color: 'success',
+          departments: [
+            'Commerce',
+            'Accounting & Finance',
+            'Marketing',
+            'Human Resource Management',
+            'Business Administration',
+            'Economics'
+          ],
+          programs: ['B.Com', 'BBA', 'MBA', 'M.Com', 'PhD']
+        },
+        agriculture: {
+          name: 'School of Agriculture',
+          icon: 'bi-tree',
+          color: 'success',
+          departments: [
+            'Agronomy',
+            'Horticulture',
+            'Soil Science',
+            'Agricultural Engineering',
+            'Plant Pathology',
+            'Entomology',
+            'Genetics & Plant Breeding',
+            'Forestry',
+            'Food Technology'
+          ],
+          programs: ['B.Sc Agriculture', 'M.Sc Agriculture', 'PhD']
+        },
+        law: {
+          name: 'School of Law',
+          icon: 'bi-shield-check',
+          color: 'danger',
+          departments: [
+            'Constitutional Law',
+            'Criminal Law',
+            'Corporate Law',
+            'Civil Law',
+            'Family Law',
+            'Human Rights Law',
+            'Cyber Law',
+            'Intellectual Property Rights (IPR)'
+          ],
+          programs: ['BA LLB', 'BBA LLB', 'LLB', 'LLM', 'PhD']
+        },
+        medical: {
+          name: 'School of Medical Sciences',
+          icon: 'bi-heart-pulse',
+          color: 'danger',
+          departments: [
+            'Anatomy',
+            'Physiology',
+            'Biochemistry',
+            'Pathology',
+            'Pharmacology',
+            'Microbiology',
+            'Community Medicine',
+            'Surgery',
+            'Medicine',
+            'Orthopedics',
+            'Pediatrics',
+            'Gynecology'
+          ],
+          programs: ['MBBS', 'MD/MS', 'BPT, BOT', 'Nursing']
+        },
+        pharmacy: {
+          name: 'School of Pharmacy',
+          icon: 'bi-capsule',
+          color: 'primary',
+          departments: [
+            'Pharmaceutics',
+            'Pharmacology',
+            'Pharmaceutical Chemistry',
+            'Pharmacognosy',
+            'Pharmaceutical Biotechnology'
+          ],
+          programs: ['D.Pharm', 'B.Pharm', 'M.Pharm', 'PhD']
+        },
+        education: {
+          name: 'School of Education',
+          icon: 'bi-mortarboard',
+          color: 'info',
+          departments: [
+            'Teacher Training',
+            'Educational Psychology',
+            'Curriculum Studies',
+            'Special Education',
+            'Educational Technology',
+            'Physical Education'
+          ],
+          programs: ['B.Ed', 'M.Ed', 'B.P.Ed', 'PhD']
+        },
+        computer: {
+          name: 'School of Computer Applications',
+          icon: 'bi-laptop',
+          color: 'primary',
+          departments: [
+            'Computer Applications',
+            'Software Engineering',
+            'Data Analytics',
+            'Cyber Security',
+            'Cloud Computing',
+            'Networking & Systems Administration'
+          ],
+          programs: ['BCA', 'MCA', 'PG Diploma in Computer Applications', 'PhD']
+        },
+        social: {
+          name: 'School of Social Sciences',
+          icon: 'bi-people',
+          color: 'warning',
+          departments: [
+            'Sociology',
+            'Psychology',
+            'Social Work',
+            'Anthropology',
+            'Political Science',
+            'Public Administration',
+            'Geography'
+          ],
+          programs: ['BA Social Sciences', 'MA', 'MSW (Social Work)', 'PhD']
+        }
+      };
+
+      // Handle School Modal
+      const schoolModal = document.getElementById('schoolModal');
+      if (schoolModal) {
+        schoolModal.addEventListener('show.bs.modal', function (event) {
+          const button = event.relatedTarget;
+          const schoolKey = button.getAttribute('data-school');
+          const schoolData = schoolDepartments[schoolKey];
+
+          if (schoolData) {
+            // Update Modal Title
+            const modalTitle = schoolModal.querySelector('#schoolModalLabel');
+            modalTitle.innerHTML = `<i class="bi ${schoolData.icon} me-2"></i>${schoolData.name}`;
+            modalTitle.closest('.modal-header').className = `modal-header bg-${schoolData.color} text-white`;
+
+            // Update Departments List
+            const departmentsList = schoolModal.querySelector('#departmentsList');
+            departmentsList.innerHTML = schoolData.departments.map(dept => {
+              // Check if it's CSE department
+              if (dept.includes('Computer Science Engineering') || dept.includes('CSE')) {
+                return `
+                  <div class="col-md-6">
+                    <button class="btn btn-outline-${schoolData.color} w-100 text-start p-2 border rounded" data-bs-toggle="modal" data-bs-target="#cseStructureModal" data-bs-dismiss="modal">
+                      <i class="bi bi-diagram-3 me-2"></i>
+                      <strong>${dept}</strong>
+                      <i class="bi bi-arrow-right float-end"></i>
+                    </button>
+                  </div>
+                `;
+              } else {
+                return `
+                  <div class="col-md-6">
+                    <div class="d-flex align-items-center p-2 border rounded">
+                      <i class="bi bi-check-circle-fill text-${schoolData.color} me-2"></i>
+                      <span>${dept}</span>
+                    </div>
+                  </div>
+                `;
+              }
+            }).join('');
+
+            // Update Programs
+            const programsSection = schoolModal.querySelector('.modal-body > div:last-child');
+            programsSection.innerHTML = `
+              <h6 class="text-${schoolData.color} mb-3"><i class="bi bi-mortarboard me-2"></i>Programs:</h6>
+              <div class="d-flex flex-wrap gap-2">
+                ${schoolData.programs.map(prog => `<span class="badge bg-${schoolData.color}">${prog}</span>`).join('')}
+              </div>
+            `;
+          }
+        });
+      }
+    </script>
+    
+    <!-- Chatbot Component -->
+    {% include 'includes/chatbot.html' %}
+  </body>
+</html>
+
+

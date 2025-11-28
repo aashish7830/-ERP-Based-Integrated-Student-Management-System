@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Scholarship Cell Portal | ERP</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="{% static 'styles.css' %}" />
+    <script src="{% static 'navigation.js' %}"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg bg-white navbar-light shadow-sm">
+      <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="{% url 'index' %}">
+          <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f3eb.svg" width="30" class="me-2"/>
+          <span class="fw-bold brand-gradient">Institution ERP</span>
+        </a>
+        <div class="ms-auto d-flex align-items-center gap-3">
+          <div id="userMini" class="small"></div>
+          <button id="logoutBtn" class="btn btn-outline-secondary btn-sm"><i class="bi bi-box-arrow-right me-1"></i>Logout</button>
+        </div>
+      </div>
+    </nav>
+    <div class="border-top" style="border-color:#f0ad00 !important"></div>
+
+    <div class="container my-4">
+      <div class="row g-4">
+        <div class="col-12">
+          <ul class="nav nav-pills flex-wrap gap-2 py-2" id="scholarshipTabs"></ul>
+        </div>
+
+        <!-- Dashboard Section -->
+        <div class="col-12" id="dashboardSection">
+          <div class="row g-3 mb-4">
+            <div class="col-md-3 col-sm-6">
+              <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                      <div class="text-secondary small mb-1">Total Applications</div>
+                      <div class="fs-4 fw-bold text-primary" id="totalApplications">0</div>
+                      <div class="small text-success mt-1"><i class="bi bi-arrow-up"></i> 15% vs last month</div>
+                    </div>
+                    <div class="icon-circle bg-primary bg-opacity-10 text-primary">
+                      <i class="bi bi-file-earmark-text"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+              <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                      <div class="text-secondary small mb-1">Pending Approvals</div>
+                      <div class="fs-4 fw-bold text-warning" id="pendingApprovals">0</div>
+                      <div class="small text-secondary mt-1">Requires review</div>
+                    </div>
+                    <div class="icon-circle bg-warning bg-opacity-10 text-warning">
+                      <i class="bi bi-clock-history"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+              <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                      <div class="text-secondary small mb-1">Total Disbursed</div>
+                      <div class="fs-4 fw-bold text-success" id="totalDisbursed">₹ 0</div>
+                      <div class="small text-secondary mt-1">This academic year</div>
+                    </div>
+                    <div class="icon-circle bg-success bg-opacity-10 text-success">
+                      <i class="bi bi-cash-coin"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+              <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                      <div class="text-secondary small mb-1">Active Scholarships</div>
+                      <div class="fs-4 fw-bold text-info" id="activeScholarships">0</div>
+                      <div class="small text-secondary mt-1">Currently active</div>
+                    </div>
+                    <div class="icon-circle bg-info bg-opacity-10 text-info">
+                      <i class="bi bi-award"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card border-0 shadow-sm">
+            <div class="card-body">
+              <h5 class="mb-3">Recent Applications</h5>
+              <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                  <thead>
+                    <tr>
+                      <th>Application ID</th>
+                      <th>Date</th>
+                      <th>Student Name</th>
+                      <th>Enrollment</th>
+                      <th>Scholarship Type</th>
+                      <th>Amount</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="recentApplicationsBody">
+                    <!-- Dynamic content -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Application Management Section -->
+        <div class="col-12" id="applicationManagementSection" style="display: none;">
+          <div class="card border-0 shadow-sm">
+            <div class="card-body">
+              <h5 class="mb-3">Scholarship Application Management</h5>
+              <div class="row g-3 mb-3">
+                <div class="col-md-3">
+                  <label class="form-label">Search Student</label>
+                  <input type="text" class="form-control" id="searchStudentApp" placeholder="Enrollment/Name/Application ID">
+                </div>
+                <div class="col-md-2">
+                  <label class="form-label">Scholarship Type</label>
+                  <select class="form-select" id="filterScholarshipType">
+                    <option value="">All Types</option>
+                    <option value="merit">Merit-Based</option>
+                    <option value="need">Need-Based</option>
+                    <option value="sports">Sports</option>
+                    <option value="cultural">Cultural</option>
+                    <option value="government">Government</option>
+                    <option value="private">Private</option>
+                  </select>
+                </div>
+                <div class="col-md-2">
+                  <label class="form-label">Status</label>
+                  <select class="form-select" id="filterApplicationStatus">
+                    <option value="">All Status</option>
+                    <option value="pending">Pending</option>
+                    <option value="under_review">Under Review</option>
+                    <option value="approved">Approved</option>
+                    <option value="rejected">Rejected</option>
+                    <option value="disbursed">Disbursed</option>
+                  </select>
+                </div>
+                <div class="col-md-2">
+                  <label class="form-label">Academic Year</label>
+                  <select class="form-select" id="filterAcademicYear">
+                    <option value="">All Years</option>
+                    <option value="2024-25">2024-25</option>
+                    <option value="2023-24">2023-24</option>
+                    <option value="2022-23">2022-23</option>
+                  </select>
+                </div>
+                <div class="col-md-3 d-flex align-items-end">
+                  <button class="btn btn-primary w-100" id="searchApplicationBtn">
+                    <i class="bi bi-search me-1"></i>Search
+                  </button>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="table table-striped align-middle">
+                  <thead>
+                    <tr>
+                      <th>Application ID</th>
+                      <th>Date</th>
+                      <th>Student Name</th>
+                      <th>Enrollment</th>
+                      <th>Course</th>
+                      <th>Scholarship Type</th>
+                      <th>Amount</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="applicationManagementBody">
+                    <!-- Dynamic content -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scholarship Types Section -->
+        <div class="col-12" id="scholarshipTypesSection" style="display: none;">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                  <h5 class="mb-3">Available Scholarships</h5>
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>Scholarship Name</th>
+                          <th>Type</th>
+                          <th>Amount</th>
+                          <th>Eligibility</th>
+                          <th>Status</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody id="scholarshipTypesBody">
+                        <!-- Dynamic content -->
+                      </tbody>
+                    </table>
+                  </div>
+                  <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#addScholarshipModal">
+                    <i class="bi bi-plus-circle me-1"></i>Add New Scholarship
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                  <h5 class="mb-3">Scholarship Eligibility Criteria</h5>
+                  <div id="eligibilityCriteriaList">
+                    <!-- Dynamic content -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Disbursement Section -->
+        <div class="col-12" id="disbursementSection" style="display: none;">
+          <div class="card border-0 shadow-sm">
+            <div class="card-body">
+              <h5 class="mb-3">Scholarship Disbursement</h5>
+              <div class="row g-3 mb-3">
+                <div class="col-md-4">
+                  <label class="form-label">Search by Application ID/Enrollment</label>
+                  <input type="text" class="form-control" id="disbursementSearch" placeholder="Enter Application ID or Enrollment">
+                </div>
+                <div class="col-md-3">
+                  <label class="form-label">Academic Year</label>
+                  <select class="form-select" id="disbursementYear">
+                    <option value="2024-25">2024-25</option>
+                    <option value="2023-24">2023-24</option>
+                  </select>
+                </div>
+                <div class="col-md-3">
+                  <label class="form-label">Status</label>
+                  <select class="form-select" id="disbursementStatus">
+                    <option value="">All Status</option>
+                    <option value="pending">Pending Disbursement</option>
+                    <option value="disbursed">Disbursed</option>
+                    <option value="failed">Failed</option>
+                  </select>
+                </div>
+                <div class="col-md-2 d-flex align-items-end">
+                  <button class="btn btn-primary w-100" id="searchDisbursementBtn">
+                    <i class="bi bi-search me-1"></i>Search
+                  </button>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="table table-striped align-middle">
+                  <thead>
+                    <tr>
+                      <th>Application ID</th>
+                      <th>Student Name</th>
+                      <th>Enrollment</th>
+                      <th>Scholarship Type</th>
+                      <th>Amount</th>
+                      <th>Disbursement Date</th>
+                      <th>Payment Mode</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="disbursementBody">
+                    <!-- Dynamic content -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Reports Section -->
+        <div class="col-12" id="reportsSection" style="display: none;">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                  <h5 class="mb-3">Application Report</h5>
+                  <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                      <label class="form-label">From Date</label>
+                      <input type="date" class="form-control" id="reportFromDate">
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label">To Date</label>
+                      <input type="date" class="form-control" id="reportToDate">
+                    </div>
+                    <div class="col-md-12">
+                      <button class="btn btn-primary w-100" id="generateApplicationReportBtn">
+                        <i class="bi bi-file-earmark-pdf me-1"></i>Generate Report
+                      </button>
+                    </div>
+                  </div>
+                  <div id="applicationReportSummary"></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                  <h5 class="mb-3">Disbursement Report</h5>
+                  <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                      <label class="form-label">Academic Year</label>
+                      <select class="form-select" id="disbursementReportYear">
+                        <option value="2024-25">2024-25</option>
+                        <option value="2023-24">2023-24</option>
+                        <option value="2022-23">2022-23</option>
+                      </select>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label">Scholarship Type</label>
+                      <select class="form-select" id="disbursementReportType">
+                        <option value="">All Types</option>
+                        <option value="merit">Merit-Based</option>
+                        <option value="need">Need-Based</option>
+                        <option value="sports">Sports</option>
+                        <option value="cultural">Cultural</option>
+                        <option value="government">Government</option>
+                        <option value="private">Private</option>
+                      </select>
+                    </div>
+                    <div class="col-md-12">
+                      <button class="btn btn-primary w-100" id="generateDisbursementReportBtn">
+                        <i class="bi bi-file-earmark-pdf me-1"></i>Generate Report
+                      </button>
+                    </div>
+                  </div>
+                  <div id="disbursementReportSummary"></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                  <h5 class="mb-3">Course-wise Distribution</h5>
+                  <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                      <label class="form-label">Academic Year</label>
+                      <select class="form-select" id="courseReportYear">
+                        <option value="2024-25">2024-25</option>
+                        <option value="2023-24">2023-24</option>
+                      </select>
+                    </div>
+                    <div class="col-md-6 d-flex align-items-end">
+                      <button class="btn btn-primary w-100" id="generateCourseReportBtn">
+                        <i class="bi bi-file-earmark-pdf me-1"></i>Generate Report
+                      </button>
+                    </div>
+                  </div>
+                  <div id="courseReportSummary"></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                  <h5 class="mb-3">Scholarship Statistics</h5>
+                  <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                      <label class="form-label">Academic Year</label>
+                      <select class="form-select" id="statisticsYear">
+                        <option value="2024-25">2024-25</option>
+                        <option value="2023-24">2023-24</option>
+                      </select>
+                    </div>
+                    <div class="col-md-6 d-flex align-items-end">
+                      <button class="btn btn-primary w-100" id="generateStatisticsBtn">
+                        <i class="bi bi-graph-up me-1"></i>View Statistics
+                      </button>
+                    </div>
+                  </div>
+                  <div id="statisticsSummary"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Settings Section -->
+        <div class="col-12" id="settingsSection" style="display: none;">
+          <div class="card border-0 shadow-sm">
+            <div class="card-body">
+              <h5 class="mb-3">Scholarship Cell Settings</h5>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <div class="card bg-light">
+                    <div class="card-body">
+                      <h6 class="mb-3">Application Settings</h6>
+                      <div class="mb-3">
+                        <label class="form-label">Application Start Date</label>
+                        <input type="date" class="form-control" id="appStartDate" value="2024-01-01">
+                      </div>
+                      <div class="mb-3">
+                        <label class="form-label">Application End Date</label>
+                        <input type="date" class="form-control" id="appEndDate" value="2024-03-31">
+                      </div>
+                      <button class="btn btn-outline-primary w-100">
+                        <i class="bi bi-gear me-1"></i>Update Settings
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="card bg-light">
+                    <div class="card-body">
+                      <h6 class="mb-3">Notification Settings</h6>
+                      <div class="mb-3">
+                        <div class="form-check form-switch">
+                          <input class="form-check-input" type="checkbox" id="emailNotifications" checked>
+                          <label class="form-check-label" for="emailNotifications">Email Notifications</label>
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <div class="form-check form-switch">
+                          <input class="form-check-input" type="checkbox" id="smsNotifications">
+                          <label class="form-check-label" for="smsNotifications">SMS Notifications</label>
+                        </div>
+                      </div>
+                      <button class="btn btn-outline-primary w-100">
+                        <i class="bi bi-bell me-1"></i>Update Settings
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="card bg-light">
+                    <div class="card-body">
+                      <h6 class="mb-3">User Management</h6>
+                      <div class="mb-3">
+                        <label class="form-label">Scholarship Cell Staff</label>
+                        <select class="form-select" id="staffSelect">
+                          <option value="">Select Staff</option>
+                          <option value="1">Scholarship Officer</option>
+                          <option value="2">Assistant Officer</option>
+                        </select>
+                      </div>
+                      <button class="btn btn-outline-primary w-100">
+                        <i class="bi bi-people me-1"></i>Manage Staff
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="card bg-light">
+                    <div class="card-body">
+                      <h6 class="mb-3">Document Requirements</h6>
+                      <div class="mb-3">
+                        <label class="form-label">Required Documents</label>
+                        <textarea class="form-control" id="requiredDocuments" rows="4" placeholder="List required documents">1. Income Certificate
+2. Caste Certificate (if applicable)
+3. Previous Year Marksheet
+4. Bank Account Details
+5. Aadhar Card</textarea>
+                      </div>
+                      <button class="btn btn-outline-primary w-100">
+                        <i class="bi bi-file-text me-1"></i>Update Requirements
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer py-3 mt-4">
+      <div class="container small text-white-50 d-flex justify-content-between">
+        <div>© <span id="year"></span> Institution ERP</div>
+        <div><a class="text-white-50" href="https://portal3.tmu.ac.in/" target="_blank" rel="noopener">Reference: TMU i-Zone</a></div>
+      </div>
+    </footer>
+
+    <!-- Application Review Modal -->
+    <div class="modal fade" id="applicationReviewModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Application Review</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div id="applicationReviewContent"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-danger" id="rejectApplicationBtn">Reject</button>
+            <button type="button" class="btn btn-success" id="approveApplicationBtn">Approve</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add Scholarship Modal -->
+    <div class="modal fade" id="addScholarshipModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Add New Scholarship</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="addScholarshipForm">
+              <div class="mb-3">
+                <label class="form-label">Scholarship Name</label>
+                <input type="text" class="form-control" id="scholarshipName" placeholder="Enter scholarship name" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Scholarship Type</label>
+                <select class="form-select" id="newScholarshipType" required>
+                  <option value="">Select Type</option>
+                  <option value="merit">Merit-Based</option>
+                  <option value="need">Need-Based</option>
+                  <option value="sports">Sports</option>
+                  <option value="cultural">Cultural</option>
+                  <option value="government">Government</option>
+                  <option value="private">Private</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Amount (₹)</label>
+                <input type="number" class="form-control" id="scholarshipAmount" placeholder="Enter amount" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Eligibility Criteria</label>
+                <textarea class="form-control" id="scholarshipEligibility" rows="3" placeholder="Enter eligibility criteria" required></textarea>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Status</label>
+                <select class="form-select" id="scholarshipStatus">
+                  <option value="active">Active</option>
+                  <option value="inactive">Inactive</option>
+                </select>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary" id="saveScholarshipBtn">Save Scholarship</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Disbursement Modal -->
+    <div class="modal fade" id="disbursementModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Process Disbursement</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div id="disbursementModalContent"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-success" id="processDisbursementBtn">Process Disbursement</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      const yearEl = document.getElementById('year');
+      if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+      // Session check
+      const sessStr = localStorage.getItem('erpSession') || sessionStorage.getItem('erpSession');
+      if (!sessStr) {
+        window.location.replace('/');
+      }
+      let sess;
+      try { sess = JSON.parse(sessStr || '{}'); } catch { sess = {}; }
+
+      // Scholarship cell users mapping
+      const scholarshipUsers = {
+        'SCH001': { name: 'Scholarship Officer', avatar: 'https://i.pravatar.cc/100?img=53' },
+        'SCH002': { name: 'Assistant Officer', avatar: 'https://i.pravatar.cc/100?img=54' }
+      };
+
+      const scholarshipUser = scholarshipUsers[sess.enrollment] || {
+        name: sess.name || 'Scholarship Cell User',
+        avatar: 'https://i.pravatar.cc/100?img=53'
+      };
+
+      const userMini = document.getElementById('userMini');
+      userMini.innerHTML = `<div class="d-flex align-items-center gap-2">
+        <img src="${scholarshipUser.avatar}" class="rounded-circle" width="36" height="36"/>
+        <div>
+          <div class="fw-semibold">${scholarshipUser.name}</div>
+          <div class="text-secondary">Scholarship Cell</div>
+        </div>
+      </div>`;
+
+      // Tab configuration
+      const scholarshipTabs = [
+        { id: 'dashboard', title: 'DASHBOARD', icon: 'bi-speedometer2' },
+        { id: 'applicationManagement', title: 'APPLICATION MANAGEMENT', icon: 'bi-file-earmark-text' },
+        { id: 'scholarshipTypes', title: 'SCHOLARSHIP TYPES', icon: 'bi-award' },
+        { id: 'disbursement', title: 'DISBURSEMENT', icon: 'bi-cash-coin' },
+        { id: 'reports', title: 'REPORTS', icon: 'bi-graph-up' },
+        { id: 'settings', title: 'SETTINGS', icon: 'bi-gear' }
+      ];
+
+      // Render tabs
+      const tabsContainer = document.getElementById('scholarshipTabs');
+      scholarshipTabs.forEach((tab, index) => {
+        const li = document.createElement('li');
+        li.className = 'nav-item';
+        const btn = document.createElement('button');
+        btn.className = `nav-link ${index === 0 ? 'active' : ''}`;
+        btn.id = `tab-${tab.id}`;
+        btn.innerHTML = `<i class="bi ${tab.icon} me-1"></i>${tab.title}`;
+        btn.onclick = () => switchTab(tab.id);
+        li.appendChild(btn);
+        tabsContainer.appendChild(li);
+      });
+
+      // Tab switching
+      function switchTab(tabId) {
+        // Update active tab
+        document.querySelectorAll('#scholarshipTabs .nav-link').forEach(btn => btn.classList.remove('active'));
+        document.getElementById(`tab-${tabId}`).classList.add('active');
+
+        // Hide all sections
+        document.querySelectorAll('[id$="Section"]').forEach(section => {
+          section.style.display = 'none';
+        });
+
+        // Show selected section
+        const sectionMap = {
+          dashboard: 'dashboardSection',
+          applicationManagement: 'applicationManagementSection',
+          scholarshipTypes: 'scholarshipTypesSection',
+          disbursement: 'disbursementSection',
+          reports: 'reportsSection',
+          settings: 'settingsSection'
+        };
+        const sectionId = sectionMap[tabId];
+        if (sectionId) {
+          document.getElementById(sectionId).style.display = 'block';
+          if (tabId === 'dashboard') {
+            loadDashboard();
+          } else if (tabId === 'applicationManagement') {
+            loadApplicationManagement();
+          } else if (tabId === 'scholarshipTypes') {
+            loadScholarshipTypes();
+          } else if (tabId === 'disbursement') {
+            loadDisbursement();
+          }
+        }
+      }
+
+      // Load dashboard data
+      function loadDashboard() {
+        // Update KPI cards
+        document.getElementById('totalApplications').textContent = '245';
+        document.getElementById('pendingApprovals').textContent = '32';
+        document.getElementById('totalDisbursed').textContent = '₹ 45,67,890';
+        document.getElementById('activeScholarships').textContent = '12';
+
+        // Load recent applications
+        const applications = [
+          { appId: 'SCH-2024-001', date: '2024-01-15', name: 'YASH JAIN', enrollment: 'TCA2259093', type: 'Merit-Based', amount: '₹ 25,000', status: 'Approved' },
+          { appId: 'SCH-2024-002', date: '2024-01-14', name: 'AARAV SHARMA', enrollment: '21BCA1234', type: 'Need-Based', amount: '₹ 30,000', status: 'Pending' },
+          { appId: 'SCH-2024-003', date: '2024-01-13', name: 'PRIYA VERMA', enrollment: '22MCA5678', type: 'Sports', amount: '₹ 20,000', status: 'Under Review' },
+          { appId: 'SCH-2024-004', date: '2024-01-12', name: 'RAHUL KUMAR', enrollment: '21MBA9012', type: 'Merit-Based', amount: '₹ 35,000', status: 'Disbursed' },
+          { appId: 'SCH-2024-005', date: '2024-01-11', name: 'ANJALI SINGH', enrollment: '22BCA9012', type: 'Cultural', amount: '₹ 15,000', status: 'Approved' }
+        ];
+
+        const tbody = document.getElementById('recentApplicationsBody');
+        tbody.innerHTML = applications.map(a => `
+          <tr>
+            <td>${a.appId}</td>
+            <td>${a.date}</td>
+            <td>${a.name}</td>
+            <td>${a.enrollment}</td>
+            <td>${a.type}</td>
+            <td class="fw-bold">${a.amount}</td>
+            <td><span class="badge bg-${getStatusColor(a.status)}">${a.status}</span></td>
+            <td>
+              <button class="btn btn-sm btn-outline-primary" onclick="viewApplication('${a.appId}')">
+                <i class="bi bi-eye"></i> View
+              </button>
+            </td>
+          </tr>
+        `).join('');
+      }
+
+      // Load application management
+      function loadApplicationManagement() {
+        const applications = [
+          { appId: 'SCH-2024-001', date: '2024-01-15', name: 'YASH JAIN', enrollment: 'TCA2259093', course: 'BTECH', type: 'Merit-Based', amount: '₹ 25,000', status: 'Approved' },
+          { appId: 'SCH-2024-002', date: '2024-01-14', name: 'AARAV SHARMA', enrollment: '21BCA1234', course: 'BCA', type: 'Need-Based', amount: '₹ 30,000', status: 'Pending' },
+          { appId: 'SCH-2024-003', date: '2024-01-13', name: 'PRIYA VERMA', enrollment: '22MCA5678', course: 'MCA', type: 'Sports', amount: '₹ 20,000', status: 'Under Review' }
+        ];
+
+        const tbody = document.getElementById('applicationManagementBody');
+        tbody.innerHTML = applications.map(a => `
+          <tr>
+            <td>${a.appId}</td>
+            <td>${a.date}</td>
+            <td>${a.name}</td>
+            <td>${a.enrollment}</td>
+            <td>${a.course}</td>
+            <td>${a.type}</td>
+            <td class="fw-bold">${a.amount}</td>
+            <td><span class="badge bg-${getStatusColor(a.status)}">${a.status}</span></td>
+            <td>
+              <button class="btn btn-sm btn-primary" onclick="viewApplication('${a.appId}')">
+                <i class="bi bi-eye"></i> Review
+              </button>
+            </td>
+          </tr>
+        `).join('');
+      }
+
+      // Load scholarship types
+      function loadScholarshipTypes() {
+        const scholarships = [
+          { name: 'Merit Scholarship', type: 'Merit-Based', amount: '₹ 25,000', eligibility: 'CGPA >= 8.5', status: 'Active' },
+          { name: 'Need-Based Scholarship', type: 'Need-Based', amount: '₹ 30,000', eligibility: 'Family Income < ₹ 3 Lakhs', status: 'Active' },
+          { name: 'Sports Excellence', type: 'Sports', amount: '₹ 20,000', eligibility: 'State/National Level Participation', status: 'Active' },
+          { name: 'Cultural Excellence', type: 'Cultural', amount: '₹ 15,000', eligibility: 'Cultural Achievement', status: 'Active' },
+          { name: 'Government Scholarship', type: 'Government', amount: '₹ 40,000', eligibility: 'As per Government Rules', status: 'Active' }
+        ];
+
+        const tbody = document.getElementById('scholarshipTypesBody');
+        tbody.innerHTML = scholarships.map(s => `
+          <tr>
+            <td>${s.name}</td>
+            <td>${s.type}</td>
+            <td class="fw-bold">${s.amount}</td>
+            <td>${s.eligibility}</td>
+            <td><span class="badge bg-success">${s.status}</span></td>
+            <td>
+              <button class="btn btn-sm btn-outline-primary">
+                <i class="bi bi-pencil"></i> Edit
+              </button>
+            </td>
+          </tr>
+        `).join('');
+
+        // Load eligibility criteria
+        const criteriaList = document.getElementById('eligibilityCriteriaList');
+        criteriaList.innerHTML = `
+          <div class="list-group">
+            <div class="list-group-item">
+              <h6 class="mb-1">Merit-Based Scholarships</h6>
+              <p class="mb-1 small">Minimum CGPA: 8.5, No backlogs, Good conduct</p>
+            </div>
+            <div class="list-group-item">
+              <h6 class="mb-1">Need-Based Scholarships</h6>
+              <p class="mb-1 small">Family Income: Less than ₹ 3 Lakhs per annum, Valid income certificate required</p>
+            </div>
+            <div class="list-group-item">
+              <h6 class="mb-1">Sports Scholarships</h6>
+              <p class="mb-1 small">State/National level participation, Valid certificates required</p>
+            </div>
+            <div class="list-group-item">
+              <h6 class="mb-1">Cultural Scholarships</h6>
+              <p class="mb-1 small">Cultural achievements, Participation certificates required</p>
+            </div>
+          </div>
+        `;
+      }
+
+      // Load disbursement
+      function loadDisbursement() {
+        const disbursements = [
+          { appId: 'SCH-2024-001', name: 'YASH JAIN', enrollment: 'TCA2259093', type: 'Merit-Based', amount: '₹ 25,000', date: '2024-01-20', mode: 'Bank Transfer', status: 'Disbursed' },
+          { appId: 'SCH-2024-004', name: 'RAHUL KUMAR', enrollment: '21MBA9012', type: 'Merit-Based', amount: '₹ 35,000', date: '2024-01-18', mode: 'Bank Transfer', status: 'Disbursed' },
+          { appId: 'SCH-2024-002', name: 'AARAV SHARMA', enrollment: '21BCA1234', type: 'Need-Based', amount: '₹ 30,000', date: '-', mode: '-', status: 'Pending' }
+        ];
+
+        const tbody = document.getElementById('disbursementBody');
+        tbody.innerHTML = disbursements.map(d => `
+          <tr>
+            <td>${d.appId}</td>
+            <td>${d.name}</td>
+            <td>${d.enrollment}</td>
+            <td>${d.type}</td>
+            <td class="fw-bold">${d.amount}</td>
+            <td>${d.date}</td>
+            <td>${d.mode}</td>
+            <td><span class="badge bg-${d.status === 'Disbursed' ? 'success' : 'warning'}">${d.status}</span></td>
+            <td>
+              ${d.status === 'Pending' ? `
+                <button class="btn btn-sm btn-success" onclick="processDisbursement('${d.appId}')">
+                  <i class="bi bi-cash-coin"></i> Process
+                </button>
+              ` : `
+                <button class="btn btn-sm btn-outline-primary">
+                  <i class="bi bi-download"></i> Receipt
+                </button>
+              `}
+            </td>
+          </tr>
+        `).join('');
+      }
+
+      // Helper function to get status color
+      function getStatusColor(status) {
+        const statusMap = {
+          'Approved': 'success',
+          'Pending': 'warning',
+          'Under Review': 'info',
+          'Rejected': 'danger',
+          'Disbursed': 'success'
+        };
+        return statusMap[status] || 'secondary';
+      }
+
+      // View application function
+      window.viewApplication = function(appId) {
+        const modal = new bootstrap.Modal(document.getElementById('applicationReviewModal'));
+        document.getElementById('applicationReviewContent').innerHTML = `
+          <div class="row g-3">
+            <div class="col-md-6">
+              <p><strong>Application ID:</strong> ${appId}</p>
+              <p><strong>Student Name:</strong> YASH JAIN</p>
+              <p><strong>Enrollment:</strong> TCA2259093</p>
+              <p><strong>Course:</strong> B.Tech</p>
+            </div>
+            <div class="col-md-6">
+              <p><strong>Scholarship Type:</strong> Merit-Based</p>
+              <p><strong>Amount:</strong> ₹ 25,000</p>
+              <p><strong>Status:</strong> <span class="badge bg-success">Approved</span></p>
+              <p><strong>Application Date:</strong> 2024-01-15</p>
+            </div>
+            <div class="col-12">
+              <h6>Documents Submitted:</h6>
+              <ul>
+                <li>Income Certificate</li>
+                <li>Previous Year Marksheet</li>
+                <li>Bank Account Details</li>
+                <li>Aadhar Card</li>
+              </ul>
+            </div>
+          </div>
+        `;
+        modal.show();
+      };
+
+      // Process disbursement function
+      window.processDisbursement = function(appId) {
+        const modal = new bootstrap.Modal(document.getElementById('disbursementModal'));
+        document.getElementById('disbursementModalContent').innerHTML = `
+          <div class="row g-3">
+            <div class="col-md-6">
+              <p><strong>Application ID:</strong> ${appId}</p>
+              <p><strong>Student Name:</strong> AARAV SHARMA</p>
+              <p><strong>Enrollment:</strong> 21BCA1234</p>
+            </div>
+            <div class="col-md-6">
+              <p><strong>Scholarship Type:</strong> Need-Based</p>
+              <p><strong>Amount:</strong> ₹ 30,000</p>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Payment Mode</label>
+              <select class="form-select" id="disbursementPaymentMode">
+                <option value="bank_transfer">Bank Transfer</option>
+                <option value="cheque">Cheque</option>
+                <option value="neft">NEFT/RTGS</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Transaction Reference</label>
+              <input type="text" class="form-control" id="disbursementRef" placeholder="Enter transaction reference">
+            </div>
+            <div class="col-12">
+              <label class="form-label">Remarks</label>
+              <textarea class="form-control" id="disbursementRemarks" rows="2" placeholder="Enter remarks (optional)"></textarea>
+            </div>
+          </div>
+        `;
+        modal.show();
+      };
+
+      // Process disbursement button handler
+      document.getElementById('processDisbursementBtn')?.addEventListener('click', function() {
+        alert('Disbursement processed successfully!');
+        const modalInstance = bootstrap.Modal.getInstance(document.getElementById('disbursementModal'));
+        if (modalInstance) modalInstance.hide();
+        loadDisbursement();
+      });
+
+      // Save scholarship button handler
+      document.getElementById('saveScholarshipBtn')?.addEventListener('click', function() {
+        const form = document.getElementById('addScholarshipForm');
+        if (form.checkValidity()) {
+          alert('Scholarship added successfully!');
+          const modalInstance = bootstrap.Modal.getInstance(document.getElementById('addScholarshipModal'));
+          if (modalInstance) modalInstance.hide();
+          form.reset();
+          loadScholarshipTypes();
+        } else {
+          form.reportValidity();
+        }
+      });
+
+      // Logout handler
+      document.getElementById('logoutBtn').addEventListener('click', function() {
+        localStorage.removeItem('erpSession');
+        sessionStorage.removeItem('erpSession');
+        window.location.replace('/');
+      });
+
+      // Initialize dashboard on load
+      loadDashboard();
+    </script>
+      <!-- Chatbot Component -->
+    {% include 'includes/chatbot.html' %}
+  </body>
+</html>
+
+
+

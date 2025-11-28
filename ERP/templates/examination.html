@@ -1,0 +1,69 @@
+{% extends 'base_student.html' %}
+{% load static %}
+
+{% block title %}Examination | ERP{% endblock %}
+
+{% block content %}
+<div class="card border-0 shadow-sm">
+        <div class="card-body">
+          <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+            <h4 class="mb-0">Examination</h4>
+            <div class="btn-group">
+              <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-journal-text me-1"></i><span id="examModeLabel">INTERNAL DATE SHEET</span>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="{% url 'internal-datesheet' %}">INTERNAL DATE SHEET</a></li>
+                <li><a class="dropdown-item" href="{% url 'external-datesheet' %}">EXTERNAL DATE SHEET</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="{% url 'exam-form-main' %}">EXAM FORM MAIN</a></li>
+                <li><a class="dropdown-item" href="{% url 'exam-form-reappear' %}">EXAM FORM REAPPEAR</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="row g-3">
+            <div class="col-sm-4">
+              <label class="form-label">Semester</label>
+              <select class="form-select"><option>VII</option><option>VI</option></select>
+            </div>
+            <div class="col-sm-8 text-sm-end">
+              <button class="btn btn-primary mt-3 mt-sm-4"><i class="bi bi-cloud-download me-1"></i>Download Admit Card</button>
+            </div>
+          </div>
+          <div class="alert alert-info mt-3"><i class="bi bi-info-circle me-1"></i>Select an option from the Examination menu to continue.</div>
+        </div>
+      </div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      const yearEl = document.getElementById('year'); if (yearEl) yearEl.textContent = new Date().getFullYear();
+      const sessStr = localStorage.getItem('erpSession') || sessionStorage.getItem('erpSession'); if (!sessStr) window.location.replace('/');
+      let sess; try { sess = JSON.parse(sessStr || '{}'); } catch { sess = {}; }
+      const demoUsers = [
+        { enrollment:'TCA2259093', name:'YASH JAIN', avatar:'https://i.pravatar.cc/100?img=68' },
+        { enrollment:'21BCA1234', name:'AARAV SHARMA', avatar:'https://i.pravatar.cc/100?img=12' }
+      ];
+      const user = demoUsers.find(u => u.enrollment === sess?.enrollment); if (!user) window.location.replace('/');
+      document.getElementById('userMini').innerHTML = `<div class=\"d-flex align-items-center gap-2\"><img src=\"${user.avatar}\" class=\"rounded-circle\" width=\"32\" height=\"32\"/><div><div class=\"fw-semibold\">${user.name}</div><div class=\"text-secondary\">${user.enrollment}</div></div></div>`;
+      document.getElementById('logoutBtn').addEventListener('click', () => { localStorage.removeItem('erpSession'); sessionStorage.removeItem('erpSession'); window.location.replace('/'); });
+
+      // No dynamic content here; items route to dedicated pages.
+        <script>
+      // Ensure navigation renders after page load
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+          if (window.navigationManager && document.getElementById('moduleTabs')) {
+            window.navigationManager.renderMainNavigation();
+          }
+        });
+      } else {
+        if (window.navigationManager && document.getElementById('moduleTabs')) {
+          window.navigationManager.renderMainNavigation();
+        }
+      }
+    </script>
+</script>
+{% endblock %}

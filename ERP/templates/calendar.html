@@ -1,0 +1,1169 @@
+{% extends 'base_student.html' %}
+{% load static %}
+
+{% block title %}College Calendar | ERP{% endblock %}
+
+{% block content %}
+<div class="row g-4">
+        <!-- Calendar Overview -->
+        <div class="col-lg-8">
+          <div class="calendar-container">
+            <div class="calendar-header">
+              <div class="calendar-nav">
+                <button onclick="previousMonth()">
+                  <i class="bi bi-chevron-left"></i>
+                </button>
+                <h2 class="month-year" id="currentMonthYear">February 2024</h2>
+                <button onclick="nextMonth()">
+                  <i class="bi bi-chevron-right"></i>
+                </button>
+              </div>
+              
+              <div class="quick-actions">
+                <button onclick="goToToday()" class="active">Today</button>
+                <button onclick="showAcademicEvents()">Academic</button>
+                <button onclick="showHolidays()">Holidays</button>
+                <button onclick="showExams()">Exams</button>
+                <button onclick="showAllEvents()">All Events</button>
+              </div>
+            </div>
+            
+            <div class="table-responsive">
+              <table class="table table-bordered mb-0">
+                <thead>
+                  <tr class="day-names">
+                    <th class="text-center">Sun</th>
+                    <th class="text-center">Mon</th>
+                    <th class="text-center">Tue</th>
+                    <th class="text-center">Wed</th>
+                    <th class="text-center">Thu</th>
+                    <th class="text-center">Fri</th>
+                    <th class="text-center">Sat</th>
+                  </tr>
+                </thead>
+                <tbody id="calendarBody">
+                  <!-- Calendar will be populated here -->
+                </tbody>
+              </table>
+            </div>
+            
+            <div class="legend">
+              <div class="legend-item">
+                <div class="legend-color" style="background-color: #007bff;"></div>
+                <span>Academic Events</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-color" style="background-color: #28a745;"></div>
+                <span>Cultural Events</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-color" style="background-color: #ffc107;"></div>
+                <span>Sports Events</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-color" style="background-color: #dc3545;"></div>
+                <span>Holidays</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-color" style="background-color: #6f42c1;"></div>
+                <span>Exams</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-color" style="background-color: #17a2b8;"></div>
+                <span>Workshops</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+          <!-- Today's Events -->
+          <div class="card border-0 shadow-sm mb-4">
+            <div class="card-header bg-primary text-white">
+              <h6 class="mb-0"><i class="bi bi-calendar-day me-2"></i>Today's Events</h6>
+            </div>
+            <div class="card-body">
+              <div id="todaysEvents" class="upcoming-events">
+                <!-- Today's events will be populated here -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Upcoming Events -->
+          <div class="card border-0 shadow-sm mb-4">
+            <div class="card-header bg-success text-white">
+              <h6 class="mb-0"><i class="bi bi-calendar-week me-2"></i>This Week</h6>
+            </div>
+            <div class="card-body">
+              <div id="thisWeekEvents" class="upcoming-events">
+                <!-- This week's events will be populated here -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Important Dates -->
+          <div class="card border-0 shadow-sm">
+            <div class="card-header bg-warning text-dark">
+              <h6 class="mb-0"><i class="bi bi-star me-2"></i>Important Dates</h6>
+            </div>
+            <div class="card-body">
+              <div id="importantDates">
+                <!-- Important dates will be populated here -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Event Details Modal -->
+      <div class="modal fade" id="eventDetailsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+              <h5 class="modal-title"><i class="bi bi-calendar-event me-2"></i>Event Details</h5>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="eventDetailsContent">
+              <!-- Event details will be populated here -->
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Add Event Modal -->
+      <div class="modal fade" id="addEventModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+              <h5 class="modal-title"><i class="bi bi-plus-circle me-2"></i>Add Event</h5>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form id="addEventForm">
+                <div class="row g-3">
+                  <div class="col-12">
+                    <label class="form-label">Event Title</label>
+                    <input type="text" class="form-control" id="eventTitle" placeholder="Enter event title" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Event Type</label>
+                    <select class="form-select" id="eventType" required>
+                      <option value="">Select Type</option>
+                      <option value="academic">Academic</option>
+                      <option value="cultural">Cultural</option>
+                      <option value="sports">Sports</option>
+                      <option value="workshop">Workshop</option>
+                      <option value="holiday">Holiday</option>
+                      <option value="exam">Exam</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Date</label>
+                    <input type="date" class="form-control" id="eventDate" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Start Time</label>
+                    <input type="time" class="form-control" id="eventStartTime">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">End Time</label>
+                    <input type="time" class="form-control" id="eventEndTime">
+                  </div>
+                  <div class="col-12">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-control" id="eventDescription" rows="3" placeholder="Enter event description"></textarea>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-success" onclick="saveEvent()">
+                <i class="bi bi-check-circle me-1"></i>Add Event
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+<style>
+      .calendar-container {
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      }
+      
+      .calendar-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 20px;
+        border-radius: 10px 10px 0 0;
+      }
+      
+      .calendar-day {
+        min-height: 120px;
+        border: 1px solid #e9ecef;
+        padding: 8px;
+        position: relative;
+        transition: all 0.3s ease;
+        cursor: pointer;
+      }
+      
+      .calendar-day:hover {
+        background-color: #f8f9fa;
+        transform: scale(1.02);
+      }
+      
+      .calendar-day.today {
+        background-color: #e3f2fd;
+        border-color: #2196f3;
+        font-weight: bold;
+      }
+      
+      .calendar-day.other-month {
+        background-color: #f8f9fa;
+        color: #6c757d;
+      }
+      
+      .calendar-day.has-events {
+        background-color: #fff3e0;
+      }
+      
+      .calendar-day.has-holiday {
+        background-color: #ffebee;
+      }
+      
+      .calendar-day.has-exam {
+        background-color: #e8f5e8;
+      }
+      
+      .event-indicator {
+        position: absolute;
+        top: 2px;
+        right: 2px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: #ff5722;
+      }
+      
+      .holiday-indicator {
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: #dc3545;
+      }
+      
+      .exam-indicator {
+        position: absolute;
+        bottom: 2px;
+        right: 2px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: #28a745;
+      }
+      
+      .event-item {
+        font-size: 0.7rem;
+        padding: 2px 4px;
+        margin: 1px 0;
+        border-radius: 3px;
+        color: white;
+        cursor: pointer;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      
+      .event-academic {
+        background-color: #007bff;
+      }
+      
+      .event-cultural {
+        background-color: #28a745;
+      }
+      
+      .event-sports {
+        background-color: #ffc107;
+        color: #000;
+      }
+      
+      .event-holiday {
+        background-color: #dc3545;
+      }
+      
+      .event-exam {
+        background-color: #6f42c1;
+      }
+      
+      .event-workshop {
+        background-color: #17a2b8;
+      }
+      
+      .calendar-nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+      
+      .calendar-nav button {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        color: white;
+        cursor: pointer;
+        padding: 5px 10px;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+      }
+      
+      .calendar-nav button:hover {
+        background-color: rgba(255,255,255,0.2);
+      }
+      
+      .legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-top: 20px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+      }
+      
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.9rem;
+      }
+      
+      .legend-color {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+      }
+      
+      .upcoming-events {
+        max-height: 400px;
+        overflow-y: auto;
+      }
+      
+      .event-card {
+        transition: all 0.3s ease;
+        cursor: pointer;
+      }
+      
+      .event-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      }
+      
+      .month-year {
+        font-size: 1.8rem;
+        font-weight: bold;
+        margin: 0;
+      }
+      
+      .day-names {
+        background-color: #f8f9fa;
+        font-weight: bold;
+        text-align: center;
+        padding: 10px 0;
+        border-bottom: 2px solid #dee2e6;
+      }
+      
+      .quick-actions {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+      }
+      
+      .quick-actions button {
+        padding: 8px 16px;
+        border-radius: 20px;
+        border: 1px solid #dee2e6;
+        background: white;
+        color: #495057;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+      }
+      
+      .quick-actions button:hover {
+        background-color: #007bff;
+        color: white;
+        border-color: #007bff;
+      }
+      
+      .quick-actions button.active {
+        background-color: #007bff;
+        color: white;
+        border-color: #007bff;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg bg-white navbar-light shadow-sm">
+      <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="{% url 'dashboard' %}">
+          <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f3eb.svg" width="30" class="me-2"/>
+          <span class="fw-bold brand-gradient">Institution ERP</span>
+        </a>
+        <div class="ms-auto d-flex align-items-center gap-3">
+          <div id="userMini" class="small"></div>
+          <button id="logoutBtn" class="btn btn-outline-secondary btn-sm"><i class="bi bi-box-arrow-right me-1"></i>Logout</button>
+        </div>
+      </div>
+    </nav>
+
+    <div class="border-top" style="border-color:#f0ad00 !important"></div>
+
+    <div class="container my-4">
+      <ul class="nav nav-pills flex-wrap gap-2 py-2" id="moduleTabs">
+        <!-- Dynamic navigation will be rendered here -->
+      </ul>
+
+      <div class="row g-4">
+        <!-- Calendar Overview -->
+        <div class="col-lg-8">
+          <div class="calendar-container">
+            <div class="calendar-header">
+              <div class="calendar-nav">
+                <button onclick="previousMonth()">
+                  <i class="bi bi-chevron-left"></i>
+                </button>
+                <h2 class="month-year" id="currentMonthYear">February 2024</h2>
+                <button onclick="nextMonth()">
+                  <i class="bi bi-chevron-right"></i>
+                </button>
+              </div>
+              
+              <div class="quick-actions">
+                <button onclick="goToToday()" class="active">Today</button>
+                <button onclick="showAcademicEvents()">Academic</button>
+                <button onclick="showHolidays()">Holidays</button>
+                <button onclick="showExams()">Exams</button>
+                <button onclick="showAllEvents()">All Events</button>
+              </div>
+            </div>
+            
+            <div class="table-responsive">
+              <table class="table table-bordered mb-0">
+                <thead>
+                  <tr class="day-names">
+                    <th class="text-center">Sun</th>
+                    <th class="text-center">Mon</th>
+                    <th class="text-center">Tue</th>
+                    <th class="text-center">Wed</th>
+                    <th class="text-center">Thu</th>
+                    <th class="text-center">Fri</th>
+                    <th class="text-center">Sat</th>
+                  </tr>
+                </thead>
+                <tbody id="calendarBody">
+                  <!-- Calendar will be populated here -->
+                </tbody>
+              </table>
+            </div>
+            
+            <div class="legend">
+              <div class="legend-item">
+                <div class="legend-color" style="background-color: #007bff;"></div>
+                <span>Academic Events</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-color" style="background-color: #28a745;"></div>
+                <span>Cultural Events</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-color" style="background-color: #ffc107;"></div>
+                <span>Sports Events</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-color" style="background-color: #dc3545;"></div>
+                <span>Holidays</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-color" style="background-color: #6f42c1;"></div>
+                <span>Exams</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-color" style="background-color: #17a2b8;"></div>
+                <span>Workshops</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+          <!-- Today's Events -->
+          <div class="card border-0 shadow-sm mb-4">
+            <div class="card-header bg-primary text-white">
+              <h6 class="mb-0"><i class="bi bi-calendar-day me-2"></i>Today's Events</h6>
+            </div>
+            <div class="card-body">
+              <div id="todaysEvents" class="upcoming-events">
+                <!-- Today's events will be populated here -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Upcoming Events -->
+          <div class="card border-0 shadow-sm mb-4">
+            <div class="card-header bg-success text-white">
+              <h6 class="mb-0"><i class="bi bi-calendar-week me-2"></i>This Week</h6>
+            </div>
+            <div class="card-body">
+              <div id="thisWeekEvents" class="upcoming-events">
+                <!-- This week's events will be populated here -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Important Dates -->
+          <div class="card border-0 shadow-sm">
+            <div class="card-header bg-warning text-dark">
+              <h6 class="mb-0"><i class="bi bi-star me-2"></i>Important Dates</h6>
+            </div>
+            <div class="card-body">
+              <div id="importantDates">
+                <!-- Important dates will be populated here -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Event Details Modal -->
+      <div class="modal fade" id="eventDetailsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+              <h5 class="modal-title"><i class="bi bi-calendar-event me-2"></i>Event Details</h5>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="eventDetailsContent">
+              <!-- Event details will be populated here -->
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Add Event Modal -->
+      <div class="modal fade" id="addEventModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+              <h5 class="modal-title"><i class="bi bi-plus-circle me-2"></i>Add Event</h5>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form id="addEventForm">
+                <div class="row g-3">
+                  <div class="col-12">
+                    <label class="form-label">Event Title</label>
+                    <input type="text" class="form-control" id="eventTitle" placeholder="Enter event title" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Event Type</label>
+                    <select class="form-select" id="eventType" required>
+                      <option value="">Select Type</option>
+                      <option value="academic">Academic</option>
+                      <option value="cultural">Cultural</option>
+                      <option value="sports">Sports</option>
+                      <option value="workshop">Workshop</option>
+                      <option value="holiday">Holiday</option>
+                      <option value="exam">Exam</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Date</label>
+                    <input type="date" class="form-control" id="eventDate" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Start Time</label>
+                    <input type="time" class="form-control" id="eventStartTime">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">End Time</label>
+                    <input type="time" class="form-control" id="eventEndTime">
+                  </div>
+                  <div class="col-12">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-control" id="eventDescription" rows="3" placeholder="Enter event description"></textarea>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-success" onclick="saveEvent()">
+                <i class="bi bi-check-circle me-1"></i>Add Event
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer py-3 mt-4">
+      <div class="container small text-white-50 d-flex justify-content-between">
+        <div>© <span id="year"></span> Institution ERP</div>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      const yearEl = document.getElementById('year'); if (yearEl) yearEl.textContent = new Date().getFullYear();
+      const sessStr = localStorage.getItem('erpSession') || sessionStorage.getItem('erpSession'); if (!sessStr) window.location.replace('/');
+      let sess; try { sess = JSON.parse(sessStr || '{}'); } catch { sess = {}; }
+      const demoUsers = [
+        { enrollment:'TCA2259093', name:'YASH JAIN', course:'BTECH-022', email:'yash.jain@email.com', phone:'9876543210', avatar:'https://i.pravatar.cc/100?img=68' },
+        { enrollment:'21BCA1234', name:'AARAV SHARMA', course:'BCA-001', email:'aarav.sharma@email.com', phone:'9876543211', avatar:'https://i.pravatar.cc/100?img=12' }
+      ];
+      const user = demoUsers.find(u => u.enrollment === sess?.enrollment); if (!user) window.location.replace('/');
+      document.getElementById('userMini').innerHTML = `<div class="d-flex align-items-center gap-2"><img src="${user.avatar}" class="rounded-circle" width="32" height="32"/><div><div class="fw-semibold">${user.name}</div><div class="text-secondary">${user.enrollment}</div></div></div>`;
+      document.getElementById('logoutBtn').addEventListener('click', () => { localStorage.removeItem('erpSession'); sessionStorage.removeItem('erpSession'); window.location.replace('/'); });
+
+      // Calendar data
+      let currentMonth = new Date().getMonth();
+      let currentYear = new Date().getFullYear();
+      let currentFilter = 'all';
+
+      const calendarEvents = [
+        // February 2024 Events
+        {
+          id: 1,
+          title: 'Tech Fest 2024',
+          type: 'cultural',
+          date: '2024-02-15',
+          startTime: '09:00',
+          endTime: '18:00',
+          description: 'Annual technology festival showcasing student innovations',
+          location: 'Main Auditorium'
+        },
+        {
+          id: 2,
+          title: 'Machine Learning Workshop',
+          type: 'workshop',
+          date: '2024-02-20',
+          startTime: '10:00',
+          endTime: '16:00',
+          description: 'Hands-on workshop on ML algorithms',
+          location: 'CS Lab 101'
+        },
+        {
+          id: 3,
+          title: 'Midterm Exams',
+          type: 'exam',
+          date: '2024-02-25',
+          startTime: '09:00',
+          endTime: '12:00',
+          description: 'Midterm examinations for all courses',
+          location: 'Various Classrooms'
+        },
+        {
+          id: 4,
+          title: 'Cricket Tournament',
+          type: 'sports',
+          date: '2024-02-28',
+          startTime: '08:00',
+          endTime: '17:00',
+          description: 'Inter-department cricket tournament',
+          location: 'Sports Ground'
+        },
+        {
+          id: 5,
+          title: 'Holi Holiday',
+          type: 'holiday',
+          date: '2024-03-08',
+          startTime: '00:00',
+          endTime: '23:59',
+          description: 'Holi Festival - College Holiday',
+          location: 'N/A'
+        },
+        {
+          id: 6,
+          title: 'Data Science Seminar',
+          type: 'academic',
+          date: '2024-03-12',
+          startTime: '14:00',
+          endTime: '17:00',
+          description: 'Industry insights on data science careers',
+          location: 'Conference Hall'
+        },
+        {
+          id: 7,
+          title: 'Cultural Night',
+          type: 'cultural',
+          date: '2024-03-15',
+          startTime: '18:00',
+          endTime: '23:00',
+          description: 'Annual cultural night with performances',
+          location: 'Open Air Theatre'
+        },
+        {
+          id: 8,
+          title: 'Final Exams Start',
+          type: 'exam',
+          date: '2024-03-20',
+          startTime: '09:00',
+          endTime: '17:00',
+          description: 'Final examination period begins',
+          location: 'Various Classrooms'
+        },
+        {
+          id: 9,
+          title: 'Web Development Bootcamp',
+          type: 'workshop',
+          date: '2024-03-25',
+          startTime: '09:00',
+          endTime: '17:00',
+          description: 'Intensive web development bootcamp',
+          location: 'CS Lab 102'
+        },
+        {
+          id: 10,
+          title: 'Good Friday',
+          type: 'holiday',
+          date: '2024-03-29',
+          startTime: '00:00',
+          endTime: '23:59',
+          description: 'Good Friday - College Holiday',
+          location: 'N/A'
+        }
+      ];
+
+      const importantDates = [
+        {
+          title: 'Academic Year Starts',
+          date: '2024-08-01',
+          type: 'academic',
+          description: 'New academic year begins'
+        },
+        {
+          title: 'Midterm Exams',
+          date: '2024-02-25',
+          type: 'exam',
+          description: 'Midterm examination period'
+        },
+        {
+          title: 'Final Exams',
+          date: '2024-03-20',
+          type: 'exam',
+          description: 'Final examination period'
+        },
+        {
+          title: 'Summer Break Starts',
+          date: '2024-05-15',
+          type: 'holiday',
+          description: 'Summer vacation begins'
+        },
+        {
+          title: 'Convocation Ceremony',
+          date: '2024-06-15',
+          type: 'academic',
+          description: 'Annual convocation ceremony'
+        }
+      ];
+
+      const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'];
+
+      const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+      function renderCalendar() {
+        const firstDay = new Date(currentYear, currentMonth, 1);
+        const lastDay = new Date(currentYear, currentMonth + 1, 0);
+        const daysInMonth = lastDay.getDate();
+        const startingDay = firstDay.getDay();
+
+        // Update month/year display
+        document.getElementById('currentMonthYear').textContent = 
+          `${monthNames[currentMonth]} ${currentYear}`;
+
+        let calendarHTML = '';
+        let day = 1;
+
+        for (let week = 0; week < 6; week++) {
+          calendarHTML += '<tr>';
+          for (let dayOfWeek = 0; dayOfWeek < 7; dayOfWeek++) {
+            if (week === 0 && dayOfWeek < startingDay) {
+              // Previous month days
+              const prevMonth = currentMonth === 0 ? 11 : currentMonth - 1;
+              const prevYear = currentMonth === 0 ? currentYear - 1 : currentYear;
+              const prevMonthLastDay = new Date(prevYear, prevMonth + 1, 0).getDate();
+              const prevDay = prevMonthLastDay - startingDay + dayOfWeek + 1;
+              
+              calendarHTML += `<td class="calendar-day other-month">
+                <div class="d-flex justify-content-between align-items-start">
+                  <span>${prevDay}</span>
+                </div>
+              </td>`;
+            } else if (day > daysInMonth) {
+              // Next month days
+              const nextDay = day - daysInMonth;
+              calendarHTML += `<td class="calendar-day other-month">
+                <div class="d-flex justify-content-between align-items-start">
+                  <span>${nextDay}</span>
+                </div>
+              </td>`;
+              day++;
+            } else {
+              const today = new Date();
+              const isToday = day === today.getDate() && 
+                            currentMonth === today.getMonth() && 
+                            currentYear === today.getFullYear();
+              
+              const dayEvents = getEventsForDate(currentYear, currentMonth, day);
+              const hasEvents = dayEvents.length > 0;
+              const hasHoliday = dayEvents.some(event => event.type === 'holiday');
+              const hasExam = dayEvents.some(event => event.type === 'exam');
+              
+              const dayClasses = ['calendar-day'];
+              if (isToday) dayClasses.push('today');
+              if (hasEvents) dayClasses.push('has-events');
+              if (hasHoliday) dayClasses.push('has-holiday');
+              if (hasExam) dayClasses.push('has-exam');
+              
+              let indicators = '';
+              if (hasEvents) indicators += '<div class="event-indicator"></div>';
+              if (hasHoliday) indicators += '<div class="holiday-indicator"></div>';
+              if (hasExam) indicators += '<div class="exam-indicator"></div>';
+              
+              let eventsHTML = '';
+              dayEvents.forEach(event => {
+                if (currentFilter === 'all' || currentFilter === event.type) {
+                  eventsHTML += `<div class="event-item event-${event.type}" onclick="showEventDetails(${event.id})" title="${event.title}">
+                    ${event.title}
+                  </div>`;
+                }
+              });
+              
+              calendarHTML += `
+                <td class="${dayClasses.join(' ')}" onclick="showDayDetails(${currentYear}, ${currentMonth}, ${day})">
+                  <div class="d-flex justify-content-between align-items-start">
+                    <span>${day}</span>
+                    ${indicators}
+                  </div>
+                  <div class="mt-1">
+                    ${eventsHTML}
+                  </div>
+                </td>
+              `;
+              day++;
+            }
+          }
+          calendarHTML += '</tr>';
+        }
+
+        document.getElementById('calendarBody').innerHTML = calendarHTML;
+      }
+
+      function getEventsForDate(year, month, day) {
+        const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        return calendarEvents.filter(event => event.date === dateStr);
+      }
+
+      function showEventDetails(eventId) {
+        const event = calendarEvents.find(e => e.id === eventId);
+        if (!event) return;
+
+        const eventDetailsContent = document.getElementById('eventDetailsContent');
+        eventDetailsContent.innerHTML = `
+          <div class="row g-3">
+            <div class="col-12">
+              <h5>${event.title}</h5>
+              <div class="row g-2 mb-3">
+                <div class="col-md-6">
+                  <div class="small text-secondary">Type:</div>
+                  <span class="badge bg-${getTypeColor(event.type)}">${event.type.toUpperCase()}</span>
+                </div>
+                <div class="col-md-6">
+                  <div class="small text-secondary">Date:</div>
+                  <div class="fw-bold">${formatDate(event.date)}</div>
+                </div>
+                <div class="col-md-6">
+                  <div class="small text-secondary">Time:</div>
+                  <div class="fw-bold">${event.startTime} - ${event.endTime}</div>
+                </div>
+                <div class="col-md-6">
+                  <div class="small text-secondary">Location:</div>
+                  <div class="fw-bold">${event.location}</div>
+                </div>
+              </div>
+              <div class="mb-3">
+                <div class="small text-secondary mb-1">Description:</div>
+                <p class="mb-0">${event.description}</p>
+              </div>
+            </div>
+          </div>
+        `;
+
+        new bootstrap.Modal(document.getElementById('eventDetailsModal')).show();
+      }
+
+      function showDayDetails(year, month, day) {
+        const events = getEventsForDate(year, month, day);
+        if (events.length === 0) return;
+
+        const eventDetailsContent = document.getElementById('eventDetailsContent');
+        eventDetailsContent.innerHTML = `
+          <div class="row g-3">
+            <div class="col-12">
+              <h5>Events on ${formatDate(`${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`)}</h5>
+              ${events.map(event => `
+                <div class="card mb-3">
+                  <div class="card-body">
+                    <h6 class="card-title">${event.title}</h6>
+                    <div class="row g-2 mb-2">
+                      <div class="col-md-6">
+                        <div class="small text-secondary">Type:</div>
+                        <span class="badge bg-${getTypeColor(event.type)}">${event.type.toUpperCase()}</span>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="small text-secondary">Time:</div>
+                        <div class="fw-bold">${event.startTime} - ${event.endTime}</div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="small text-secondary">Location:</div>
+                        <div class="fw-bold">${event.location}</div>
+                      </div>
+                    </div>
+                    <p class="card-text small">${event.description}</p>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+
+        new bootstrap.Modal(document.getElementById('eventDetailsModal')).show();
+      }
+
+      function getTypeColor(type) {
+        const colors = {
+          'academic': 'primary',
+          'cultural': 'success',
+          'sports': 'warning',
+          'workshop': 'info',
+          'holiday': 'danger',
+          'exam': 'secondary'
+        };
+        return colors[type] || 'secondary';
+      }
+
+      function formatDate(dateString) {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-US', { 
+          year: 'numeric', 
+          month: 'long', 
+          day: 'numeric'
+        });
+      }
+
+      function renderTodaysEvents() {
+        const today = new Date();
+        const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+        const todaysEvents = calendarEvents.filter(event => event.date === todayStr);
+
+        if (todaysEvents.length === 0) {
+          document.getElementById('todaysEvents').innerHTML = '<div class="text-center text-muted">No events today</div>';
+          return;
+        }
+
+        document.getElementById('todaysEvents').innerHTML = todaysEvents.map(event => `
+          <div class="d-flex align-items-center justify-content-between p-2 border rounded mb-2">
+            <div>
+              <div class="fw-bold">${event.title}</div>
+              <div class="small text-secondary">${event.startTime} - ${event.endTime}</div>
+              <div class="small text-muted">${event.location}</div>
+            </div>
+            <span class="badge bg-${getTypeColor(event.type)}">${event.type}</span>
+          </div>
+        `).join('');
+      }
+
+      function renderThisWeekEvents() {
+        const today = new Date();
+        const weekStart = new Date(today);
+        weekStart.setDate(today.getDate() - today.getDay());
+        
+        const weekEvents = [];
+        for (let i = 0; i < 7; i++) {
+          const date = new Date(weekStart);
+          date.setDate(weekStart.getDate() + i);
+          const dateStr = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+          
+          const dayEvents = calendarEvents.filter(event => event.date === dateStr);
+          weekEvents.push(...dayEvents.map(event => ({ ...event, dayName: dayNames[i] })));
+        }
+
+        if (weekEvents.length === 0) {
+          document.getElementById('thisWeekEvents').innerHTML = '<div class="text-center text-muted">No events this week</div>';
+          return;
+        }
+
+        document.getElementById('thisWeekEvents').innerHTML = weekEvents.slice(0, 5).map(event => `
+          <div class="d-flex align-items-center justify-content-between p-2 border rounded mb-2">
+            <div>
+              <div class="fw-bold">${event.title}</div>
+              <div class="small text-secondary">${event.dayName} • ${event.startTime}</div>
+              <div class="small text-muted">${event.location}</div>
+            </div>
+            <span class="badge bg-${getTypeColor(event.type)}">${event.type}</span>
+          </div>
+        `).join('');
+      }
+
+      function renderImportantDates() {
+        document.getElementById('importantDates').innerHTML = importantDates.map(date => `
+          <div class="d-flex align-items-center justify-content-between p-2 border rounded mb-2">
+            <div>
+              <div class="fw-bold">${date.title}</div>
+              <div class="small text-secondary">${formatDate(date.date)}</div>
+              <div class="small text-muted">${date.description}</div>
+            </div>
+            <span class="badge bg-${getTypeColor(date.type)}">${date.type}</span>
+          </div>
+        `).join('');
+      }
+
+      function previousMonth() {
+        currentMonth--;
+        if (currentMonth < 0) {
+          currentMonth = 11;
+          currentYear--;
+        }
+        renderCalendar();
+      }
+
+      function nextMonth() {
+        currentMonth++;
+        if (currentMonth > 11) {
+          currentMonth = 0;
+          currentYear++;
+        }
+        renderCalendar();
+      }
+
+      function goToToday() {
+        const today = new Date();
+        currentMonth = today.getMonth();
+        currentYear = today.getFullYear();
+        currentFilter = 'all';
+        updateQuickActions();
+        renderCalendar();
+      }
+
+      function showAcademicEvents() {
+        currentFilter = 'academic';
+        updateQuickActions();
+        renderCalendar();
+      }
+
+      function showHolidays() {
+        currentFilter = 'holiday';
+        updateQuickActions();
+        renderCalendar();
+      }
+
+      function showExams() {
+        currentFilter = 'exam';
+        updateQuickActions();
+        renderCalendar();
+      }
+
+      function showAllEvents() {
+        currentFilter = 'all';
+        updateQuickActions();
+        renderCalendar();
+      }
+
+      function updateQuickActions() {
+        document.querySelectorAll('.quick-actions button').forEach(btn => {
+          btn.classList.remove('active');
+        });
+        
+        const activeButton = document.querySelector(`.quick-actions button[onclick*="${currentFilter}"]`);
+        if (activeButton) {
+          activeButton.classList.add('active');
+        } else {
+          document.querySelector('.quick-actions button[onclick="goToToday()"]').classList.add('active');
+        }
+      }
+
+      function saveEvent() {
+        const title = document.getElementById('eventTitle').value;
+        const type = document.getElementById('eventType').value;
+        const date = document.getElementById('eventDate').value;
+        const startTime = document.getElementById('eventStartTime').value;
+        const endTime = document.getElementById('eventEndTime').value;
+        const description = document.getElementById('eventDescription').value;
+
+        if (!title || !type || !date) {
+          alert('Please fill all required fields');
+          return;
+        }
+
+        const newEvent = {
+          id: calendarEvents.length + 1,
+          title: title,
+          type: type,
+          date: date,
+          startTime: startTime || '09:00',
+          endTime: endTime || '17:00',
+          description: description || 'No description provided',
+          location: 'TBD'
+        };
+
+        calendarEvents.push(newEvent);
+
+        document.getElementById('addEventForm').reset();
+        new bootstrap.Modal(document.getElementById('addEventModal')).hide();
+
+        renderCalendar();
+        renderTodaysEvents();
+        renderThisWeekEvents();
+
+        alert('Event added successfully!');
+      }
+
+      // Initialize
+      renderCalendar();
+      renderTodaysEvents();
+      renderThisWeekEvents();
+      renderImportantDates();
+        <script>
+      // Ensure navigation renders after page load
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+          if (window.navigationManager && document.getElementById('moduleTabs')) {
+            window.navigationManager.renderMainNavigation();
+          }
+        });
+      } else {
+        if (window.navigationManager && document.getElementById('moduleTabs')) {
+          window.navigationManager.renderMainNavigation();
+        }
+      }
+    </script>
+</script>
+{% endblock %}

@@ -1,0 +1,572 @@
+<!-- Chatbot Floating Button & Window -->
+<div id="chatbotContainer">
+  <!-- Floating Chat Button -->
+  <button id="chatbotToggle" class="chatbot-toggle-btn" aria-label="Open Chat">
+    <i class="bi bi-chat-dots-fill"></i>
+    <span class="chatbot-badge" id="chatbotBadge" style="display: none;">1</span>
+  </button>
+
+  <!-- Chat Window -->
+  <div id="chatbotWindow" class="chatbot-window">
+    <!-- Chat Header -->
+    <div class="chatbot-header">
+      <div class="d-flex align-items-center gap-2">
+        <div class="chatbot-avatar">
+          <i class="bi bi-robot"></i>
+        </div>
+        <div>
+          <div class="chatbot-title">ERP Assistant</div>
+          <div class="chatbot-status">
+            <span class="status-dot"></span>
+            Online
+          </div>
+        </div>
+      </div>
+      <button id="chatbotMinimize" class="chatbot-minimize-btn" aria-label="Minimize">
+        <i class="bi bi-dash"></i>
+      </button>
+      <button id="chatbotClose" class="chatbot-close-btn" aria-label="Close">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+
+    <!-- Chat Messages Area -->
+    <div class="chatbot-messages" id="chatbotMessages">
+      <div class="chatbot-message chatbot-message-bot">
+        <div class="message-avatar">
+          <i class="bi bi-robot"></i>
+        </div>
+        <div class="message-content">
+          <div class="message-text">
+            Hello! 👋 I'm your ERP Assistant. How can I help you today?
+          </div>
+          <div class="message-time">Just now</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="chatbot-quick-actions" id="chatbotQuickActions">
+      <button class="quick-action-btn" data-action="attendance">
+        <i class="bi bi-calendar-check"></i> Attendance
+      </button>
+      <button class="quick-action-btn" data-action="fees">
+        <i class="bi bi-credit-card"></i> Fees
+      </button>
+      <button class="quick-action-btn" data-action="placement">
+        <i class="bi bi-briefcase"></i> Placement
+      </button>
+      <button class="quick-action-btn" data-action="help">
+        <i class="bi bi-question-circle"></i> Help
+      </button>
+    </div>
+
+    <!-- Chat Input Area -->
+    <div class="chatbot-input-area">
+      <input 
+        type="text" 
+        id="chatbotInput" 
+        class="chatbot-input" 
+        placeholder="Type your message..."
+        autocomplete="off"
+      />
+      <button id="chatbotSend" class="chatbot-send-btn" aria-label="Send">
+        <i class="bi bi-send-fill"></i>
+      </button>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Chatbot Container */
+  #chatbotContainer {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  }
+
+  /* Floating Toggle Button */
+  .chatbot-toggle-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    transition: all 0.3s ease;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .chatbot-toggle-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+  }
+
+  .chatbot-toggle-btn:active {
+    transform: scale(0.95);
+  }
+
+  .chatbot-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #ff4757;
+    color: white;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    border: 2px solid white;
+  }
+
+  /* Chat Window */
+  .chatbot-window {
+    position: absolute;
+    bottom: 80px;
+    right: 0;
+    width: 380px;
+    height: 600px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    animation: slideUp 0.3s ease;
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .chatbot-window.active {
+    display: flex;
+  }
+
+  /* Chat Header */
+  .chatbot-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .chatbot-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+  }
+
+  .chatbot-title {
+    font-weight: 600;
+    font-size: 16px;
+  }
+
+  .chatbot-status {
+    font-size: 12px;
+    opacity: 0.9;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #4ade80;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+
+  .chatbot-minimize-btn,
+  .chatbot-close-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 4px 8px;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+  }
+
+  .chatbot-minimize-btn:hover,
+  .chatbot-close-btn:hover {
+    opacity: 1;
+  }
+
+  /* Messages Area */
+  .chatbot-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    background: #f8f9fa;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .chatbot-messages::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .chatbot-messages::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .chatbot-messages::-webkit-scrollbar-thumb {
+    background: #dee2e6;
+    border-radius: 3px;
+  }
+
+  .chatbot-message {
+    display: flex;
+    gap: 10px;
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .chatbot-message-user {
+    flex-direction: row-reverse;
+  }
+
+  .message-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .chatbot-message-user .message-avatar {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  }
+
+  .message-content {
+    max-width: 75%;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .chatbot-message-user .message-content {
+    align-items: flex-end;
+  }
+
+  .message-text {
+    background: white;
+    padding: 10px 14px;
+    border-radius: 12px;
+    font-size: 14px;
+    line-height: 1.5;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+
+  .chatbot-message-user .message-text {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+  }
+
+  .message-time {
+    font-size: 11px;
+    color: #6c757d;
+    padding: 0 4px;
+  }
+
+  /* Quick Actions */
+  .chatbot-quick-actions {
+    padding: 12px 16px;
+    background: white;
+    border-top: 1px solid #e9ecef;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .quick-action-btn {
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 20px;
+    padding: 6px 12px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #495057;
+  }
+
+  .quick-action-btn:hover {
+    background: #e9ecef;
+    border-color: #667eea;
+    color: #667eea;
+  }
+
+  /* Input Area */
+  .chatbot-input-area {
+    padding: 12px 16px;
+    background: white;
+    border-top: 1px solid #e9ecef;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .chatbot-input {
+    flex: 1;
+    border: 1px solid #dee2e6;
+    border-radius: 24px;
+    padding: 10px 16px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .chatbot-input:focus {
+    border-color: #667eea;
+  }
+
+  .chatbot-send-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s;
+  }
+
+  .chatbot-send-btn:hover {
+    transform: scale(1.1);
+  }
+
+  .chatbot-send-btn:active {
+    transform: scale(0.95);
+  }
+
+  /* Minimized State */
+  .chatbot-window.minimized {
+    height: 60px;
+  }
+
+  .chatbot-window.minimized .chatbot-messages,
+  .chatbot-window.minimized .chatbot-quick-actions,
+  .chatbot-window.minimized .chatbot-input-area {
+    display: none;
+  }
+
+  /* Responsive */
+  @media (max-width: 480px) {
+    .chatbot-window {
+      width: calc(100vw - 40px);
+      height: calc(100vh - 100px);
+      bottom: 80px;
+      right: 20px;
+      left: 20px;
+    }
+  }
+</style>
+
+<script>
+  (function() {
+    // Chatbot State
+    let isOpen = false;
+    let isMinimized = false;
+
+    // DOM Elements
+    const toggleBtn = document.getElementById('chatbotToggle');
+    const chatWindow = document.getElementById('chatbotWindow');
+    const minimizeBtn = document.getElementById('chatbotMinimize');
+    const closeBtn = document.getElementById('chatbotClose');
+    const messagesArea = document.getElementById('chatbotMessages');
+    const inputField = document.getElementById('chatbotInput');
+    const sendBtn = document.getElementById('chatbotSend');
+    const quickActions = document.querySelectorAll('.quick-action-btn');
+
+    // Toggle Chat Window
+    toggleBtn.addEventListener('click', () => {
+      if (isOpen && !isMinimized) {
+        closeChat();
+      } else {
+        openChat();
+      }
+    });
+
+    // Minimize Chat
+    minimizeBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      isMinimized = true;
+      chatWindow.classList.add('minimized');
+    });
+
+    // Close Chat
+    closeBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      closeChat();
+    });
+
+    function openChat() {
+      isOpen = true;
+      isMinimized = false;
+      chatWindow.classList.add('active');
+      chatWindow.classList.remove('minimized');
+      inputField.focus();
+    }
+
+    function closeChat() {
+      isOpen = false;
+      isMinimized = false;
+      chatWindow.classList.remove('active');
+      chatWindow.classList.remove('minimized');
+    }
+
+    // Send Message
+    function sendMessage() {
+      const message = inputField.value.trim();
+      if (!message) return;
+
+      // Add user message
+      addMessage(message, 'user');
+      inputField.value = '';
+
+      // Simulate bot response
+      setTimeout(() => {
+        const response = getBotResponse(message);
+        addMessage(response, 'bot');
+      }, 500);
+    }
+
+    sendBtn.addEventListener('click', sendMessage);
+    inputField.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        sendMessage();
+      }
+    });
+
+    // Quick Actions
+    quickActions.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const action = btn.getAttribute('data-action');
+        handleQuickAction(action);
+      });
+    });
+
+    function handleQuickAction(action) {
+      const messages = {
+        attendance: 'I can help you with attendance queries. What would you like to know?',
+        fees: 'I can assist with fee-related questions. What do you need?',
+        placement: 'I can provide information about placements. How can I help?',
+        help: 'I\'m here to help! You can ask me about attendance, fees, placements, or any other ERP-related questions.'
+      };
+      
+      addMessage(messages[action] || 'How can I help you?', 'bot');
+    }
+
+    // Add Message to Chat
+    function addMessage(text, type) {
+      const messageDiv = document.createElement('div');
+      messageDiv.className = `chatbot-message chatbot-message-${type}`;
+      
+      const now = new Date();
+      const timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+
+      messageDiv.innerHTML = `
+        <div class="message-avatar">
+          <i class="bi ${type === 'bot' ? 'bi-robot' : 'bi-person-fill'}"></i>
+        </div>
+        <div class="message-content">
+          <div class="message-text">${escapeHtml(text)}</div>
+          <div class="message-time">${timeStr}</div>
+        </div>
+      `;
+
+      messagesArea.appendChild(messageDiv);
+      messagesArea.scrollTop = messagesArea.scrollHeight;
+    }
+
+    // Simple Bot Response Logic
+    function getBotResponse(userMessage) {
+      const msg = userMessage.toLowerCase();
+      
+      if (msg.includes('attendance') || msg.includes('present')) {
+        return 'You can check your attendance in the Attendance section. Would you like me to guide you there?';
+      } else if (msg.includes('fee') || msg.includes('payment')) {
+        return 'Fee information is available in the Fees section. I can help you navigate there if needed.';
+      } else if (msg.includes('placement') || msg.includes('job')) {
+        return 'Placement opportunities are listed in the Placement section. Check it out for the latest job openings!';
+      } else if (msg.includes('hello') || msg.includes('hi') || msg.includes('hey')) {
+        return 'Hello! 👋 How can I assist you today?';
+      } else if (msg.includes('help')) {
+        return 'I can help you with:\n• Attendance queries\n• Fee information\n• Placement updates\n• General ERP navigation\n\nWhat would you like to know?';
+      } else if (msg.includes('thank')) {
+        return 'You\'re welcome! Feel free to ask if you need anything else. 😊';
+      } else {
+        return 'I understand you\'re asking about: "' + userMessage + '". Let me help you with that. You can find more information in the relevant section of the ERP portal.';
+      }
+    }
+
+    // Escape HTML
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+  })();
+</script>
+

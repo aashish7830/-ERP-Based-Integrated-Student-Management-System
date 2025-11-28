@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Faculty Portal | ERP</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="{% static 'styles.css' %}" />
+    <script src="{% static 'navigation.js' %}"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg bg-white navbar-light shadow-sm">
+      <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="{% url 'index' %}">
+          <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f3eb.svg" width="30" class="me-2"/>
+          <span class="fw-bold brand-gradient">Institution ERP</span>
+        </a>
+        <div class="ms-auto d-flex align-items-center gap-3">
+          <div id="userMini" class="small"></div>
+          <button id="logoutBtn" class="btn btn-outline-secondary btn-sm"><i class="bi bi-box-arrow-right me-1"></i>Logout</button>
+        </div>
+      </div>
+    </nav>
+    <div class="border-top" style="border-color:#f0ad00 !important"></div>
+
+    <div class="container my-4">
+      <div class="row g-4">
+        <div class="col-12">
+          <ul class="nav nav-pills flex-wrap gap-2 py-2" id="facultyTabs"></ul>
+        </div>
+
+        <!-- OTHERS Menu Options Section -->
+        <div class="col-12" id="othersMenuSection" style="display: none;">
+          <div class="card border-0 shadow-sm">
+            <div class="card-body">
+              <h5 class="mb-3">OTHERS Menu</h5>
+              <div class="row g-2">
+                <div class="col-md-4 col-sm-6">
+                  <a href="#" class="btn btn-outline-primary w-100 text-start">
+                    <i class="bi bi-bug me-2"></i>ISSUE TRACKER
+                  </a>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                  <a href="#" class="btn btn-outline-primary w-100 text-start">
+                    <i class="bi bi-list-check me-2"></i>ISSUE TRACKER LIST
+                  </a>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                  <a href="#" class="btn btn-outline-primary w-100 text-start">
+                    <i class="bi bi-laptop me-2"></i>IT ISSUE TRACKER
+                  </a>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                  <a href="#" class="btn btn-outline-primary w-100 text-start">
+                    <i class="bi bi-pc-display me-2"></i>IT ASSETS DETAIL
+                  </a>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                  <a href="#" class="btn btn-outline-primary w-100 text-start">
+                    <i class="bi bi-file-text me-2"></i>SUBJECT REPORT
+                  </a>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                  <a href="#" class="btn btn-outline-primary w-100 text-start">
+                    <i class="bi bi-journal-text me-2"></i>TEACHER DIARY
+                  </a>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                  <a href="#" class="btn btn-outline-primary w-100 text-start">
+                    <i class="bi bi-check-circle me-2"></i>MONTHLY PMS APPROVAL
+                  </a>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                  <a href="#" class="btn btn-outline-primary w-100 text-start">
+                    <i class="bi bi-calendar-event me-2"></i>EVENT
+                  </a>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                  <a href="#" class="btn btn-outline-primary w-100 text-start">
+                    <i class="bi bi-box-seam me-2"></i>COURIER DATA
+                  </a>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                  <a href="#" class="btn btn-outline-primary w-100 text-start">
+                    <i class="bi bi-file-earmark-person me-2"></i>RESIGNATION FORM
+                  </a>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                  <a href="#" class="btn btn-outline-primary w-100 text-start">
+                    <i class="bi bi-list-ul me-2"></i>RESIGNATION FORM LIST
+                  </a>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                  <a href="#" class="btn btn-outline-primary w-100 text-start">
+                    <i class="bi bi-person-check me-2"></i>ENROLLMENT APPROVAL
+                  </a>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                  <a href="#" class="btn btn-outline-primary w-100 text-start">
+                    <i class="bi bi-shield-check me-2"></i>NO DUES APPROVAL
+                  </a>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                  <a href="#" class="btn btn-outline-primary w-100 text-start">
+                    <i class="bi bi-cash-coin me-2"></i>STUDENT DUES APPROVAL
+                  </a>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                  <a href="#" class="btn btn-outline-primary w-100 text-start">
+                    <i class="bi bi-list-check me-2"></i>STUDENT DUES APPROVAL LIST
+                  </a>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                  <a href="#" class="btn btn-outline-primary w-100 text-start">
+                    <i class="bi bi-currency-dollar me-2"></i>SEED MONEY
+                  </a>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                  <a href="#" class="btn btn-outline-primary w-100 text-start">
+                    <i class="bi bi-wallet2 me-2"></i>FINANCIAL ASSISTANCE
+                  </a>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                  <a href="#" class="btn btn-outline-primary w-100 text-start">
+                    <i class="bi bi-file-earmark-text me-2"></i>HONORARIUM APPLICATION
+                  </a>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                  <a href="#" class="btn btn-outline-primary w-100 text-start">
+                    <i class="bi bi-file-earmark-text-fill me-2"></i>HONORARIUM APPLICATION(V2)
+                  </a>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                  <a href="#" class="btn btn-outline-primary w-100 text-start">
+                    <i class="bi bi-bus-front me-2"></i>TRANSPORT REQUISITION
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- HR Menu Options Section -->
+        <div class="col-12" id="hrMenuSection" style="display: none;">
+          <div class="card border-0 shadow-sm">
+            <div class="card-body">
+              <h5 class="mb-3">HR Menu</h5>
+              <div class="row g-2">
+                <div class="col-md-4 col-sm-6">
+                  <a href="#" class="btn btn-outline-primary w-100 text-start">
+                    <i class="bi bi-calendar-check me-2"></i>VIEW ATTENDANCE
+                  </a>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                  <a href="#" class="btn btn-outline-primary w-100 text-start">
+                    <i class="bi bi-person-badge me-2"></i>EMPLOYEE VERIFICATION
+                  </a>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                  <a href="#" class="btn btn-outline-primary w-100 text-start">
+                    <i class="bi bi-clock-history me-2"></i>PUNCH DATA
+                  </a>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                  <a href="#" class="btn btn-outline-primary w-100 text-start">
+                    <i class="bi bi-pencil-square me-2"></i>PUNCH CORRECTION
+                  </a>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                  <a href="#" class="btn btn-warning w-100 text-start text-white">
+                    <i class="bi bi-pencil-fill me-2"></i>PUNCH CORRECTION(SP)
+                  </a>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                  <a href="#" class="btn btn-outline-primary w-100 text-start">
+                    <i class="bi bi-calendar-event me-2"></i>LEAVE
+                  </a>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                  <a href="#" class="btn btn-outline-primary w-100 text-start">
+                    <i class="bi bi-geo-alt me-2"></i>OD / TOUR-CLAIM
+                  </a>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                  <a href="#" class="btn btn-outline-primary w-100 text-start">
+                    <i class="bi bi-house-door me-2"></i>WORK FROM HOME
+                  </a>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                  <a href="#" class="btn btn-outline-primary w-100 text-start">
+                    <i class="bi bi-file-earmark-text me-2"></i>CO APPLICATION
+                  </a>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                  <a href="#" class="btn btn-outline-primary w-100 text-start">
+                    <i class="bi bi-file-earmark-check me-2"></i>EWL APPLICATION
+                  </a>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                  <a href="#" class="btn btn-outline-primary w-100 text-start">
+                    <i class="bi bi-clipboard-data me-2"></i>APPRAISAL FORM
+                  </a>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                  <a href="#" class="btn btn-outline-primary w-100 text-start">
+                    <i class="bi bi-file-earmark-plus me-2"></i>TMVF APPLICATION
+                  </a>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                  <a href="#" class="btn btn-outline-primary w-100 text-start">
+                    <i class="bi bi-check-circle me-2"></i>TMVF APPROVAL
+                  </a>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                  <a href="#" class="btn btn-outline-primary w-100 text-start">
+                    <i class="bi bi-exclamation-triangle me-2"></i>GRIEVANCES
+                  </a>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                  <a href="#" class="btn btn-outline-primary w-100 text-start">
+                    <i class="bi bi-box-arrow-right me-2"></i>EXIT FORM
+                  </a>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                  <a href="#" class="btn btn-outline-primary w-100 text-start">
+                    <i class="bi bi-file-earmark-spreadsheet me-2"></i>TDS DETAIL
+                  </a>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                  <a href="#" class="btn btn-outline-primary w-100 text-start">
+                    <i class="bi bi-file-earmark-pdf me-2"></i>FORM 16
+                  </a>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                  <a href="#" class="btn btn-outline-primary w-100 text-start">
+                    <i class="bi bi-award me-2"></i>FELLOWSHIP APPROVAL
+                  </a>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                  <a href="#" class="btn btn-outline-primary w-100 text-start">
+                    <i class="bi bi-cash-stack me-2"></i>ARREAR REQUEST
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- EXAMINATION Menu Options Section -->
+        <div class="col-12" id="examinationMenuSection" style="display: none;">
+          <div class="card border-0 shadow-sm">
+            <div class="card-body">
+              <h5 class="mb-3">EXAMINATION Menu</h5>
+              <div class="row g-2">
+                <div class="col-md-4 col-sm-6">
+                  <a href="#" class="btn btn-outline-primary w-100 text-start">
+                    <i class="bi bi-calendar-week me-2"></i>DUTY CHART
+                  </a>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                  <a href="#" class="btn btn-outline-primary w-100 text-start">
+                    <i class="bi bi-pencil-square me-2"></i>MARKS ENTRY
+                  </a>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                  <a href="#" class="btn btn-outline-primary w-100 text-start">
+                    <i class="bi bi-diagram-3 me-2"></i>CO PO MAPPING
+                  </a>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                  <a href="#" class="btn btn-outline-primary w-100 text-start">
+                    <i class="bi bi-file-earmark-text me-2"></i>REPORT>>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MENTOR-MENTEE Menu Options Section -->
+        <div class="col-12" id="mentorMenuSection" style="display: none;">
+          <div class="card border-0 shadow-sm">
+            <div class="card-body">
+              <h5 class="mb-3">MENTOR-MENTEE Menu</h5>
+              <div class="row g-2">
+                <div class="col-md-4 col-sm-6">
+                  <a href="#" class="btn btn-outline-primary w-100 text-start">
+                    <i class="bi bi-info-circle me-2"></i>INTRODUCTION
+                  </a>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                  <a href="#" class="btn btn-outline-primary w-100 text-start">
+                    <i class="bi bi-people me-2"></i>MENTOR FOR MENTEE
+                  </a>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                  <a href="#" class="btn btn-outline-primary w-100 text-start">
+                    <i class="bi bi-file-earmark-text me-2"></i>COMBINED RECORD>>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PROGRAM Menu Options Section -->
+        <div class="col-12" id="programMenuSection" style="display: none;">
+          <div class="card border-0 shadow-sm">
+            <div class="card-body">
+              <h5 class="mb-3">PROGRAM Menu</h5>
+              <div class="row g-2">
+                <div class="col-md-4 col-sm-6">
+                  <a href="#" class="btn btn-outline-primary w-100 text-start">
+                    <i class="bi bi-file-earmark-text me-2"></i>ASSIGNMENT
+                  </a>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                  <a href="#" class="btn btn-outline-primary w-100 text-start">
+                    <i class="bi bi-calendar-week me-2"></i>TIME TABLE
+                  </a>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                  <a href="#" class="btn btn-outline-primary w-100 text-start">
+                    <i class="bi bi-plus-circle me-2"></i>CREATE TIMETABLE
+                  </a>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                  <a href="#" class="btn btn-outline-primary w-100 text-start">
+                    <i class="bi bi-cloud-upload me-2"></i>UPLOAD TIMETABLE
+                  </a>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                  <a href="#" class="btn btn-outline-primary w-100 text-start">
+                    <i class="bi bi-people me-2"></i>FACULTY ARRANGEMENT
+                  </a>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                  <a href="#" class="btn btn-outline-primary w-100 text-start">
+                    <i class="bi bi-journal-text me-2"></i>LESSON PLAN
+                  </a>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                  <a href="#" class="btn btn-outline-primary w-100 text-start">
+                    <i class="bi bi-book me-2"></i>COURSE PLAN
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- LIBRARY Menu Options Section -->
+        <div class="col-12" id="libraryMenuSection" style="display: none;">
+          <div class="card border-0 shadow-sm">
+            <div class="card-body">
+              <h5 class="mb-3">LIBRARY Menu</h5>
+              <div class="row g-2">
+                <div class="col-md-4 col-sm-6">
+                  <a href="#" class="btn btn-outline-primary w-100 text-start">
+                    <i class="bi bi-person-badge me-2"></i>MEMBERSHIP FORM
+                  </a>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                  <a href="#" class="btn btn-outline-primary w-100 text-start">
+                    <i class="bi bi-globe me-2"></i>LIBRARY WEBSITE
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="card border-0 shadow-sm">
+            <div class="card-body">
+              <h4 class="mb-3">Faculty Dashboard</h4>
+              <div class="row g-3">
+                <div class="col-md-3">
+                  <div class="card bg-primary text-white">
+                    <div class="card-body text-center">
+                      <i class="bi bi-people fs-1 mb-2"></i>
+                      <h5>Total Students</h5>
+                      <h3>156</h3>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="card bg-success text-white">
+                    <div class="card-body text-center">
+                      <i class="bi bi-book fs-1 mb-2"></i>
+                      <h5>Subjects</h5>
+                      <h3>4</h3>0
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="card bg-warning text-white">
+                    <div class="card-body text-center">
+                      <i class="bi bi-calendar-check fs-1 mb-2"></i>
+                      <h5>Classes Today</h5>
+                      <h3>3</h3>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="card bg-info text-white">
+                    <div class="card-body text-center">
+                      <i class="bi bi-clipboard-check fs-1 mb-2"></i>
+                      <h5>Pending Tasks</h5>
+                      <h3>7</h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="card border-0 shadow-sm">
+            <div class="card-body">
+              <h5 class="mb-3">Today's Schedule</h5>
+              <div class="list-group list-group-flush">
+                <div class="list-group-item d-flex justify-content-between align-items-center">
+                  <div>
+                    <div class="fw-semibold">Database Management System</div>
+                    <div class="text-secondary small">9:00 AM - 10:30 AM</div>
+                  </div>
+                  <span class="badge bg-primary">LAB-101</span>
+                </div>
+                <div class="list-group-item d-flex justify-content-between align-items-center">
+                  <div>
+                    <div class="fw-semibold">Operating Systems</div>
+                    <div class="text-secondary small">11:00 AM - 12:30 PM</div>
+                  </div>
+                  <span class="badge bg-success">LAB-102</span>
+                </div>
+                <div class="list-group-item d-flex justify-content-between align-items-center">
+                  <div>
+                    <div class="fw-semibold">Computer Networks</div>
+                    <div class="text-secondary small">2:00 PM - 3:30 PM</div>
+                  </div>
+                  <span class="badge bg-warning">LAB-103</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="card border-0 shadow-sm">
+            <div class="card-body">
+              <h5 class="mb-3">Quick Actions</h5>
+              <div class="d-grid gap-2">
+                <button class="btn btn-outline-primary w-100 text-start" data-bs-toggle="modal" data-bs-target="#attendanceModal">
+                  <i class="bi bi-calendar-check me-2"></i>Attendance
+                </button>
+                <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#assignmentModal">
+                  <i class="bi bi-file-earmark-text me-2"></i>Upload Assignment
+                </button>
+                <button class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#gradeModal">
+                  <i class="bi bi-clipboard-data me-2"></i>Enter Grades
+                </button>
+                <button class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#noticeModal">
+                  <i class="bi bi-megaphone me-2"></i>Post Notice
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="card border-0 shadow-sm">
+            <div class="card-body">
+              <h5 class="mb-3">Student Performance Overview</h5>
+              <div class="table-responsive">
+                <table class="table table-striped align-middle">
+                  <thead>
+                    <tr>
+                      <th>Student Name</th>
+                      <th>Enrollment</th>
+                      <th>Subject</th>
+                      <th>Attendance %</th>
+                      <th>Assignment Score</th>
+                      <th>Overall Grade</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>YASH JAIN</td>
+                      <td>TCA2259093</td>
+                      <td>DBMS</td>
+                      <td><span class="badge bg-success">95%</span></td>
+                      <td>85/100</td>
+                      <td><span class="badge bg-success">A</span></td>
+                    </tr>
+                    <tr>
+                      <td>AARAV SHARMA</td>
+                      <td>21BCA1234</td>
+                      <td>OS</td>
+                      <td><span class="badge bg-warning">78%</span></td>
+                      <td>72/100</td>
+                      <td><span class="badge bg-warning">B</span></td>
+                    </tr>
+                    <tr>
+                      <td>PRIYA SINGH</td>
+                      <td>22BCA5678</td>
+                      <td>CN</td>
+                      <td><span class="badge bg-danger">65%</span></td>
+                      <td>68/100</td>
+                      <td><span class="badge bg-danger">C</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Attendance Modal -->
+    <div class="modal fade" id="attendanceModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title"><i class="bi bi-calendar-check me-2"></i>Mark Attendance</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row g-3 mb-3">
+              <div class="col-md-3">
+                <label class="form-label"><i class="bi bi-book me-1"></i>Subject</label>
+                <select class="form-select" id="attSubject">
+                  <option>Database Management System</option>
+                  <option>Operating Systems</option>
+                  <option>Computer Networks</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label"><i class="bi bi-calendar3 me-1"></i>Date</label>
+                <input type="date" class="form-control" id="attDate" value="2024-12-15">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label"><i class="bi bi-people me-1"></i>Class/Batch</label>
+                <select class="form-select" id="attClass">
+                  <option>BCA 3rd Year</option>
+                  <option>BCA 2nd Year</option>
+                  <option>BCA 1st Year</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label"><i class="bi bi-calendar-week me-1"></i>Semester</label>
+                <select class="form-select" id="attSemester">
+                  <option>VII</option>
+                  <option>VI</option>
+                  <option>V</option>
+                  <option>IV</option>
+                  <option>III</option>
+                  <option>II</option>
+                  <option>I</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label"><i class="bi bi-clock me-1"></i>Time Slot</label>
+                <select class="form-select" id="attTimeSlot">
+                  <option>9:00 AM - 10:30 AM</option>
+                  <option>11:00 AM - 12:30 PM</option>
+                  <option>2:00 PM - 3:30 PM</option>
+                  <option>3:30 PM - 5:00 PM</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label"><i class="bi bi-door-open me-1"></i>Room/Lab</label>
+                <select class="form-select" id="attRoom">
+                  <option>LAB-101</option>
+                  <option>LAB-102</option>
+                  <option>LAB-103</option>
+                  <option>Room-201</option>
+                  <option>Room-202</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label"><i class="bi bi-file-earmark-text me-1"></i>Session Type</label>
+                <select class="form-select" id="attSessionType">
+                  <option>Lecture</option>
+                  <option>Practical</option>
+                  <option>Tutorial</option>
+                  <option>Lab Session</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label"><i class="bi bi-topic me-1"></i>Topic Covered</label>
+                <input type="text" class="form-control" id="attTopic" placeholder="Enter topic">
+              </div>
+            </div>
+            <div class="row g-3 mb-3">
+              <div class="col-12">
+                <label class="form-label"><i class="bi bi-chat-left-text me-1"></i>Notes/Comments</label>
+                <textarea class="form-control" id="attNotes" rows="2" placeholder="Add any additional notes or comments about the class"></textarea>
+              </div>
+            </div>
+            <hr>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h6 class="mb-0">Student Attendance List</h6>
+              <div>
+                <span class="badge bg-success me-2" id="presentCount">Present: 0</span>
+                <span class="badge bg-danger me-2" id="absentCount">Absent: 0</span>
+                <span class="badge bg-info" id="totalCount">Total: 0</span>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-sm table-hover">
+                <thead class="table-light">
+                  <tr>
+                    <th>S.No.</th>
+                    <th>Student Name</th>
+                    <th>Enrollment No.</th>
+                    <th>Roll No.</th>
+                    <th>Status</th>
+                    <th>Remarks</th>
+                  </tr>
+                </thead>
+                <tbody id="attendanceTableBody">
+                  <tr>
+                    <td>1</td>
+                    <td>YASH JAIN</td>
+                    <td>TCA2259093</td>
+                    <td>01</td>
+                    <td>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="att1" id="present1" value="present" checked>
+                        <label class="form-check-label" for="present1">Present</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="att1" id="absent1" value="absent">
+                        <label class="form-check-label" for="absent1">Absent</label>
+                      </div>
+                    </td>
+                    <td>
+                      <input type="text" class="form-control form-control-sm" placeholder="Remarks" style="width: 150px;">
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>AARAV SHARMA</td>
+                    <td>21BCA1234</td>
+                    <td>02</td>
+                    <td>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="att2" id="present2" value="present">
+                        <label class="form-check-label" for="present2">Present</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="att2" id="absent2" value="absent" checked>
+                        <label class="form-check-label" for="absent2">Absent</label>
+                      </div>
+                    </td>
+                    <td>
+                      <input type="text" class="form-control form-control-sm" placeholder="Remarks" style="width: 150px;">
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td>PRIYA SINGH</td>
+                    <td>22BCA5678</td>
+                    <td>03</td>
+                    <td>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="att3" id="present3" value="present" checked>
+                        <label class="form-check-label" for="present3">Present</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="att3" id="absent3" value="absent">
+                        <label class="form-check-label" for="absent3">Absent</label>
+                      </div>
+                    </td>
+                    <td>
+                      <input type="text" class="form-control form-control-sm" placeholder="Remarks" style="width: 150px;">
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="bi bi-x-circle me-1"></i>Cancel</button>
+            <button type="button" class="btn btn-outline-primary"><i class="bi bi-download me-1"></i>Export</button>
+            <button type="button" class="btn btn-primary" id="saveAttendanceBtn"><i class="bi bi-save me-1"></i>Save Attendance</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Assignment Modal -->
+    <div class="modal fade" id="assignmentModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Upload Assignment</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="mb-3">
+                <label class="form-label">Subject</label>
+                <select class="form-select">
+                  <option>Database Management System</option>
+                  <option>Operating Systems</option>
+                  <option>Computer Networks</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Assignment Title</label>
+                <input type="text" class="form-control" placeholder="Enter assignment title">
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Description</label>
+                <textarea class="form-control" rows="3" placeholder="Assignment description"></textarea>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Due Date</label>
+                <input type="date" class="form-control">
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Upload File</label>
+                <input type="file" class="form-control" accept=".pdf,.doc,.docx">
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-success">Upload Assignment</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grade Modal -->
+    <div class="modal fade" id="gradeModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Enter Grades</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row g-3 mb-3">
+              <div class="col-md-6">
+                <label class="form-label">Subject</label>
+                <select class="form-select">
+                  <option>Database Management System</option>
+                  <option>Operating Systems</option>
+                  <option>Computer Networks</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Assignment/Exam</label>
+                <select class="form-select">
+                  <option>Mid Term Exam</option>
+                  <option>Assignment 1</option>
+                  <option>Assignment 2</option>
+                </select>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-sm">
+                <thead>
+                  <tr>
+                    <th>Student</th>
+                    <th>Enrollment</th>
+                    <th>Marks</th>
+                    <th>Grade</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>YASH JAIN</td>
+                    <td>TCA2259093</td>
+                    <td><input type="number" class="form-control form-control-sm" value="85" max="100"></td>
+                    <td><span class="badge bg-success">A</span></td>
+                  </tr>
+                  <tr>
+                    <td>AARAV SHARMA</td>
+                    <td>21BCA1234</td>
+                    <td><input type="number" class="form-control form-control-sm" value="72" max="100"></td>
+                    <td><span class="badge bg-warning">B</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-warning">Save Grades</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notice Modal -->
+    <div class="modal fade" id="noticeModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Post Notice</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="mb-3">
+                <label class="form-label">Subject</label>
+                <select class="form-select">
+                  <option>All Subjects</option>
+                  <option>Database Management System</option>
+                  <option>Operating Systems</option>
+                  <option>Computer Networks</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Notice Title</label>
+                <input type="text" class="form-control" placeholder="Enter notice title">
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Message</label>
+                <textarea class="form-control" rows="4" placeholder="Enter notice message"></textarea>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Priority</label>
+                <select class="form-select">
+                  <option>Normal</option>
+                  <option>High</option>
+                  <option>Urgent</option>
+                </select>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-info">Post Notice</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer py-3 mt-4">
+      <div class="container small text-white-50 d-flex justify-content-between">
+        <div>© <span id="year"></span> Institution ERP</div>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      const yearEl = document.getElementById('year');
+      if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+      // Demo faculty data
+      const facultyData = {
+        name: 'Dr. Neha Gupta',
+        department: 'Computer Science',
+        avatar: 'https://i.pravatar.cc/100?img=11'
+      };
+
+      document.getElementById('userMini').innerHTML = `
+        <div class="d-flex align-items-center gap-2">
+          <img src="${facultyData.avatar}" class="rounded-circle" width="32" height="32"/>
+          <div>
+            <div class="fw-semibold">${facultyData.name}</div>
+            <div class="text-secondary">${facultyData.department}</div>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('logoutBtn').addEventListener('click', () => {
+        window.location.replace('/');
+      });
+
+      // Handle menu display - generic function
+      function toggleMenu(menuType, show) {
+        const othersMenuSection = document.getElementById('othersMenuSection');
+        const hrMenuSection = document.getElementById('hrMenuSection');
+        const examinationMenuSection = document.getElementById('examinationMenuSection');
+        const mentorMenuSection = document.getElementById('mentorMenuSection');
+        const programMenuSection = document.getElementById('programMenuSection');
+        const libraryMenuSection = document.getElementById('libraryMenuSection');
+        
+        // Hide all menus first
+        if (othersMenuSection) othersMenuSection.style.display = 'none';
+        if (hrMenuSection) hrMenuSection.style.display = 'none';
+        if (examinationMenuSection) examinationMenuSection.style.display = 'none';
+        if (mentorMenuSection) mentorMenuSection.style.display = 'none';
+        if (programMenuSection) programMenuSection.style.display = 'none';
+        if (libraryMenuSection) libraryMenuSection.style.display = 'none';
+        
+        // Show the requested menu
+        if (show) {
+          if (menuType === 'others' && othersMenuSection) {
+            othersMenuSection.style.display = 'block';
+          } else if (menuType === 'hr' && hrMenuSection) {
+            hrMenuSection.style.display = 'block';
+          } else if (menuType === 'examination' && examinationMenuSection) {
+            examinationMenuSection.style.display = 'block';
+          } else if (menuType === 'mentor' && mentorMenuSection) {
+            mentorMenuSection.style.display = 'block';
+          } else if (menuType === 'program' && programMenuSection) {
+            programMenuSection.style.display = 'block';
+          } else if (menuType === 'library' && libraryMenuSection) {
+            libraryMenuSection.style.display = 'block';
+          }
+        }
+        
+        // Hide/show dashboard content when showing any menu
+        const dashboardRows = document.querySelectorAll('.row.g-4 > .col-12');
+        dashboardRows.forEach(row => {
+          if (row.id === 'othersMenuSection' || row.id === 'hrMenuSection' || row.id === 'examinationMenuSection' || row.id === 'mentorMenuSection' || row.id === 'programMenuSection' || row.id === 'libraryMenuSection') return;
+          const hasCard = row.querySelector('.card');
+          if (hasCard) {
+            row.style.display = show ? 'none' : 'block';
+          }
+        });
+      }
+
+      // Setup menu handler for a specific menu type
+      function setupMenuHandler(menuType, searchText) {
+        const facultyTabs = document.getElementById('facultyTabs');
+        if (!facultyTabs) return;
+
+        const allNavItems = facultyTabs.querySelectorAll('a, span');
+        const navItem = Array.from(allNavItems).find(
+          el => {
+            const text = el.textContent.trim().toUpperCase();
+            return text.includes(searchText) && !el.hasAttribute('data-menu-handler');
+          }
+        );
+        
+        if (navItem) {
+          // Mark as handled to avoid duplicate handlers
+          navItem.setAttribute('data-menu-handler', 'true');
+          
+          // If it's a link, prevent navigation and show menu
+          if (navItem.tagName === 'A') {
+            navItem.addEventListener('click', (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              
+              // Update active state for all nav items
+              facultyTabs.querySelectorAll('a, span').forEach(item => {
+                item.classList.remove('btn-warning', 'text-white');
+                item.classList.add('btn-outline-warning');
+              });
+              navItem.classList.remove('btn-outline-warning');
+              navItem.classList.add('btn-warning', 'text-white');
+              
+              toggleMenu(menuType, true);
+              return false;
+            });
+          }
+          
+          // If it's already active (span), show menu
+          if (navItem.classList.contains('btn-warning')) {
+            toggleMenu(menuType, true);
+          }
+        }
+      }
+
+      // Setup handlers for both OTHERS and HR menus
+      function setupAllMenuHandlers() {
+        // Handle OTHERS (but not MENTOR-MENTEE)
+        const facultyTabs = document.getElementById('facultyTabs');
+        if (facultyTabs) {
+          const allNavItems = facultyTabs.querySelectorAll('a, span');
+          const othersNavItem = Array.from(allNavItems).find(
+            el => {
+              const text = el.textContent.trim().toUpperCase();
+              return text.includes('OTHERS') && !text.includes('MENTOR') && !el.hasAttribute('data-menu-handler');
+            }
+          );
+          if (othersNavItem) {
+            othersNavItem.setAttribute('data-menu-handler', 'true');
+            if (othersNavItem.tagName === 'A') {
+              othersNavItem.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                facultyTabs.querySelectorAll('a, span').forEach(item => {
+                  item.classList.remove('btn-warning', 'text-white');
+                  item.classList.add('btn-outline-warning');
+                });
+                othersNavItem.classList.remove('btn-outline-warning');
+                othersNavItem.classList.add('btn-warning', 'text-white');
+                toggleMenu('others', true);
+                return false;
+              });
+            }
+            if (othersNavItem.classList.contains('btn-warning')) {
+              toggleMenu('others', true);
+            }
+          }
+        }
+        
+        // Handle HR
+        setupMenuHandler('hr', 'HR');
+        
+        // Handle EXAMINATION
+        setupMenuHandler('examination', 'EXAMINATION');
+        
+        // Handle MENTOR-MENTEE
+        setupMenuHandler('mentor', 'MENTOR-MENTEE');
+        
+        // Handle PROGRAM
+        setupMenuHandler('program', 'PROGRAM');
+        
+        // Handle LIBRARY
+        setupMenuHandler('library', 'LIBRARY');
+        
+        // Handle clicks on other nav items to hide menus (but don't prevent navigation)
+        if (facultyTabs) {
+          const allNavItems = facultyTabs.querySelectorAll('a, span');
+          allNavItems.forEach(item => {
+            if (item.hasAttribute('data-close-menu')) return;
+            const text = item.textContent.trim().toUpperCase();
+            // Skip OTHERS, HR, EXAMINATION, MENTOR-MENTEE, PROGRAM, and LIBRARY items as they have their own handlers
+            if (text.includes('OTHERS') || text.includes('HR') || text.includes('EXAMINATION') || text.includes('MENTOR-MENTEE') || (text.includes('MENTOR') && text.includes('MENTEE')) || text.includes('PROGRAM') || text.includes('LIBRARY')) return;
+            
+            item.setAttribute('data-close-menu', 'true');
+            if (item.tagName === 'A') {
+              item.addEventListener('click', (e) => {
+                // Don't prevent navigation, just hide menus
+                toggleMenu('others', false);
+                toggleMenu('hr', false);
+                toggleMenu('examination', false);
+                toggleMenu('mentor', false);
+                toggleMenu('program', false);
+                toggleMenu('library', false);
+                // Show dashboard again
+                const dashboardRows = document.querySelectorAll('.row.g-4 > .col-12');
+                dashboardRows.forEach(row => {
+                  if (row.id !== 'othersMenuSection' && row.id !== 'hrMenuSection' && row.id !== 'examinationMenuSection' && row.id !== 'mentorMenuSection' && row.id !== 'programMenuSection' && row.id !== 'libraryMenuSection') {
+                    const hasCard = row.querySelector('.card');
+                    if (hasCard) {
+                      row.style.display = 'block';
+                    }
+                  }
+                });
+              });
+            }
+          });
+        }
+      }
+
+      // Setup handlers after navigation renders
+      setTimeout(setupAllMenuHandlers, 100);
+      setTimeout(setupAllMenuHandlers, 500);
+      setTimeout(setupAllMenuHandlers, 1000);
+
+      // Attendance Modal Functionality
+      function updateAttendanceCount() {
+        const attendanceRadios = document.querySelectorAll('#attendanceModal input[type="radio"]');
+        let presentCount = 0;
+        let absentCount = 0;
+        let totalCount = 0;
+
+        attendanceRadios.forEach(radio => {
+          if (radio.checked) {
+            totalCount++;
+            if (radio.value === 'present') {
+              presentCount++;
+            } else if (radio.value === 'absent') {
+              absentCount++;
+            }
+          }
+        });
+
+        // Update badge counts
+        const presentCountEl = document.getElementById('presentCount');
+        const absentCountEl = document.getElementById('absentCount');
+        const totalCountEl = document.getElementById('totalCount');
+
+        if (presentCountEl) presentCountEl.textContent = `Present: ${presentCount}`;
+        if (absentCountEl) absentCountEl.textContent = `Absent: ${absentCount}`;
+        if (totalCountEl) totalCountEl.textContent = `Total: ${totalCount}`;
+      }
+
+      // Add event listeners to attendance modal when it's shown
+      const attendanceModal = document.getElementById('attendanceModal');
+      if (attendanceModal) {
+        attendanceModal.addEventListener('shown.bs.modal', function () {
+          // Initial count update
+          updateAttendanceCount();
+
+          // Add listeners to all radio buttons
+          const attendanceRadios = attendanceModal.querySelectorAll('input[type="radio"]');
+          attendanceRadios.forEach(radio => {
+            radio.addEventListener('change', updateAttendanceCount);
+          });
+        });
+
+        // Set default date to today
+        const attDateInput = document.getElementById('attDate');
+        if (attDateInput && !attDateInput.value) {
+          const today = new Date().toISOString().split('T')[0];
+          attDateInput.value = today;
+        }
+
+        // Save attendance button handler
+        const saveAttendanceBtn = document.getElementById('saveAttendanceBtn');
+        if (saveAttendanceBtn) {
+          saveAttendanceBtn.addEventListener('click', function() {
+            const attendanceData = {
+              subject: document.getElementById('attSubject')?.value || '',
+              date: document.getElementById('attDate')?.value || '',
+              class: document.getElementById('attClass')?.value || '',
+              semester: document.getElementById('attSemester')?.value || '',
+              timeSlot: document.getElementById('attTimeSlot')?.value || '',
+              room: document.getElementById('attRoom')?.value || '',
+              sessionType: document.getElementById('attSessionType')?.value || '',
+              topic: document.getElementById('attTopic')?.value || '',
+              notes: document.getElementById('attNotes')?.value || '',
+              students: []
+            };
+
+            // Collect student attendance data
+            const rows = attendanceModal.querySelectorAll('#attendanceTableBody tr');
+            rows.forEach(row => {
+              const name = row.cells[1]?.textContent.trim() || '';
+              const enrollment = row.cells[2]?.textContent.trim() || '';
+              const rollNo = row.cells[3]?.textContent.trim() || '';
+              const statusRadio = row.querySelector('input[type="radio"]:checked');
+              const status = statusRadio?.value || '';
+              const remarks = row.querySelector('input[type="text"]')?.value || '';
+
+              attendanceData.students.push({
+                name,
+                enrollment,
+                rollNo,
+                status,
+                remarks
+              });
+            });
+
+            // Here you would typically send this data to a server
+            console.log('Attendance Data:', attendanceData);
+            
+            // Show success message
+            alert('Attendance saved successfully!');
+            
+            // Close modal
+            const modalInstance = bootstrap.Modal.getInstance(attendanceModal);
+            if (modalInstance) {
+              modalInstance.hide();
+            }
+          });
+        }
+      }
+    </script>
+      <!-- Chatbot Component -->
+    {% include 'includes/chatbot.html' %}
+  </body>
+</html>
+
+
+
+
+
+

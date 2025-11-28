@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes" />
+    <title>College ERP Portal | Login</title>
+    <meta name="description" content="ERP-based Integrated Student Management System Portal" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+    <!-- Bootstrap 5 CSS (CDN) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'styles.css' %}" />
+    <script src="{% static 'navigation.js' %}"></script>
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="{% static 'styles.css' %}" as="style" />
+
+    <link rel="icon" href="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f393.svg" />
+  </head>
+  <body>
+    <!-- Top Bar -->
+    <div class="topbar py-1 small d-none d-lg-block">
+      <div class="container d-flex justify-content-between align-items-center">
+        <div class="d-flex gap-3 align-items-center">
+          <span class="text-white-50"><i class="bi bi-geo-alt me-1"></i>Campus ERP Portal</span>
+          <span class="text-white-50 d-none d-xl-inline"><i class="bi bi-shield-lock me-1"></i>Secure • Role-based</span>
+        </div>
+        <div class="d-flex flex-wrap gap-2 gap-md-3">
+          <a class="text-white-50 hover-white text-decoration-none" href="#features">Features</a>
+          <a class="text-white-50 hover-white text-decoration-none" href="#facilities">Facilities</a>
+          <a class="text-white-50 hover-white text-decoration-none" href="#contact">Contact</a>
+          <a class="text-white-50 hover-white text-decoration-none" href="#faq">FAQ</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top shadow-sm py-3">
+      <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="#">
+          <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f3eb.svg" alt="Logo" width="34" height="34" class="me-2" />
+          <span class="fw-bold brand-gradient">Institution ERP</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navMenu">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center" id="navMenu">
+            <!-- Dynamic navigation will be rendered here -->
+            <li class="nav-item ms-lg-2">
+              <a class="btn btn-primary-soft" href="#login">Login</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero position-relative overflow-hidden">
+      <div class="container position-relative">
+        <div class="row align-items-center py-5 gy-4">
+          <div class="col-lg-7">
+            <div class="badge rounded-pill px-3 py-2 bg-light text-primary fw-semibold mb-3 w-auto d-inline-flex align-items-center gap-2">
+              <i class="bi bi-lightning-charge-fill"></i>
+              Seamless ERP for Students, Staff & Admins
+            </div>
+            <h1 class="display-5 fw-bold mb-3">Integrated Student Management, Without Expensive Software</h1>
+            <p class="lead text-secondary mb-4">Unify admissions, fees, hostel, library and exams with cloud-first workflows, real-time dashboards and secure role-based access.</p>
+            <div class="d-flex flex-wrap gap-2 mb-3">
+              <a href="#login" class="btn btn-primary btn-lg"><i class="bi bi-box-arrow-in-right me-2"></i>Login to Portal</a>
+              <a href="#features" class="btn btn-outline-primary btn-lg"><i class="bi bi-grid me-2"></i>Explore Features</a>
+              <a href="#facilities" class="btn btn-outline-success btn-lg"><i class="bi bi-building me-2"></i>View Facilities</a>
+            </div>
+            <div class="d-flex flex-wrap align-items-center gap-3 gap-md-4 mt-3 text-secondary small">
+              <span><i class="bi bi-shield-check me-1 text-success"></i>Secure</span>
+              <span><i class="bi bi-cloud-check me-1 text-primary"></i>Cloud-first</span>
+              <span><i class="bi bi-graph-up-arrow me-1 text-warning"></i>Realtime</span>
+            </div>
+          </div>
+          <div class="col-lg-5" id="login">
+            <div class="card login-card border-0 shadow-lg">
+              <div class="card-body p-4 p-md-5">
+                  <div class="d-flex flex-column flex-sm-row align-items-start align-items-sm-center justify-content-between mb-3 gap-2">
+                  <h5 class="mb-0">Portal Login</h5>
+                  <div class="d-flex flex-wrap gap-1 gap-sm-2">
+                    <span class="badge bg-primary-soft text-primary small">Student</span>
+                    <span class="badge bg-success-soft text-success small">Faculty</span>
+                    <span class="badge bg-info-soft text-info small">Account</span>
+                    <span class="badge bg-secondary-soft text-secondary small">Scholarship</span>
+                    <span class="badge bg-warning-soft text-warning small">CRC</span>
+                    <span class="badge bg-danger-soft text-danger small">Admin</span>
+                  </div>
+                </div>
+                <form id="loginForm">
+                  <div class="mb-3">
+                    <label for="username" class="form-label">User Name / Enrollment No</label>
+                    <div class="input-group">
+                      <span class="input-group-text"><i class="bi bi-person"></i></span>
+                      <input type="text" class="form-control" id="username" placeholder="e.g. 21BCA1234" autocomplete="username" required />
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <label for="role" class="form-label">Login As</label>
+                    <select id="role" class="form-select" required>
+                      <option value="student" selected>Student</option>
+                      <option value="faculty">Faculty</option>
+                      <option value="accountoffice">Account Office</option>
+                      <option value="scholarship">Scholarship Cell</option>
+                      <option value="crc">CRC Department</option>
+                      <option value="admin">Admin</option>
+                    </select>
+                  </div>
+                  <div class="mb-2">
+                    <label for="password" class="form-label">Password</label>
+                    <div class="input-group">
+                      <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                      <input type="password" class="form-control" id="password" placeholder="Enter password" autocomplete="current-password" required />
+                      <button class="btn btn-outline-secondary" type="button" id="togglePwd" aria-label="Show/Hide Password"><i class="bi bi-eye"></i></button>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center mb-3 gap-2">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="" id="remember" />
+                      <label class="form-check-label" for="remember" style="cursor: pointer;">Remember me</label>
+                    </div>
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#recoverModal" class="small text-decoration-none">Get Password?</a>
+                  </div>
+                  <div class="d-grid">
+                    <button type="submit" class="btn btn-primary btn-lg">
+                      <i class="bi bi-box-arrow-in-right me-2"></i>Login
+                    </button>
+                  </div>
+                  <div id="loginError" class="alert alert-danger small mt-3 mb-0" role="alert" style="display:none;">
+                    <i class="bi bi-exclamation-triangle me-2"></i>Invalid enrollment or password. Please try again.
+                  </div>
+                </form>
+                <hr class="my-4" />
+                <div class="text-center small">
+                  <a href="https://portal3.tmu.ac.in/" class="text-decoration-none" target="_blank" rel="noopener">Go to TMU Medical/Dental Portal</a>
+                  <br>
+                  <a href="{% url 'admin-student-registration' %}" class="text-decoration-none text-warning mt-2 d-inline-block">Admin Portal</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-bg-shape"></div>
+    </header>
+
+    <!-- Profile Section (renders after login) -->
+    <section id="profileSection" class="py-4" style="display:none;">
+      <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h2 class="fw-bold mb-0">Profile</h2>
+          <div class="d-flex align-items-center gap-3">
+            <div id="profileMini" class="d-flex align-items-center gap-2"></div>
+            <button id="logoutBtn" class="btn btn-outline-secondary btn-sm"><i class="bi bi-box-arrow-right me-1"></i>Logout</button>
+          </div>
+        </div>
+        <div id="profileCard" class="card border-0 shadow-sm">
+          <div class="card-body">
+            <!-- Filled by JS -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features" class="py-5">
+      <div class="container">
+        <div class="text-center mb-4">
+          <span class="badge rounded-pill bg-primary-soft text-primary mb-2">Why this ERP</span>
+          <h2 class="fw-bold">Everything you need. Nothing you don't.</h2>
+          <p class="text-secondary">Built with cloud-native tools and smart automation for colleges of any size.</p>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-md-6 col-lg-3">
+            <div class="feature-tile h-100">
+              <i class="bi bi-person-check"></i>
+              <h6>Streamlined Admissions</h6>
+              <p>Custom online forms feed directly into the central student database.</p>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-3">
+            <div class="feature-tile h-100">
+              <i class="bi bi-receipt"></i>
+              <h6>Automated Receipts</h6>
+              <p>Payments generate instant digital receipts and ledger updates.</p>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-3">
+            <div class="feature-tile h-100">
+              <i class="bi bi-house-door"></i>
+              <h6>Hostel Tracking</h6>
+              <p>Live occupancy and room allocation synced with student records.</p>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-3">
+            <div class="feature-tile h-100">
+              <i class="bi bi-speedometer2"></i>
+              <h6>Real-time Dashboards</h6>
+              <p>Key metrics for administrators in one place, always up to date.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- KPI Band -->
+    <section class="py-5 bg-light" id="analytics">
+      <div class="container">
+        <div class="row text-center g-4">
+          <div class="col-6 col-lg-3">
+            <div class="kpi">
+              <div class="kpi-value" data-target="12000">0</div>
+              <div class="kpi-label">Active Students</div>
+            </div>
+          </div>
+          <div class="col-6 col-lg-3">
+            <div class="kpi">
+              <div class="kpi-value" data-target="650">0</div>
+              <div class="kpi-label">Faculty Members</div>
+            </div>
+          </div>
+          <div class="col-6 col-lg-3">
+            <div class="kpi">
+              <div class="kpi-value" data-target="98">0</div>
+              <div class="kpi-label">Fee Digitization %</div>
+            </div>
+          </div>
+          <div class="col-6 col-lg-3">
+            <div class="kpi">
+              <div class="kpi-value" data-target="24">0</div>
+              <div class="kpi-label">Hour Uptime</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Modules Grid -->
+    <section class="py-5" id="admissions">
+      <div class="container">
+        <div class="row g-4 align-items-center">
+          <div class="col-lg-6 order-lg-2">
+            <img class="img-fluid rounded-4 shadow" src="https://images.unsplash.com/photo-1553877522-43269d4ea984?q=80&w=1470&auto=format&fit=crop" alt="ERP Illustration" />
+          </div>
+          <div class="col-lg-6 order-lg-1">
+            <h2 class="fw-bold mb-3">Admissions to Finance — One Seamless Flow</h2>
+            <p class="text-secondary">No more duplicate data entry. Students apply once; records update everywhere automatically.</p>
+            <div class="d-flex flex-column gap-3 mt-3">
+              <div class="d-flex align-items-start gap-3">
+                <span class="icon-circle text-primary"><i class="bi bi-ui-checks-grid"></i></span>
+                <div>
+                  <div class="fw-semibold">Smart Forms</div>
+                  <div class="text-secondary small">Online forms with validation and auto-mapping.</div>
+                </div>
+              </div>
+              <div class="d-flex align-items-start gap-3" id="finance">
+                <span class="icon-circle text-success"><i class="bi bi-cash-coin"></i></span>
+                <div>
+                  <div class="fw-semibold">Integrated Fees</div>
+                  <div class="text-secondary small">Payment links, receipts, and ledgers in sync.</div>
+                </div>
+              </div>
+              <div class="d-flex align-items-start gap-3" id="hostel">
+                <span class="icon-circle text-warning"><i class="bi bi-building"></i></span>
+                <div>
+                  <div class="fw-semibold">Hostel & Library</div>
+                  <div class="text-secondary small">Live occupancy and circulation updates.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Campus Facilities -->
+    <section class="py-5 bg-light" id="facilities">
+      <div class="container">
+        <div class="text-center mb-5">
+          <span class="badge rounded-pill bg-primary-soft text-primary mb-2">Campus Life</span>
+          <h2 class="fw-bold">World-Class Facilities for Complete Development</h2>
+          <p class="text-secondary">Modern infrastructure supporting academic excellence and holistic student growth.</p>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body p-4 text-center">
+                <div class="icon-circle bg-primary-soft text-primary mx-auto mb-3">
+                  <i class="bi bi-building fs-4"></i>
+                </div>
+                <h5 class="fw-bold mb-2">Smart Classrooms</h5>
+                <p class="text-secondary small mb-0">Air-conditioned classrooms with projectors, smart boards and digital learning tools.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body p-4 text-center">
+                <div class="icon-circle bg-success-soft text-success mx-auto mb-3">
+                  <i class="bi bi-cpu fs-4"></i>
+                </div>
+                <h5 class="fw-bold mb-2">Computer Labs</h5>
+                <p class="text-secondary small mb-0">High-end computing labs with latest software and hardware for practical learning.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body p-4 text-center">
+                <div class="icon-circle bg-warning-soft text-warning mx-auto mb-3">
+                  <i class="bi bi-book fs-4"></i>
+                </div>
+                <h5 class="fw-bold mb-2">Central Library</h5>
+                <p class="text-secondary small mb-0">Digital library with 1,00,000+ books, e-resources and quiet study spaces.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body p-4 text-center">
+                <div class="icon-circle bg-info-soft text-info mx-auto mb-3">
+                  <i class="bi bi-house-door fs-4"></i>
+                </div>
+                <h5 class="fw-bold mb-2">Hostel Facilities</h5>
+                <p class="text-secondary small mb-0">Separate hostels for boys and girls with WiFi, mess and security.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body p-4 text-center">
+                <div class="icon-circle bg-danger-soft text-danger mx-auto mb-3">
+                  <i class="bi bi-hospital fs-4"></i>
+                </div>
+                <h5 class="fw-bold mb-2">Medical Center</h5>
+                <p class="text-secondary small mb-0">24/7 medical facility with doctor, ambulance and emergency care.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body p-4 text-center">
+                <div class="icon-circle bg-secondary-soft text-secondary mx-auto mb-3">
+                  <i class="bi bi-bus-front fs-4"></i>
+                </div>
+                <h5 class="fw-bold mb-2">Transport</h5>
+                <p class="text-secondary small mb-0">College buses covering major routes for convenient commuting.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row g-4 mt-3">
+          <div class="col-md-6 col-lg-3">
+            <div class="d-flex align-items-center gap-3 p-3 border rounded">
+              <i class="bi bi-bank text-primary fs-4"></i>
+              <div>
+                <div class="fw-semibold">Banking</div>
+                <div class="text-secondary small">ATM & Bank Branch</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-3">
+            <div class="d-flex align-items-center gap-3 p-3 border rounded">
+              <i class="bi bi-cup-hot text-success fs-4"></i>
+              <div>
+                <div class="fw-semibold">Cafeteria</div>
+                <div class="text-secondary small">Food Court & Canteen</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-3">
+            <div class="d-flex align-items-center gap-3 p-3 border rounded">
+              <i class="bi bi-wifi text-info fs-4"></i>
+              <div>
+                <div class="fw-semibold">WiFi</div>
+                <div class="text-secondary small">Campus-wide Internet</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-3">
+            <div class="d-flex align-items-center gap-3 p-3 border rounded">
+              <i class="bi bi-shield-check text-warning fs-4"></i>
+              <div>
+                <div class="fw-semibold">Security</div>
+                <div class="text-secondary small">24/7 CCTV & Guards</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ / Help -->
+    <section class="py-5 bg-light" id="faq">
+      <div class="container">
+        <div class="row g-4">
+          <div class="col-lg-6">
+            <h3 class="fw-bold mb-3">Frequently Asked Questions</h3>
+            <div class="accordion" id="faqAcc">
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="q1">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#a1" aria-expanded="true" aria-controls="a1">
+                    How do I reset my password?
+                  </button>
+                </h2>
+                <div id="a1" class="accordion-collapse collapse show" aria-labelledby="q1" data-bs-parent="#faqAcc">
+                  <div class="accordion-body">Click "Get Password?" on the login card and submit your registered mobile number.</div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="q2">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#a2" aria-expanded="false" aria-controls="a2">
+                    Which roles can access the portal?
+                  </button>
+                </h2>
+                <div id="a2" class="accordion-collapse collapse" aria-labelledby="q2" data-bs-parent="#faqAcc">
+                  <div class="accordion-body">Students, faculty, accounts, hostel, library and admins with role-based permissions.</div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="q3">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#a3" aria-expanded="false" aria-controls="a3">
+                    Do I need to install any software?
+                  </button>
+                </h2>
+                <div id="a3" class="accordion-collapse collapse" aria-labelledby="q3" data-bs-parent="#faqAcc">
+                  <div class="accordion-body">No installations are required. The portal runs in your browser using secure cloud services.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-5 offset-lg-1" id="contact">
+            <div class="card border-0 shadow h-100">
+              <div class="card-body p-4">
+                <h5 class="mb-3">Need Help?</h5>
+                <p class="text-secondary small">For technical issues, contact your department ERP coordinator.</p>
+                <div class="d-flex flex-column gap-2 small">
+                  <div><i class="bi bi-envelope me-2"></i>support@college-erp.example</div>
+                  <div><i class="bi bi-telephone me-2"></i>+91 98765 43210</div>
+                  <div class="d-flex gap-2 align-items-center">
+                    <i class="bi bi-share"></i>
+                    <a class="text-decoration-none" href="https://portal3.tmu.ac.in/" target="_blank" rel="noopener">Official TMU i-Zone</a>
+                  </div>
+                  <div class="d-flex gap-3 mt-2">
+                    <a class="btn btn-outline-secondary btn-sm" href="https://www.youtube.com/@TeerthankerMahaveerUniversity" target="_blank" rel="noopener"><i class="bi bi-youtube"></i></a>
+                    <a class="btn btn-outline-secondary btn-sm" href="https://www.facebook.com/tmumbd/" target="_blank" rel="noopener"><i class="bi bi-facebook"></i></a>
+                    <a class="btn btn-outline-secondary btn-sm" href="https://www.instagram.com/tmu_mbd/" target="_blank" rel="noopener"><i class="bi bi-instagram"></i></a>
+                    <a class="btn btn-outline-secondary btn-sm" href="https://twitter.com/Tmumbd" target="_blank" rel="noopener"><i class="bi bi-twitter-x"></i></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer py-4">
+      <div class="container d-flex flex-column flex-lg-row justify-content-between align-items-center gap-3">
+        <div class="small text-white-50">© <span id="year"></span> Institution ERP. All rights reserved.</div>
+        <div class="d-flex gap-3 small">
+          <a class="text-white-50 hover-white" href="#">Privacy</a>
+          <a class="text-white-50 hover-white" href="#">Terms</a>
+          <a class="text-white-50 hover-white" href="#">Accessibility</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Password Recovery Modal -->
+    <div class="modal fade" id="recoverModal" tabindex="-1" aria-labelledby="recoverLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="recoverLabel">Password Recovery</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="mb-3">
+                <label class="form-label">User ID</label>
+                <input type="text" class="form-control" placeholder="Enter your User ID" required />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">10 Digit Registered Mobile (without +91/0)</label>
+                <input type="tel" class="form-control" pattern="^[1-9][0-9]{9}$" placeholder="e.g. 9876543210" required />
+              </div>
+              <div class="form-text">We'll send a reset link or OTP to your registered contact.</div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary">Send</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS (CDN) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <!-- Django URLs for JavaScript -->
+    <script>
+      const DJANGO_URLS = {
+        dashboard: "{% url 'dashboard' %}",
+        facultyPortal: "{% url 'faculty-portal' %}",
+        accountOffice: "{% url 'account-office-portal' %}",
+        scholarship: "{% url 'scholarship-portal' %}",
+        crc: "{% url 'crc-portal' %}",
+        adminDashboard: "{% url 'admin-dashboard' %}",
+        index: "{% url 'index' %}",
+        adminRegistration: "{% url 'admin-student-registration' %}"
+      };
+    </script>
+
+    <!-- Page JS -->
+    <script>
+      const yearEl = document.getElementById('year');
+      if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+      const toggleBtn = document.getElementById('togglePwd');
+      const pwdInput = document.getElementById('password');
+      if (toggleBtn && pwdInput) {
+        toggleBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const isPwd = pwdInput.getAttribute('type') === 'password';
+          pwdInput.setAttribute('type', isPwd ? 'text' : 'password');
+          toggleBtn.innerHTML = isPwd ? '<i class="bi bi-eye-slash"></i>' : '<i class="bi bi-eye"></i>';
+          toggleBtn.setAttribute('aria-label', isPwd ? 'Hide Password' : 'Show Password');
+        });
+      }
+
+      // Smooth scroll for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          const href = this.getAttribute('href');
+          if (href !== '#' && href.length > 1) {
+            e.preventDefault();
+            const target = document.querySelector(href);
+            if (target) {
+              target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          }
+        });
+      });
+
+      const counters = document.querySelectorAll('.kpi-value');
+      const animateCounter = (el) => {
+        const target = parseInt(el.getAttribute('data-target') || '0', 10);
+        let current = 0;
+        const step = Math.max(1, Math.floor(target / 120));
+        const interval = setInterval(() => {
+          current += step;
+          if (current >= target) {
+            current = target;
+            clearInterval(interval);
+          }
+          el.textContent = current.toLocaleString();
+        }, 16);
+      };
+      const onScroll = () => {
+        counters.forEach((c) => {
+          if (c.getAttribute('data-animated')) return;
+          const rect = c.getBoundingClientRect();
+          if (rect.top < window.innerHeight - 40) {
+            c.setAttribute('data-animated', 'true');
+            animateCounter(c);
+          }
+        });
+      };
+      window.addEventListener('scroll', onScroll);
+      onScroll();
+
+      // Demo dataset (client-side only for hackathon demo)
+      const demoUsers = [
+        {
+          enrollment: 'TCA2259093',
+          password: '123456',
+          name: 'YASH JAIN',
+          nameHi: 'यश जैन',
+          studentNo: 'ST/045184',
+          course: 'BTECH-022',
+          category: 'GEN',
+          admittedYear: '22-23',
+          abcId: '850639866762',
+          mentor: '—',
+          dob: '11-Aug-2004',
+          academicYear: '25-26',
+          section: 'B',
+          fatherName: 'NEERAJ JAIN',
+          motherName: 'BABITA JAIN',
+          semesterYear: 'VII',
+          batch: '—',
+          motherNameHi: 'बबिता जैन',
+          avatar: 'https://i.pravatar.cc/100?img=68'
+        },
+        {
+          enrollment: '21BCA1234',
+          password: 'pass@123',
+          name: 'AARAV SHARMA',
+          nameHi: 'आरव शर्मा',
+          studentNo: 'ST/012345',
+          course: 'BCA-001',
+          category: 'OBC',
+          admittedYear: '21-22',
+          abcId: '780123456789',
+          mentor: 'Ms. Verma',
+          dob: '02-Jan-2003',
+          academicYear: '24-25',
+          section: 'A',
+          fatherName: 'RAHUL SHARMA',
+          motherName: 'SNEHA SHARMA',
+          semesterYear: 'V',
+          batch: 'B1',
+          motherNameHi: 'स्नेहा शर्मा',
+          avatar: 'https://i.pravatar.cc/100?img=12'
+        }
+      ];
+
+      const loginForm = document.getElementById('loginForm');
+      const loginError = document.getElementById('loginError');
+      const profileSection = document.getElementById('profileSection');
+      const profileCard = document.querySelector('#profileCard .card-body');
+      const profileMini = document.getElementById('profileMini');
+      const logoutBtn = document.getElementById('logoutBtn');
+
+      function renderProfile(user) {
+        if (!user || !profileCard) return;
+        // Mini header info
+        profileMini.innerHTML = `
+          <img src="${user.avatar}" alt="avatar" class="rounded-circle" width="44" height="44"/>
+          <div class="small">
+            <div class="fw-semibold">${user.name}</div>
+            <div class="text-secondary">${user.enrollment}</div>
+          </div>
+        `;
+
+        // Detailed grid similar to the reference
+        profileCard.innerHTML = `
+          <div class="row g-3">
+            <div class="col-md-6">
+              <div class="border rounded p-2 bg-light fw-semibold">Personal Information</div>
+              <div class="row g-2 mt-1">
+                <div class="col-5 text-secondary small">Enrolment No:</div>
+                <div class="col-7">${user.enrollment}</div>
+
+                <div class="col-5 text-secondary small">Student No:</div>
+                <div class="col-7">${user.studentNo}</div>
+
+                <div class="col-5 text-secondary small">Course:</div>
+                <div class="col-7">${user.course}</div>
+
+                <div class="col-5 text-secondary small">Category:</div>
+                <div class="col-7">${user.category}</div>
+
+                <div class="col-5 text-secondary small">Admitted Year:</div>
+                <div class="col-7">${user.admittedYear}</div>
+
+                <div class="col-5 text-secondary small">छात्र/छात्रा का नाम</div>
+                <div class="col-7">${user.nameHi}</div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="row g-2 mt-md-4 mt-2">
+                <div class="col-5 text-secondary small">ABC ID:</div>
+                <div class="col-7">${user.abcId}</div>
+
+                <div class="col-5 text-secondary small">Name:</div>
+                <div class="col-7">${user.name}</div>
+
+                <div class="col-5 text-secondary small">Section:</div>
+                <div class="col-7">${user.section}</div>
+
+                <div class="col-5 text-secondary small">Father Name:</div>
+                <div class="col-7">${user.fatherName}</div>
+
+                <div class="col-5 text-secondary small">Semester/Year:</div>
+                <div class="col-7">${user.semesterYear}</div>
+
+                <div class="col-5 text-secondary small">पिता का नाम</div>
+                <div class="col-7">${user.fatherName}</div>
+              </div>
+            </div>
+          </div>
+          <hr class="my-3"/>
+          <div class="row g-2">
+            <div class="col-5 col-md-2 text-secondary small">Mentor:</div>
+            <div class="col-7 col-md-4">${user.mentor}</div>
+            <div class="col-5 col-md-2 text-secondary small">Date of Birth:</div>
+            <div class="col-7 col-md-4">${user.dob}</div>
+
+            <div class="col-5 col-md-2 text-secondary small">Academic Year:</div>
+            <div class="col-7 col-md-4">${user.academicYear}</div>
+            <div class="col-5 col-md-2 text-secondary small">Mother Name:</div>
+            <div class="col-7 col-md-4">${user.motherName}</div>
+
+            <div class="col-5 col-md-2 text-secondary small">Batch:</div>
+            <div class="col-7 col-md-4">${user.batch}</div>
+            <div class="col-5 col-md-2 text-secondary small">माता का नाम</div>
+            <div class="col-7 col-md-4">${user.motherNameHi}</div>
+          </div>
+        `;
+
+        // Show section and scroll into view
+        profileSection.style.display = 'block';
+        document.getElementById('login')?.scrollIntoView({ behavior: 'smooth' });
+      }
+
+      function doLogin(enrollment, password, remember, role) {
+        // Demo credentials for different roles
+        const credentials = {
+          student: [
+            { enrollment: 'TCA2259093', password: '123456', name: 'YASH JAIN', avatar: 'https://i.pravatar.cc/100?img=68' },
+            { enrollment: '21BCA1234', password: 'pass@123', name: 'AARAV SHARMA', avatar: 'https://i.pravatar.cc/100?img=12' }
+          ],
+          faculty: [
+            { enrollment: 'FAC001', password: 'faculty123', name: 'Dr. Neha Gupta', avatar: 'https://i.pravatar.cc/100?img=11' },
+            { enrollment: 'FAC002', password: 'faculty456', name: 'Prof. Rahul Verma', avatar: 'https://i.pravatar.cc/100?img=22' }
+          ],
+          accountoffice: [
+            { enrollment: 'ACC001', password: 'account123', name: 'Account Office Admin', avatar: 'https://i.pravatar.cc/100?img=51' },
+            { enrollment: 'ACC002', password: 'account456', name: 'Accountant', avatar: 'https://i.pravatar.cc/100?img=52' }
+          ],
+          scholarship: [
+            { enrollment: 'SCH001', password: 'scholar123', name: 'Scholarship Officer', avatar: 'https://i.pravatar.cc/100?img=53' },
+            { enrollment: 'SCH002', password: 'scholar456', name: 'Assistant Officer', avatar: 'https://i.pravatar.cc/100?img=54' }
+          ],
+          crc: [
+            { enrollment: 'CRC001', password: 'crc123', name: 'Dr. Neha Gupta', avatar: 'https://i.pravatar.cc/100?img=11' },
+            { enrollment: 'CRC002', password: 'crc456', name: 'Mr. Rajesh Kumar', avatar: 'https://i.pravatar.cc/100?img=12' },
+            { enrollment: 'CRC003', password: 'crc789', name: 'Ms. Priya Sharma', avatar: 'https://i.pravatar.cc/100?img=13' }
+          ],
+          admin: [
+            { enrollment: 'ADMIN001', password: 'admin123', name: 'College Admin', avatar: 'https://i.pravatar.cc/100?img=1' }
+          ]
+        };
+
+        const user = credentials[role]?.find(u => u.enrollment.toLowerCase() === String(enrollment).toLowerCase() && u.password === password);
+        
+        if (!user) {
+          if (loginError) {
+            loginError.style.display = 'block';
+            loginError.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          }
+          // Shake animation for error
+          const loginCard = document.querySelector('.login-card');
+          if (loginCard) {
+            loginCard.style.animation = 'shake 0.5s';
+            setTimeout(() => { loginCard.style.animation = ''; }, 500);
+          }
+          return false;
+        }
+        
+        if (loginError) loginError.style.display = 'none';
+        const payload = { type: role, enrollment: user.enrollment, name: user.name };
+        const payloadStr = JSON.stringify(payload);
+        if (remember) localStorage.setItem('erpSession', payloadStr);
+        else sessionStorage.setItem('erpSession', payloadStr);
+
+        // Redirect based on role
+        if (role === 'student') {
+          window.location.href = DJANGO_URLS.dashboard;
+        } else if (role === 'faculty') {
+          window.location.href = DJANGO_URLS.facultyPortal;
+        } else if (role === 'accountoffice') {
+          window.location.href = DJANGO_URLS.accountOffice;
+        } else if (role === 'scholarship') {
+          window.location.href = DJANGO_URLS.scholarship;
+        } else if (role === 'crc') {
+          window.location.href = DJANGO_URLS.crc;
+        } else if (role === 'admin') {
+          window.location.href = DJANGO_URLS.adminDashboard;
+        }
+
+        return true;
+      }
+      
+
+      if (loginForm) {
+        loginForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const submitBtn = loginForm.querySelector('button[type="submit"]');
+          const enrollment = document.getElementById('username').value.trim();
+          const pwd = document.getElementById('password').value;
+          const remember = document.getElementById('remember').checked;
+          const role = document.getElementById('role').value;
+          
+          // Show loading state
+          if (submitBtn) {
+            submitBtn.classList.add('btn-loading');
+            submitBtn.disabled = true;
+          }
+          
+          // Simulate small delay for better UX
+          setTimeout(() => {
+            const success = doLogin(enrollment, pwd, remember, role);
+            if (!success && submitBtn) {
+              submitBtn.classList.remove('btn-loading');
+              submitBtn.disabled = false;
+            }
+          }, 300);
+        });
+      }
+
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', () => {
+          // Clear all session data
+          localStorage.removeItem('erpSession');
+          localStorage.removeItem('erpSessionEnrollment');
+          sessionStorage.removeItem('erpSession');
+          sessionStorage.removeItem('erpSessionEnrollment');
+          // Reload to show landing page
+          window.location.reload();
+        });
+      }
+
+      // Restore session - Show landing page first, don't auto-redirect
+      // User can manually login if they want to access their portal
+      // Auto-redirect is disabled to show landing page first
+      
+      // Optional: Uncomment below to enable auto-redirect on page load
+      /*
+      const existingSess = localStorage.getItem('erpSession') || sessionStorage.getItem('erpSession');
+      if (existingSess) {
+        try {
+          const sess = JSON.parse(existingSess);
+          if (sess && sess.enrollment) {
+            // Redirect based on role to prevent blinking/redirect loop
+            const role = sess.type;
+            if (role === 'student') {
+              window.location.href = DJANGO_URLS.dashboard;
+            } else if (role === 'faculty') {
+              window.location.href = DJANGO_URLS.facultyPortal;
+            } else if (role === 'accountoffice') {
+              window.location.href = DJANGO_URLS.accountOffice;
+            } else if (role === 'scholarship') {
+              window.location.href = DJANGO_URLS.scholarship;
+            } else if (role === 'crc') {
+              window.location.href = DJANGO_URLS.crc;
+            } else if (role === 'admin') {
+              window.location.href = DJANGO_URLS.adminDashboard;
+            } else {
+              window.location.href = DJANGO_URLS.dashboard;
+            }
+          }
+        } catch {}
+      }
+      */
+    </script>
+    
+    <!-- Chatbot Component -->
+    {% include 'includes/chatbot.html' %}
+  </body>
+</html>
+
+
+
+

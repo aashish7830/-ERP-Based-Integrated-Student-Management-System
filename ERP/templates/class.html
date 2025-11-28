@@ -1,0 +1,1888 @@
+{% extends 'base_student.html' %}
+{% load static %}
+
+{% block title %}Class Portal | ERP{% endblock %}
+
+{% block content %}
+<div class="row g-4">
+        <!-- Class Schedule Overview -->
+        <div class="col-lg-4">
+          <div class="card border-0 shadow-sm">
+            <div class="card-header bg-primary text-white">
+              <h5 class="mb-0"><i class="bi bi-calendar-week me-2"></i>Today's Schedule</h5>
+            </div>
+            <div class="card-body">
+              <div id="todaysSchedule">
+                <!-- Today's classes will be populated here -->
+              </div>
+              <hr class="my-3">
+              <div class="text-center">
+                <div class="badge bg-info fs-6 mb-2" id="totalClassesToday">4 Classes Today</div>
+                <div class="small text-secondary">Current Day Schedule</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Stats Card -->
+          <div class="card border-0 shadow-sm mt-3">
+            <div class="card-header bg-success text-white">
+              <h6 class="mb-0"><i class="bi bi-graph-up me-2"></i>Class Statistics</h6>
+            </div>
+            <div class="card-body">
+              <div class="row g-2">
+                <div class="col-6">
+                  <div class="text-center">
+                    <div class="fs-5 fw-bold text-primary" id="totalSubjects">8</div>
+                    <div class="small text-secondary">Subjects</div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="text-center">
+                    <div class="fs-5 fw-bold text-success" id="attendedClasses">45</div>
+                    <div class="small text-secondary">Attended</div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="text-center">
+                    <div class="fs-5 fw-bold text-warning" id="missedClasses">3</div>
+                    <div class="small text-secondary">Missed</div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="text-center">
+                    <div class="fs-5 fw-bold text-info" id="attendanceRate">94%</div>
+                    <div class="small text-secondary">Attendance</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Classroom Information Card -->
+          <div class="card border-0 shadow-sm mt-3">
+            <div class="card-header bg-warning text-dark">
+              <h6 class="mb-0"><i class="bi bi-building me-2"></i>Classroom Info</h6>
+              <div class="small text-muted">Drag classrooms to reorder or manage</div>
+            </div>
+            <div class="card-body">
+              <div id="classroomInfo" class="classroom-container">
+                <!-- Classroom information will be populated here -->
+              </div>
+              <div class="mt-3">
+                <button class="btn btn-outline-primary btn-sm" onclick="addNewClassroom()">
+                  <i class="bi bi-plus-circle me-1"></i>Add Classroom
+                </button>
+                <button class="btn btn-outline-success btn-sm ms-2" onclick="saveClassroomOrder()">
+                  <i class="bi bi-check-circle me-1"></i>Save Order
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Actions Card -->
+          <div class="card border-0 shadow-sm mt-3">
+            <div class="card-header bg-info text-white">
+              <h6 class="mb-0"><i class="bi bi-lightning me-2"></i>Quick Actions</h6>
+            </div>
+            <div class="card-body">
+              <div class="d-grid gap-2">
+                <button class="btn btn-outline-primary btn-sm" onclick="showClassNotes()">
+                  <i class="bi bi-journal-text me-1"></i>Class Notes
+                </button>
+                <button class="btn btn-outline-success btn-sm" onclick="showAttendanceHistory()">
+                  <i class="bi bi-calendar-check me-1"></i>Attendance History
+                </button>
+                <button class="btn btn-outline-warning btn-sm" onclick="showUpcomingClasses()">
+                  <i class="bi bi-calendar-event me-1"></i>Upcoming Classes
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Class Schedule -->
+        <div class="col-lg-8">
+          <div class="card border-0 shadow-sm">
+            <div class="card-header bg-primary text-white">
+              <div class="row align-items-center">
+                <div class="col-md-6">
+                  <h5 class="mb-0"><i class="bi bi-calendar3 me-2"></i>Weekly Schedule</h5>
+                </div>
+                <div class="col-md-6">
+                  <select class="form-select form-select-sm" id="weekFilter">
+                    <option value="current">Current Week</option>
+                    <option value="next">Next Week</option>
+                    <option value="all">All Weeks</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered align-middle">
+                  <thead class="table-light">
+                    <tr>
+                      <th>Time</th>
+                      <th>Monday</th>
+                      <th>Tuesday</th>
+                      <th>Wednesday</th>
+                      <th>Thursday</th>
+                      <th>Friday</th>
+                      <th>Saturday</th>
+                    </tr>
+                  </thead>
+                  <tbody id="weeklySchedule">
+                    <!-- Weekly schedule will be populated here -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Class Details Tabs -->
+      <div class="card border-0 shadow-sm mt-4">
+        <div class="card-header bg-primary text-white">
+          <ul class="nav nav-tabs card-header-tabs" id="classTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active text-white" id="schedule-tab" data-bs-toggle="tab" data-bs-target="#schedule" type="button" role="tab">
+                <i class="bi bi-calendar-week me-1" style="color: #111010;"></i> <span style="color: #111010;">Class Schedule</span>
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link text-white" id="subjects-tab" data-bs-toggle="tab" data-bs-target="#subjects" type="button" role="tab">
+                <i class="bi bi-book me-1" style="color: #111010;"></i> <span style="color: #111010;">Subjects & Faculty</span>
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link text-white" id="attendance-tab" data-bs-toggle="tab" data-bs-target="#attendance" type="button" role="tab">
+                <i class="bi bi-person-check me-1" style="color: #111010;"></i> <span style="color: #111010;">Attendance</span>
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link text-white" id="resources-tab" data-bs-toggle="tab" data-bs-target="#resources" type="button" role="tab">
+                <i class="bi bi-folder me-1" style="color: #111010;"></i> <span style="color: #111010;">Class Resources</span>
+              </button>
+            </li>
+          </ul>
+        </div>
+        <div class="card-body">
+          <div class="tab-content" id="classTabContent">
+            <!-- Class Schedule Tab -->
+            <div class="tab-pane fade show active" id="schedule" role="tabpanel">
+              <div class="row g-3" id="scheduleContainer">
+                <!-- Schedule details will be populated here -->
+              </div>
+            </div>
+
+            <!-- Subjects & Faculty Tab -->
+            <div class="tab-pane fade" id="subjects" role="tabpanel">
+              <div class="row g-3" id="subjectsContainer">
+                <!-- Subjects will be populated here -->
+              </div>
+            </div>
+
+            <!-- Attendance Tab -->
+            <div class="tab-pane fade" id="attendance" role="tabpanel">
+              <div class="table-responsive">
+                <table class="table table-striped align-middle">
+                  <thead>
+                    <tr>
+                      <th>Subject</th>
+                      <th>Faculty</th>
+                      <th>Total Classes</th>
+                      <th>Attended</th>
+                      <th>Missed</th>
+                      <th>Attendance %</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="attendanceBody">
+                    <!-- Attendance data will be populated here -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Class Resources Tab -->
+            <div class="tab-pane fade" id="resources" role="tabpanel">
+              <div class="row g-3" id="resourcesContainer">
+                <!-- Resources will be populated here -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Class Notes Modal -->
+      <div class="modal fade" id="classNotesModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+              <h5 class="modal-title"><i class="bi bi-journal-text me-2"></i>Class Notes</h5>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="row g-3" id="classNotesContainer">
+                <!-- Class notes will be populated here -->
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Attendance History Modal -->
+      <div class="modal fade" id="attendanceHistoryModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+              <h5 class="modal-title"><i class="bi bi-calendar-check me-2"></i>Attendance History</h5>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="table-responsive">
+                <table class="table table-striped align-middle">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Subject</th>
+                      <th>Faculty</th>
+                      <th>Time</th>
+                      <th>Status</th>
+                      <th>Remarks</th>
+                    </tr>
+                  </thead>
+                  <tbody id="attendanceHistoryBody">
+                    <!-- Attendance history will be populated here -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-success" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Upcoming Classes Modal -->
+      <div class="modal fade" id="upcomingClassesModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header bg-warning text-dark">
+              <h5 class="modal-title"><i class="bi bi-calendar-event me-2"></i>Upcoming Classes</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="row g-3" id="upcomingClassesContainer">
+                <!-- Upcoming classes will be populated here -->
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Add Classroom Modal -->
+      <div class="modal fade" id="addClassroomModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+              <h5 class="modal-title"><i class="bi bi-plus-circle me-2"></i>Add New Classroom</h5>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form id="addClassroomForm">
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="form-label">Room Number</label>
+                    <input type="text" class="form-control" id="newRoomNumber" placeholder="e.g. CS-107" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Capacity</label>
+                    <input type="number" class="form-control" id="newRoomCapacity" placeholder="e.g. 50" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Building</label>
+                    <input type="text" class="form-control" id="newBuilding" placeholder="e.g. Computer Science Block" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Floor</label>
+                    <select class="form-select" id="newFloor" required>
+                      <option value="">Select Floor</option>
+                      <option value="Ground Floor">Ground Floor</option>
+                      <option value="First Floor">First Floor</option>
+                      <option value="Second Floor">Second Floor</option>
+                      <option value="Third Floor">Third Floor</option>
+                    </select>
+                  </div>
+                  <div class="col-12">
+                    <label class="form-label">Facilities</label>
+                    <div class="row g-2">
+                      <div class="col-md-4">
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" value="Projector" id="facility1">
+                          <label class="form-check-label" for="facility1">Projector</label>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" value="Whiteboard" id="facility2">
+                          <label class="form-check-label" for="facility2">Whiteboard</label>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" value="AC" id="facility3">
+                          <label class="form-check-label" for="facility3">AC</label>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" value="WiFi" id="facility4">
+                          <label class="form-check-label" for="facility4">WiFi</label>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" value="Computer Lab" id="facility5">
+                          <label class="form-check-label" for="facility5">Computer Lab</label>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" value="Smart Board" id="facility6">
+                          <label class="form-check-label" for="facility6">Smart Board</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-primary" onclick="saveNewClassroom()">
+                <i class="bi bi-check-circle me-1"></i>Add Classroom
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+<style>
+      .classroom-container {
+        min-height: 200px;
+      }
+      
+      .classroom-item {
+        cursor: move;
+        transition: all 0.3s ease;
+        user-select: none;
+      }
+      
+      .classroom-item:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      }
+      
+      .classroom-item.dragging {
+        opacity: 0.5;
+        transform: rotate(5deg);
+      }
+      
+      .classroom-item.drag-over {
+        border: 2px dashed #007bff;
+        background-color: rgba(0, 123, 255, 0.1);
+      }
+      
+      .drop-zone {
+        min-height: 50px;
+        border: 2px dashed #dee2e6;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #6c757d;
+        margin: 10px 0;
+        transition: all 0.3s ease;
+      }
+      
+      .drop-zone.drag-over {
+        border-color: #007bff;
+        background-color: rgba(0, 123, 255, 0.1);
+        color: #007bff;
+      }
+      
+      .classroom-item .drag-handle {
+        cursor: grab;
+        color: #6c757d;
+        margin-right: 8px;
+      }
+      
+      .classroom-item .drag-handle:active {
+        cursor: grabbing;
+      }
+      
+      .classroom-item .delete-btn {
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+      
+      .classroom-item:hover .delete-btn {
+        opacity: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg bg-white navbar-light shadow-sm">
+      <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="{% url 'dashboard' %}">
+          <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f3eb.svg" width="30" class="me-2"/>
+          <span class="fw-bold brand-gradient">Institution ERP</span>
+        </a>
+        <div class="ms-auto d-flex align-items-center gap-3">
+          <div id="userMini" class="small"></div>
+          <button id="logoutBtn" class="btn btn-outline-secondary btn-sm"><i class="bi bi-box-arrow-right me-1"></i>Logout</button>
+        </div>
+      </div>
+    </nav>
+
+    <div class="border-top" style="border-color:#f0ad00 !important"></div>
+
+    <div class="container my-4">
+      <ul class="nav nav-pills flex-wrap gap-2 py-2" id="moduleTabs">
+        <!-- Dynamic navigation will be rendered here -->
+      </ul>
+
+      <div class="row g-4">
+        <!-- Class Schedule Overview -->
+        <div class="col-lg-4">
+          <div class="card border-0 shadow-sm">
+            <div class="card-header bg-primary text-white">
+              <h5 class="mb-0"><i class="bi bi-calendar-week me-2"></i>Today's Schedule</h5>
+            </div>
+            <div class="card-body">
+              <div id="todaysSchedule">
+                <!-- Today's classes will be populated here -->
+              </div>
+              <hr class="my-3">
+              <div class="text-center">
+                <div class="badge bg-info fs-6 mb-2" id="totalClassesToday">4 Classes Today</div>
+                <div class="small text-secondary">Current Day Schedule</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Stats Card -->
+          <div class="card border-0 shadow-sm mt-3">
+            <div class="card-header bg-success text-white">
+              <h6 class="mb-0"><i class="bi bi-graph-up me-2"></i>Class Statistics</h6>
+            </div>
+            <div class="card-body">
+              <div class="row g-2">
+                <div class="col-6">
+                  <div class="text-center">
+                    <div class="fs-5 fw-bold text-primary" id="totalSubjects">8</div>
+                    <div class="small text-secondary">Subjects</div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="text-center">
+                    <div class="fs-5 fw-bold text-success" id="attendedClasses">45</div>
+                    <div class="small text-secondary">Attended</div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="text-center">
+                    <div class="fs-5 fw-bold text-warning" id="missedClasses">3</div>
+                    <div class="small text-secondary">Missed</div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="text-center">
+                    <div class="fs-5 fw-bold text-info" id="attendanceRate">94%</div>
+                    <div class="small text-secondary">Attendance</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Classroom Information Card -->
+          <div class="card border-0 shadow-sm mt-3">
+            <div class="card-header bg-warning text-dark">
+              <h6 class="mb-0"><i class="bi bi-building me-2"></i>Classroom Info</h6>
+              <div class="small text-muted">Drag classrooms to reorder or manage</div>
+            </div>
+            <div class="card-body">
+              <div id="classroomInfo" class="classroom-container">
+                <!-- Classroom information will be populated here -->
+              </div>
+              <div class="mt-3">
+                <button class="btn btn-outline-primary btn-sm" onclick="addNewClassroom()">
+                  <i class="bi bi-plus-circle me-1"></i>Add Classroom
+                </button>
+                <button class="btn btn-outline-success btn-sm ms-2" onclick="saveClassroomOrder()">
+                  <i class="bi bi-check-circle me-1"></i>Save Order
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Actions Card -->
+          <div class="card border-0 shadow-sm mt-3">
+            <div class="card-header bg-info text-white">
+              <h6 class="mb-0"><i class="bi bi-lightning me-2"></i>Quick Actions</h6>
+            </div>
+            <div class="card-body">
+              <div class="d-grid gap-2">
+                <button class="btn btn-outline-primary btn-sm" onclick="showClassNotes()">
+                  <i class="bi bi-journal-text me-1"></i>Class Notes
+                </button>
+                <button class="btn btn-outline-success btn-sm" onclick="showAttendanceHistory()">
+                  <i class="bi bi-calendar-check me-1"></i>Attendance History
+                </button>
+                <button class="btn btn-outline-warning btn-sm" onclick="showUpcomingClasses()">
+                  <i class="bi bi-calendar-event me-1"></i>Upcoming Classes
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Class Schedule -->
+        <div class="col-lg-8">
+          <div class="card border-0 shadow-sm">
+            <div class="card-header bg-primary text-white">
+              <div class="row align-items-center">
+                <div class="col-md-6">
+                  <h5 class="mb-0"><i class="bi bi-calendar3 me-2"></i>Weekly Schedule</h5>
+                </div>
+                <div class="col-md-6">
+                  <select class="form-select form-select-sm" id="weekFilter">
+                    <option value="current">Current Week</option>
+                    <option value="next">Next Week</option>
+                    <option value="all">All Weeks</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered align-middle">
+                  <thead class="table-light">
+                    <tr>
+                      <th>Time</th>
+                      <th>Monday</th>
+                      <th>Tuesday</th>
+                      <th>Wednesday</th>
+                      <th>Thursday</th>
+                      <th>Friday</th>
+                      <th>Saturday</th>
+                    </tr>
+                  </thead>
+                  <tbody id="weeklySchedule">
+                    <!-- Weekly schedule will be populated here -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Class Details Tabs -->
+      <div class="card border-0 shadow-sm mt-4">
+        <div class="card-header bg-primary text-white">
+          <ul class="nav nav-tabs card-header-tabs" id="classTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active text-white" id="schedule-tab" data-bs-toggle="tab" data-bs-target="#schedule" type="button" role="tab">
+                <i class="bi bi-calendar-week me-1" style="color: #111010;"></i> <span style="color: #111010;">Class Schedule</span>
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link text-white" id="subjects-tab" data-bs-toggle="tab" data-bs-target="#subjects" type="button" role="tab">
+                <i class="bi bi-book me-1" style="color: #111010;"></i> <span style="color: #111010;">Subjects & Faculty</span>
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link text-white" id="attendance-tab" data-bs-toggle="tab" data-bs-target="#attendance" type="button" role="tab">
+                <i class="bi bi-person-check me-1" style="color: #111010;"></i> <span style="color: #111010;">Attendance</span>
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link text-white" id="resources-tab" data-bs-toggle="tab" data-bs-target="#resources" type="button" role="tab">
+                <i class="bi bi-folder me-1" style="color: #111010;"></i> <span style="color: #111010;">Class Resources</span>
+              </button>
+            </li>
+          </ul>
+        </div>
+        <div class="card-body">
+          <div class="tab-content" id="classTabContent">
+            <!-- Class Schedule Tab -->
+            <div class="tab-pane fade show active" id="schedule" role="tabpanel">
+              <div class="row g-3" id="scheduleContainer">
+                <!-- Schedule details will be populated here -->
+              </div>
+            </div>
+
+            <!-- Subjects & Faculty Tab -->
+            <div class="tab-pane fade" id="subjects" role="tabpanel">
+              <div class="row g-3" id="subjectsContainer">
+                <!-- Subjects will be populated here -->
+              </div>
+            </div>
+
+            <!-- Attendance Tab -->
+            <div class="tab-pane fade" id="attendance" role="tabpanel">
+              <div class="table-responsive">
+                <table class="table table-striped align-middle">
+                  <thead>
+                    <tr>
+                      <th>Subject</th>
+                      <th>Faculty</th>
+                      <th>Total Classes</th>
+                      <th>Attended</th>
+                      <th>Missed</th>
+                      <th>Attendance %</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="attendanceBody">
+                    <!-- Attendance data will be populated here -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Class Resources Tab -->
+            <div class="tab-pane fade" id="resources" role="tabpanel">
+              <div class="row g-3" id="resourcesContainer">
+                <!-- Resources will be populated here -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Class Notes Modal -->
+      <div class="modal fade" id="classNotesModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+              <h5 class="modal-title"><i class="bi bi-journal-text me-2"></i>Class Notes</h5>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="row g-3" id="classNotesContainer">
+                <!-- Class notes will be populated here -->
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Attendance History Modal -->
+      <div class="modal fade" id="attendanceHistoryModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+              <h5 class="modal-title"><i class="bi bi-calendar-check me-2"></i>Attendance History</h5>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="table-responsive">
+                <table class="table table-striped align-middle">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Subject</th>
+                      <th>Faculty</th>
+                      <th>Time</th>
+                      <th>Status</th>
+                      <th>Remarks</th>
+                    </tr>
+                  </thead>
+                  <tbody id="attendanceHistoryBody">
+                    <!-- Attendance history will be populated here -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-success" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Upcoming Classes Modal -->
+      <div class="modal fade" id="upcomingClassesModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header bg-warning text-dark">
+              <h5 class="modal-title"><i class="bi bi-calendar-event me-2"></i>Upcoming Classes</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="row g-3" id="upcomingClassesContainer">
+                <!-- Upcoming classes will be populated here -->
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Add Classroom Modal -->
+      <div class="modal fade" id="addClassroomModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+              <h5 class="modal-title"><i class="bi bi-plus-circle me-2"></i>Add New Classroom</h5>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form id="addClassroomForm">
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="form-label">Room Number</label>
+                    <input type="text" class="form-control" id="newRoomNumber" placeholder="e.g. CS-107" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Capacity</label>
+                    <input type="number" class="form-control" id="newRoomCapacity" placeholder="e.g. 50" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Building</label>
+                    <input type="text" class="form-control" id="newBuilding" placeholder="e.g. Computer Science Block" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Floor</label>
+                    <select class="form-select" id="newFloor" required>
+                      <option value="">Select Floor</option>
+                      <option value="Ground Floor">Ground Floor</option>
+                      <option value="First Floor">First Floor</option>
+                      <option value="Second Floor">Second Floor</option>
+                      <option value="Third Floor">Third Floor</option>
+                    </select>
+                  </div>
+                  <div class="col-12">
+                    <label class="form-label">Facilities</label>
+                    <div class="row g-2">
+                      <div class="col-md-4">
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" value="Projector" id="facility1">
+                          <label class="form-check-label" for="facility1">Projector</label>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" value="Whiteboard" id="facility2">
+                          <label class="form-check-label" for="facility2">Whiteboard</label>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" value="AC" id="facility3">
+                          <label class="form-check-label" for="facility3">AC</label>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" value="WiFi" id="facility4">
+                          <label class="form-check-label" for="facility4">WiFi</label>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" value="Computer Lab" id="facility5">
+                          <label class="form-check-label" for="facility5">Computer Lab</label>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" value="Smart Board" id="facility6">
+                          <label class="form-check-label" for="facility6">Smart Board</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-primary" onclick="saveNewClassroom()">
+                <i class="bi bi-check-circle me-1"></i>Add Classroom
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer py-3 mt-4">
+      <div class="container small text-white-50 d-flex justify-content-between">
+        <div>© <span id="year"></span> Institution ERP</div>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      const yearEl = document.getElementById('year'); if (yearEl) yearEl.textContent = new Date().getFullYear();
+      const sessStr = localStorage.getItem('erpSession') || sessionStorage.getItem('erpSession'); if (!sessStr) window.location.replace('/');
+      let sess; try { sess = JSON.parse(sessStr || '{}'); } catch { sess = {}; }
+      const demoUsers = [
+        { enrollment:'TCA2259093', name:'YASH JAIN', course:'BTECH-022', email:'yash.jain@email.com', phone:'9876543210', avatar:'https://i.pravatar.cc/100?img=68' },
+        { enrollment:'21BCA1234', name:'AARAV SHARMA', course:'BCA-001', email:'aarav.sharma@email.com', phone:'9876543211', avatar:'https://i.pravatar.cc/100?img=12' }
+      ];
+      const user = demoUsers.find(u => u.enrollment === sess?.enrollment); if (!user) window.location.replace('/');
+      document.getElementById('userMini').innerHTML = `<div class="d-flex align-items-center gap-2"><img src="${user.avatar}" class="rounded-circle" width="32" height="32"/><div><div class="fw-semibold">${user.name}</div><div class="text-secondary">${user.enrollment}</div></div></div>`;
+      document.getElementById('logoutBtn').addEventListener('click', () => { localStorage.removeItem('erpSession'); sessionStorage.removeItem('erpSession'); window.location.replace('/'); });
+
+      // Class schedule data
+      const classSchedule = [
+        {
+          id: 1,
+          subject: 'Data Structures',
+          faculty: 'Dr. Neha Gupta',
+          room: 'CS-101',
+          roomNumber: 'CS-101',
+          roomCapacity: 60,
+          roomFacilities: ['Projector', 'Whiteboard', 'AC', 'WiFi'],
+          building: 'Computer Science Block',
+          floor: 'Ground Floor',
+          time: '09:00-10:00',
+          day: 'Monday',
+          type: 'Lecture',
+          status: 'completed',
+          attendance: 'present',
+          notes: 'Binary trees and traversal algorithms'
+        },
+        {
+          id: 2,
+          subject: 'Web Development',
+          faculty: 'Prof. Rahul Verma',
+          room: 'CS-102',
+          roomNumber: 'CS-102',
+          roomCapacity: 40,
+          roomFacilities: ['Computer Lab', 'Projector', 'Whiteboard', 'AC', 'WiFi'],
+          building: 'Computer Science Block',
+          floor: 'Ground Floor',
+          time: '10:00-11:00',
+          day: 'Monday',
+          type: 'Practical',
+          status: 'completed',
+          attendance: 'present',
+          notes: 'HTML5 and CSS3 fundamentals'
+        },
+        {
+          id: 3,
+          subject: 'Database Management',
+          faculty: 'Dr. Priya Singh',
+          room: 'CS-103',
+          roomNumber: 'CS-103',
+          roomCapacity: 50,
+          roomFacilities: ['Projector', 'Whiteboard', 'AC', 'WiFi', 'Database Server'],
+          building: 'Computer Science Block',
+          floor: 'Ground Floor',
+          time: '11:00-12:00',
+          day: 'Monday',
+          type: 'Lecture',
+          status: 'completed',
+          attendance: 'present',
+          notes: 'SQL queries and database design'
+        },
+        {
+          id: 4,
+          subject: 'Machine Learning',
+          faculty: 'Dr. Amit Kumar',
+          room: 'CS-104',
+          roomNumber: 'CS-104',
+          roomCapacity: 45,
+          roomFacilities: ['Projector', 'Whiteboard', 'AC', 'WiFi', 'GPU Workstations'],
+          building: 'Computer Science Block',
+          floor: 'First Floor',
+          time: '14:00-15:00',
+          day: 'Monday',
+          type: 'Lecture',
+          status: 'upcoming',
+          attendance: null,
+          notes: null
+        },
+        {
+          id: 5,
+          subject: 'Software Engineering',
+          faculty: 'Prof. Sneha Patel',
+          room: 'CS-105',
+          roomNumber: 'CS-105',
+          roomCapacity: 35,
+          roomFacilities: ['Projector', 'Whiteboard', 'AC', 'WiFi', 'Collaboration Tools'],
+          building: 'Computer Science Block',
+          floor: 'First Floor',
+          time: '15:00-16:00',
+          day: 'Monday',
+          type: 'Tutorial',
+          status: 'upcoming',
+          attendance: null,
+          notes: null
+        }
+      ];
+
+      // Weekly schedule data
+      const weeklySchedule = {
+        '09:00-10:00': {
+          'Monday': { subject: 'Data Structures', faculty: 'Dr. Neha Gupta', room: 'CS-101', roomNumber: 'CS-101', roomCapacity: 60, building: 'Computer Science Block', floor: 'Ground Floor', type: 'Lecture' },
+          'Tuesday': { subject: 'Operating Systems', faculty: 'Dr. Rajesh Tiwari', room: 'CS-101', roomNumber: 'CS-101', roomCapacity: 60, building: 'Computer Science Block', floor: 'Ground Floor', type: 'Lecture' },
+          'Wednesday': { subject: 'Data Structures', faculty: 'Dr. Neha Gupta', room: 'CS-101', roomNumber: 'CS-101', roomCapacity: 60, building: 'Computer Science Block', floor: 'Ground Floor', type: 'Tutorial' },
+          'Thursday': { subject: 'Computer Networks', faculty: 'Dr. Rajesh Tiwari', room: 'CS-101', roomNumber: 'CS-101', roomCapacity: 60, building: 'Computer Science Block', floor: 'Ground Floor', type: 'Lecture' },
+          'Friday': { subject: 'Data Structures', faculty: 'Dr. Neha Gupta', room: 'CS-101', roomNumber: 'CS-101', roomCapacity: 60, building: 'Computer Science Block', floor: 'Ground Floor', type: 'Practical' },
+          'Saturday': { subject: 'Operating Systems', faculty: 'Dr. Rajesh Tiwari', room: 'CS-101', roomNumber: 'CS-101', roomCapacity: 60, building: 'Computer Science Block', floor: 'Ground Floor', type: 'Practical' }
+        },
+        '10:00-11:00': {
+          'Monday': { subject: 'Web Development', faculty: 'Prof. Rahul Verma', room: 'CS-102', roomNumber: 'CS-102', roomCapacity: 40, building: 'Computer Science Block', floor: 'Ground Floor', type: 'Practical' },
+          'Tuesday': { subject: 'Database Management', faculty: 'Dr. Priya Singh', room: 'CS-103', roomNumber: 'CS-103', roomCapacity: 50, building: 'Computer Science Block', floor: 'Ground Floor', type: 'Lecture' },
+          'Wednesday': { subject: 'Web Development', faculty: 'Prof. Rahul Verma', room: 'CS-102', roomNumber: 'CS-102', roomCapacity: 40, building: 'Computer Science Block', floor: 'Ground Floor', type: 'Lecture' },
+          'Thursday': { subject: 'Machine Learning', faculty: 'Dr. Amit Kumar', room: 'CS-104', roomNumber: 'CS-104', roomCapacity: 45, building: 'Computer Science Block', floor: 'First Floor', type: 'Lecture' },
+          'Friday': { subject: 'Web Development', faculty: 'Prof. Rahul Verma', room: 'CS-102', roomNumber: 'CS-102', roomCapacity: 40, building: 'Computer Science Block', floor: 'Ground Floor', type: 'Tutorial' },
+          'Saturday': { subject: 'Database Management', faculty: 'Dr. Priya Singh', room: 'CS-103', roomNumber: 'CS-103', roomCapacity: 50, building: 'Computer Science Block', floor: 'Ground Floor', type: 'Practical' }
+        },
+        '11:00-12:00': {
+          'Monday': { subject: 'Database Management', faculty: 'Dr. Priya Singh', room: 'CS-103', roomNumber: 'CS-103', roomCapacity: 50, building: 'Computer Science Block', floor: 'Ground Floor', type: 'Lecture' },
+          'Tuesday': { subject: 'Software Engineering', faculty: 'Prof. Sneha Patel', room: 'CS-105', roomNumber: 'CS-105', roomCapacity: 35, building: 'Computer Science Block', floor: 'First Floor', type: 'Lecture' },
+          'Wednesday': { subject: 'Machine Learning', faculty: 'Dr. Amit Kumar', room: 'CS-104', roomNumber: 'CS-104', roomCapacity: 45, building: 'Computer Science Block', floor: 'First Floor', type: 'Practical' },
+          'Thursday': { subject: 'Software Engineering', faculty: 'Prof. Sneha Patel', room: 'CS-105', roomNumber: 'CS-105', roomCapacity: 35, building: 'Computer Science Block', floor: 'First Floor', type: 'Tutorial' },
+          'Friday': { subject: 'Machine Learning', faculty: 'Dr. Amit Kumar', room: 'CS-104', roomNumber: 'CS-104', roomCapacity: 45, building: 'Computer Science Block', floor: 'First Floor', type: 'Lecture' },
+          'Saturday': { subject: 'Software Engineering', faculty: 'Prof. Sneha Patel', room: 'CS-105', roomNumber: 'CS-105', roomCapacity: 35, building: 'Computer Science Block', floor: 'First Floor', type: 'Practical' }
+        },
+        '14:00-15:00': {
+          'Monday': { subject: 'Machine Learning', faculty: 'Dr. Amit Kumar', room: 'CS-104', roomNumber: 'CS-104', roomCapacity: 45, building: 'Computer Science Block', floor: 'First Floor', type: 'Lecture' },
+          'Tuesday': { subject: 'Computer Graphics', faculty: 'Dr. Anjali Singh', room: 'CS-106', roomNumber: 'CS-106', roomCapacity: 30, building: 'Computer Science Block', floor: 'First Floor', type: 'Lecture' },
+          'Wednesday': { subject: 'Computer Networks', faculty: 'Dr. Rajesh Tiwari', room: 'CS-101', roomNumber: 'CS-101', roomCapacity: 60, building: 'Computer Science Block', floor: 'Ground Floor', type: 'Practical' },
+          'Thursday': { subject: 'Computer Graphics', faculty: 'Dr. Anjali Singh', room: 'CS-106', roomNumber: 'CS-106', roomCapacity: 30, building: 'Computer Science Block', floor: 'First Floor', type: 'Practical' },
+          'Friday': { subject: 'Computer Networks', faculty: 'Dr. Rajesh Tiwari', room: 'CS-101', roomNumber: 'CS-101', roomCapacity: 60, building: 'Computer Science Block', floor: 'Ground Floor', type: 'Tutorial' },
+          'Saturday': { subject: 'Computer Graphics', faculty: 'Dr. Anjali Singh', room: 'CS-106', roomNumber: 'CS-106', roomCapacity: 30, building: 'Computer Science Block', floor: 'First Floor', type: 'Tutorial' }
+        },
+        '15:00-16:00': {
+          'Monday': { subject: 'Software Engineering', faculty: 'Prof. Sneha Patel', room: 'CS-105', roomNumber: 'CS-105', roomCapacity: 35, building: 'Computer Science Block', floor: 'First Floor', type: 'Tutorial' },
+          'Tuesday': { subject: 'Operating Systems', faculty: 'Dr. Rajesh Tiwari', room: 'CS-101', roomNumber: 'CS-101', roomCapacity: 60, building: 'Computer Science Block', floor: 'Ground Floor', type: 'Practical' },
+          'Wednesday': { subject: 'Database Management', faculty: 'Dr. Priya Singh', room: 'CS-103', roomNumber: 'CS-103', roomCapacity: 50, building: 'Computer Science Block', floor: 'Ground Floor', type: 'Tutorial' },
+          'Thursday': { subject: 'Operating Systems', faculty: 'Dr. Rajesh Tiwari', room: 'CS-101', roomNumber: 'CS-101', roomCapacity: 60, building: 'Computer Science Block', floor: 'Ground Floor', type: 'Tutorial' },
+          'Friday': { subject: 'Software Engineering', faculty: 'Prof. Sneha Patel', room: 'CS-105', roomNumber: 'CS-105', roomCapacity: 35, building: 'Computer Science Block', floor: 'First Floor', type: 'Lecture' },
+          'Saturday': { subject: 'Machine Learning', faculty: 'Dr. Amit Kumar', room: 'CS-104', roomNumber: 'CS-104', roomCapacity: 45, building: 'Computer Science Block', floor: 'First Floor', type: 'Tutorial' }
+        }
+      };
+
+      // Subjects data
+      const subjects = [
+        {
+          id: 1,
+          name: 'Data Structures',
+          code: 'CS-301',
+          faculty: 'Dr. Neha Gupta',
+          credits: 4,
+          type: 'Core',
+          description: 'Fundamental data structures and algorithms',
+          email: 'neha.gupta@college.edu',
+          phone: '9876543210',
+          office: 'CS-201',
+          avatar: 'https://i.pravatar.cc/100?img=11'
+        },
+        {
+          id: 2,
+          name: 'Web Development',
+          code: 'CS-302',
+          faculty: 'Prof. Rahul Verma',
+          credits: 3,
+          type: 'Elective',
+          description: 'Modern web development technologies',
+          email: 'rahul.verma@college.edu',
+          phone: '9876543211',
+          office: 'CS-202',
+          avatar: 'https://i.pravatar.cc/100?img=22'
+        },
+        {
+          id: 3,
+          name: 'Database Management',
+          code: 'CS-303',
+          faculty: 'Dr. Priya Singh',
+          credits: 4,
+          type: 'Core',
+          description: 'Database design and management systems',
+          email: 'priya.singh@college.edu',
+          phone: '9876543212',
+          office: 'CS-203',
+          avatar: 'https://i.pravatar.cc/100?img=33'
+        },
+        {
+          id: 4,
+          name: 'Machine Learning',
+          code: 'CS-304',
+          faculty: 'Dr. Amit Kumar',
+          credits: 3,
+          type: 'Elective',
+          description: 'Introduction to machine learning algorithms',
+          email: 'amit.kumar@college.edu',
+          phone: '9876543213',
+          office: 'CS-204',
+          avatar: 'https://i.pravatar.cc/100?img=44'
+        },
+        {
+          id: 5,
+          name: 'Software Engineering',
+          code: 'CS-305',
+          faculty: 'Prof. Sneha Patel',
+          credits: 4,
+          type: 'Core',
+          description: 'Software development methodologies and practices',
+          email: 'sneha.patel@college.edu',
+          phone: '9876543214',
+          office: 'CS-205',
+          avatar: 'https://i.pravatar.cc/100?img=55'
+        },
+        {
+          id: 6,
+          name: 'Computer Networks',
+          code: 'CS-306',
+          faculty: 'Dr. Rajesh Tiwari',
+          credits: 3,
+          type: 'Core',
+          description: 'Network protocols and communication systems',
+          email: 'rajesh.tiwari@college.edu',
+          phone: '9876543215',
+          office: 'CS-206',
+          avatar: 'https://i.pravatar.cc/100?img=66'
+        },
+        {
+          id: 7,
+          name: 'Operating Systems',
+          code: 'CS-307',
+          faculty: 'Dr. Rajesh Tiwari',
+          credits: 4,
+          type: 'Core',
+          description: 'Operating system concepts and implementation',
+          email: 'rajesh.tiwari@college.edu',
+          phone: '9876543215',
+          office: 'CS-206',
+          avatar: 'https://i.pravatar.cc/100?img=66'
+        },
+        {
+          id: 8,
+          name: 'Computer Graphics',
+          code: 'CS-308',
+          faculty: 'Dr. Anjali Singh',
+          credits: 3,
+          type: 'Elective',
+          description: 'Computer graphics algorithms and applications',
+          email: 'anjali.singh@college.edu',
+          phone: '9876543216',
+          office: 'CS-207',
+          avatar: 'https://i.pravatar.cc/100?img=77'
+        }
+      ];
+
+      // Attendance data
+      const attendanceData = [
+        {
+          subject: 'Data Structures',
+          faculty: 'Dr. Neha Gupta',
+          totalClasses: 20,
+          attended: 19,
+          missed: 1,
+          attendancePercent: 95,
+          status: 'Good'
+        },
+        {
+          subject: 'Web Development',
+          faculty: 'Prof. Rahul Verma',
+          totalClasses: 18,
+          attended: 17,
+          missed: 1,
+          attendancePercent: 94,
+          status: 'Good'
+        },
+        {
+          subject: 'Database Management',
+          faculty: 'Dr. Priya Singh',
+          totalClasses: 22,
+          attended: 21,
+          missed: 1,
+          attendancePercent: 95,
+          status: 'Good'
+        },
+        {
+          subject: 'Machine Learning',
+          faculty: 'Dr. Amit Kumar',
+          totalClasses: 16,
+          attended: 15,
+          missed: 1,
+          attendancePercent: 94,
+          status: 'Good'
+        },
+        {
+          subject: 'Software Engineering',
+          faculty: 'Prof. Sneha Patel',
+          totalClasses: 20,
+          attended: 18,
+          missed: 2,
+          attendancePercent: 90,
+          status: 'Good'
+        },
+        {
+          subject: 'Computer Networks',
+          faculty: 'Dr. Rajesh Tiwari',
+          totalClasses: 18,
+          attended: 16,
+          missed: 2,
+          attendancePercent: 89,
+          status: 'Good'
+        },
+        {
+          subject: 'Operating Systems',
+          faculty: 'Dr. Rajesh Tiwari',
+          totalClasses: 20,
+          attended: 17,
+          missed: 3,
+          attendancePercent: 85,
+          status: 'Average'
+        },
+        {
+          subject: 'Computer Graphics',
+          faculty: 'Dr. Anjali Singh',
+          totalClasses: 16,
+          attended: 14,
+          missed: 2,
+          attendancePercent: 88,
+          status: 'Good'
+        }
+      ];
+
+      // Class resources data
+      const classResources = [
+        {
+          title: 'Data Structures Textbook',
+          type: 'Book',
+          subject: 'Data Structures',
+          description: 'Complete textbook covering all data structure concepts',
+          link: '#',
+          icon: 'bi-book'
+        },
+        {
+          title: 'Web Development Lab Manual',
+          type: 'Manual',
+          subject: 'Web Development',
+          description: 'Step-by-step lab exercises for web development',
+          link: '#',
+          icon: 'bi-file-text'
+        },
+        {
+          title: 'Database Design Templates',
+          type: 'Template',
+          subject: 'Database Management',
+          description: 'ER diagram templates and database design tools',
+          link: '#',
+          icon: 'bi-diagram-3'
+        },
+        {
+          title: 'Machine Learning Datasets',
+          type: 'Dataset',
+          subject: 'Machine Learning',
+          description: 'Sample datasets for ML algorithms practice',
+          link: '#',
+          icon: 'bi-database'
+        },
+        {
+          title: 'Software Engineering Tools',
+          type: 'Software',
+          subject: 'Software Engineering',
+          description: 'Development tools and project management software',
+          link: '#',
+          icon: 'bi-tools'
+        },
+        {
+          title: 'Network Simulation Software',
+          type: 'Software',
+          subject: 'Computer Networks',
+          description: 'Network simulation and analysis tools',
+          link: '#',
+          icon: 'bi-router'
+        }
+      ];
+
+      // Class notes data
+      const classNotes = [
+        {
+          subject: 'Data Structures',
+          date: '2024-02-12',
+          topic: 'Binary Trees and Traversal',
+          notes: 'Binary trees are hierarchical data structures. We discussed three types of traversal: inorder, preorder, and postorder.',
+          faculty: 'Dr. Neha Gupta'
+        },
+        {
+          subject: 'Web Development',
+          date: '2024-02-12',
+          topic: 'HTML5 Semantic Elements',
+          notes: 'HTML5 introduced semantic elements like header, nav, main, article, section, aside, and footer for better document structure.',
+          faculty: 'Prof. Rahul Verma'
+        },
+        {
+          subject: 'Database Management',
+          date: '2024-02-12',
+          topic: 'SQL Joins',
+          notes: 'Different types of SQL joins: INNER JOIN, LEFT JOIN, RIGHT JOIN, and FULL OUTER JOIN with practical examples.',
+          faculty: 'Dr. Priya Singh'
+        }
+      ];
+
+      // Attendance history data
+      const attendanceHistory = [
+        {
+          date: '2024-02-12',
+          subject: 'Data Structures',
+          faculty: 'Dr. Neha Gupta',
+          time: '09:00-10:00',
+          status: 'Present',
+          remarks: 'On time'
+        },
+        {
+          date: '2024-02-12',
+          subject: 'Web Development',
+          faculty: 'Prof. Rahul Verma',
+          time: '10:00-11:00',
+          status: 'Present',
+          remarks: 'On time'
+        },
+        {
+          date: '2024-02-12',
+          subject: 'Database Management',
+          faculty: 'Dr. Priya Singh',
+          time: '11:00-12:00',
+          status: 'Present',
+          remarks: 'On time'
+        },
+        {
+          date: '2024-02-11',
+          subject: 'Machine Learning',
+          faculty: 'Dr. Amit Kumar',
+          time: '14:00-15:00',
+          status: 'Absent',
+          remarks: 'Medical leave'
+        },
+        {
+          date: '2024-02-11',
+          subject: 'Software Engineering',
+          faculty: 'Prof. Sneha Patel',
+          time: '15:00-16:00',
+          status: 'Present',
+          remarks: 'Late by 5 minutes'
+        }
+      ];
+
+      // Upcoming classes data
+      const upcomingClasses = [
+        {
+          subject: 'Machine Learning',
+          faculty: 'Dr. Amit Kumar',
+          room: 'CS-104',
+          time: '14:00-15:00',
+          date: '2024-02-13',
+          type: 'Lecture',
+          topic: 'Neural Networks Introduction'
+        },
+        {
+          subject: 'Software Engineering',
+          faculty: 'Prof. Sneha Patel',
+          room: 'CS-105',
+          time: '15:00-16:00',
+          date: '2024-02-13',
+          type: 'Tutorial',
+          topic: 'Agile Methodology'
+        },
+        {
+          subject: 'Computer Networks',
+          faculty: 'Dr. Rajesh Tiwari',
+          room: 'CS-101',
+          time: '09:00-10:00',
+          date: '2024-02-14',
+          type: 'Lecture',
+          topic: 'TCP/IP Protocol Suite'
+        },
+        {
+          subject: 'Operating Systems',
+          faculty: 'Dr. Rajesh Tiwari',
+          room: 'CS-101',
+          time: '10:00-11:00',
+          date: '2024-02-14',
+          type: 'Practical',
+          topic: 'Process Scheduling'
+        }
+      ];
+
+      const todaysSchedule = document.getElementById('todaysSchedule');
+      const weeklyScheduleTable = document.getElementById('weeklySchedule');
+      const scheduleContainer = document.getElementById('scheduleContainer');
+      const subjectsContainer = document.getElementById('subjectsContainer');
+      const attendanceBody = document.getElementById('attendanceBody');
+      const resourcesContainer = document.getElementById('resourcesContainer');
+      const classroomInfo = document.getElementById('classroomInfo');
+      const weekFilter = document.getElementById('weekFilter');
+      const classNotesModal = new bootstrap.Modal(document.getElementById('classNotesModal'));
+      const attendanceHistoryModal = new bootstrap.Modal(document.getElementById('attendanceHistoryModal'));
+      const upcomingClassesModal = new bootstrap.Modal(document.getElementById('upcomingClassesModal'));
+      const addClassroomModal = new bootstrap.Modal(document.getElementById('addClassroomModal'));
+
+      // Classroom management
+      let classroomOrder = [];
+      let draggedElement = null;
+
+      function getStatusBadge(status) {
+        const badges = {
+          'Present': 'bg-success',
+          'Absent': 'bg-danger',
+          'Late': 'bg-warning',
+          'Good': 'bg-success',
+          'Average': 'bg-warning',
+          'Poor': 'bg-danger'
+        };
+        return badges[status] || 'bg-secondary';
+      }
+
+      function getTypeBadge(type) {
+        const badges = {
+          'Lecture': 'bg-primary',
+          'Practical': 'bg-success',
+          'Tutorial': 'bg-info',
+          'Core': 'bg-primary',
+          'Elective': 'bg-warning'
+        };
+        return badges[type] || 'bg-secondary';
+      }
+
+      function formatTime(timeString) {
+        return timeString.replace('-', ' - ');
+      }
+
+      function renderTodaysSchedule() {
+        const today = new Date().toLocaleDateString('en-US', { weekday: 'long' });
+        const todaysClasses = classSchedule.filter(cls => cls.day === today);
+        
+        if (todaysClasses.length === 0) {
+          todaysSchedule.innerHTML = '<div class="text-center text-muted">No classes scheduled for today</div>';
+          return;
+        }
+
+        todaysSchedule.innerHTML = todaysClasses.map(cls => `
+          <div class="d-flex align-items-center justify-content-between p-2 border rounded mb-2">
+            <div>
+              <div class="fw-bold">${cls.subject}</div>
+              <div class="small text-secondary">${cls.faculty}</div>
+              <div class="small text-muted">
+                <i class="bi bi-geo-alt me-1"></i>${cls.roomNumber} • ${cls.building} • ${cls.floor}
+              </div>
+              <div class="small text-muted">
+                <i class="bi bi-clock me-1"></i>${formatTime(cls.time)} • 
+                <i class="bi bi-people me-1"></i>Capacity: ${cls.roomCapacity}
+              </div>
+            </div>
+            <div class="text-end">
+              <span class="badge ${getTypeBadge(cls.type)}">${cls.type}</span>
+              ${cls.attendance ? `<span class="badge ${getStatusBadge(cls.attendance)} ms-1">${cls.attendance}</span>` : ''}
+            </div>
+          </div>
+        `).join('');
+      }
+
+      function renderClassroomInfo() {
+        // Get unique classrooms from today's schedule
+        const today = new Date().toLocaleDateString('en-US', { weekday: 'long' });
+        const todaysClasses = classSchedule.filter(cls => cls.day === today);
+        const uniqueRooms = [...new Set(todaysClasses.map(cls => cls.roomNumber))];
+        
+        // Initialize classroom order if empty
+        if (classroomOrder.length === 0) {
+          classroomOrder = uniqueRooms;
+        }
+        
+        if (uniqueRooms.length === 0) {
+          classroomInfo.innerHTML = '<div class="text-center text-muted">No classrooms scheduled today</div>';
+          return;
+        }
+
+        classroomInfo.innerHTML = classroomOrder.map((roomNumber, index) => {
+          const roomData = todaysClasses.find(cls => cls.roomNumber === roomNumber);
+          if (!roomData) return '';
+          
+          return `
+            <div class="classroom-item border rounded p-2 mb-2" 
+                 draggable="true" 
+                 data-room="${roomNumber}"
+                 data-index="${index}">
+              <div class="d-flex justify-content-between align-items-start">
+                <div class="d-flex align-items-start">
+                  <i class="bi bi-grip-vertical drag-handle me-2"></i>
+                  <div>
+                    <div class="fw-bold"><i class="bi bi-geo-alt me-1"></i>${roomData.roomNumber}</div>
+                    <div class="small text-secondary">${roomData.building}</div>
+                    <div class="small text-muted">${roomData.floor}</div>
+                  </div>
+                </div>
+                <div class="text-end">
+                  <div class="small text-primary"><i class="bi bi-people me-1"></i>${roomData.roomCapacity}</div>
+                  <div class="small text-muted">Capacity</div>
+                  <button class="btn btn-sm btn-outline-danger delete-btn ms-2" onclick="deleteClassroom('${roomNumber}')">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="mt-2">
+                <div class="small text-secondary mb-1">Facilities:</div>
+                <div class="d-flex flex-wrap gap-1">
+                  ${roomData.roomFacilities.map(facility => `<span class="badge bg-light text-dark small">${facility}</span>`).join('')}
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        // Add drag and drop event listeners
+        addDragAndDropListeners();
+      }
+
+      function renderWeeklySchedule() {
+        const timeSlots = Object.keys(weeklySchedule);
+        weeklyScheduleTable.innerHTML = timeSlots.map(timeSlot => {
+          const schedule = weeklySchedule[timeSlot];
+          return `
+            <tr>
+              <td class="fw-bold">${formatTime(timeSlot)}</td>
+              <td>${schedule.Monday ? `<div class="fw-bold">${schedule.Monday.subject}</div><div class="small text-secondary">${schedule.Monday.faculty}</div><div class="small text-muted"><i class="bi bi-geo-alt me-1"></i>${schedule.Monday.roomNumber}</div><div class="small text-muted"><i class="bi bi-building me-1"></i>${schedule.Monday.building}</div><span class="badge ${getTypeBadge(schedule.Monday.type)}">${schedule.Monday.type}</span>` : '-'}</td>
+              <td>${schedule.Tuesday ? `<div class="fw-bold">${schedule.Tuesday.subject}</div><div class="small text-secondary">${schedule.Tuesday.faculty}</div><div class="small text-muted"><i class="bi bi-geo-alt me-1"></i>${schedule.Tuesday.roomNumber}</div><div class="small text-muted"><i class="bi bi-building me-1"></i>${schedule.Tuesday.building}</div><span class="badge ${getTypeBadge(schedule.Tuesday.type)}">${schedule.Tuesday.type}</span>` : '-'}</td>
+              <td>${schedule.Wednesday ? `<div class="fw-bold">${schedule.Wednesday.subject}</div><div class="small text-secondary">${schedule.Wednesday.faculty}</div><div class="small text-muted"><i class="bi bi-geo-alt me-1"></i>${schedule.Wednesday.roomNumber}</div><div class="small text-muted"><i class="bi bi-building me-1"></i>${schedule.Wednesday.building}</div><span class="badge ${getTypeBadge(schedule.Wednesday.type)}">${schedule.Wednesday.type}</span>` : '-'}</td>
+              <td>${schedule.Thursday ? `<div class="fw-bold">${schedule.Thursday.subject}</div><div class="small text-secondary">${schedule.Thursday.faculty}</div><div class="small text-muted"><i class="bi bi-geo-alt me-1"></i>${schedule.Thursday.roomNumber}</div><div class="small text-muted"><i class="bi bi-building me-1"></i>${schedule.Thursday.building}</div><span class="badge ${getTypeBadge(schedule.Thursday.type)}">${schedule.Thursday.type}</span>` : '-'}</td>
+              <td>${schedule.Friday ? `<div class="fw-bold">${schedule.Friday.subject}</div><div class="small text-secondary">${schedule.Friday.faculty}</div><div class="small text-muted"><i class="bi bi-geo-alt me-1"></i>${schedule.Friday.roomNumber}</div><div class="small text-muted"><i class="bi bi-building me-1"></i>${schedule.Friday.building}</div><span class="badge ${getTypeBadge(schedule.Friday.type)}">${schedule.Friday.type}</span>` : '-'}</td>
+              <td>${schedule.Saturday ? `<div class="fw-bold">${schedule.Saturday.subject}</div><div class="small text-secondary">${schedule.Saturday.faculty}</div><div class="small text-muted"><i class="bi bi-geo-alt me-1"></i>${schedule.Saturday.roomNumber}</div><div class="small text-muted"><i class="bi bi-building me-1"></i>${schedule.Saturday.building}</div><span class="badge ${getTypeBadge(schedule.Saturday.type)}">${schedule.Saturday.type}</span>` : '-'}</td>
+            </tr>
+          `;
+        }).join('');
+      }
+
+      function renderScheduleDetails() {
+        scheduleContainer.innerHTML = classSchedule.map(cls => `
+          <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                  <div>
+                    <h6 class="mb-1">${cls.subject}</h6>
+                    <div class="small text-secondary">${cls.faculty}</div>
+                  </div>
+                  <span class="badge ${getTypeBadge(cls.type)}">${cls.type}</span>
+                </div>
+                <div class="row g-2 mb-3">
+                  <div class="col-6">
+                    <div class="small text-secondary">Day:</div>
+                    <div class="fw-bold">${cls.day}</div>
+                  </div>
+                  <div class="col-6">
+                    <div class="small text-secondary">Time:</div>
+                    <div class="fw-bold text-primary">${formatTime(cls.time)}</div>
+                  </div>
+                  <div class="col-6">
+                    <div class="small text-secondary">Room:</div>
+                    <div class="fw-bold"><i class="bi bi-geo-alt me-1"></i>${cls.roomNumber}</div>
+                  </div>
+                  <div class="col-6">
+                    <div class="small text-secondary">Capacity:</div>
+                    <div class="fw-bold text-info"><i class="bi bi-people me-1"></i>${cls.roomCapacity}</div>
+                  </div>
+                  <div class="col-6">
+                    <div class="small text-secondary">Building:</div>
+                    <div class="fw-bold"><i class="bi bi-building me-1"></i>${cls.building}</div>
+                  </div>
+                  <div class="col-6">
+                    <div class="small text-secondary">Floor:</div>
+                    <div class="fw-bold"><i class="bi bi-layers me-1"></i>${cls.floor}</div>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <div class="small text-secondary mb-1">Facilities:</div>
+                  <div class="d-flex flex-wrap gap-1">
+                    ${cls.roomFacilities.map(facility => `<span class="badge bg-light text-dark">${facility}</span>`).join('')}
+                  </div>
+                </div>
+                ${cls.notes ? `<div class="alert alert-info mb-0"><div class="small fw-bold">Notes:</div><div class="small">${cls.notes}</div></div>` : ''}
+              </div>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      function renderSubjects() {
+        subjectsContainer.innerHTML = subjects.map(subject => `
+          <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body">
+                <div class="d-flex align-items-center mb-3">
+                  <img src="${subject.avatar}" class="rounded-circle me-3" width="50" height="50">
+                  <div>
+                    <h6 class="mb-1">${subject.name}</h6>
+                    <div class="small text-secondary">${subject.code}</div>
+                  </div>
+                </div>
+                <div class="row g-2 mb-3">
+                  <div class="col-6">
+                    <div class="small text-secondary">Faculty:</div>
+                    <div class="fw-bold">${subject.faculty}</div>
+                  </div>
+                  <div class="col-6">
+                    <div class="small text-secondary">Credits:</div>
+                    <div class="fw-bold text-primary">${subject.credits}</div>
+                  </div>
+                  <div class="col-6">
+                    <div class="small text-secondary">Type:</div>
+                    <span class="badge ${getTypeBadge(subject.type)}">${subject.type}</span>
+                  </div>
+                  <div class="col-6">
+                    <div class="small text-secondary">Office:</div>
+                    <div class="fw-bold">${subject.office}</div>
+                  </div>
+                </div>
+                <p class="small text-muted mb-3">${subject.description}</p>
+                <div class="d-grid gap-2">
+                  <a href="mailto:${subject.email}" class="btn btn-outline-primary btn-sm">
+                    <i class="bi bi-envelope me-1"></i>Email Faculty
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      function renderAttendance() {
+        attendanceBody.innerHTML = attendanceData.map(att => `
+          <tr>
+            <td>${att.subject}</td>
+            <td>${att.faculty}</td>
+            <td class="fw-bold">${att.totalClasses}</td>
+            <td class="fw-bold text-success">${att.attended}</td>
+            <td class="fw-bold text-danger">${att.missed}</td>
+            <td class="fw-bold text-primary">${att.attendancePercent}%</td>
+            <td><span class="badge ${getStatusBadge(att.status)}">${att.status}</span></td>
+          </tr>
+        `).join('');
+      }
+
+      function renderResources() {
+        resourcesContainer.innerHTML = classResources.map(resource => `
+          <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body">
+                <div class="d-flex align-items-center mb-3">
+                  <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                    <i class="${resource.icon}"></i>
+                  </div>
+                  <div>
+                    <h6 class="mb-1">${resource.title}</h6>
+                    <div class="small text-secondary">${resource.type}</div>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <div class="small text-secondary">Subject:</div>
+                  <div class="fw-bold text-primary">${resource.subject}</div>
+                </div>
+                <p class="small text-muted mb-3">${resource.description}</p>
+                <div class="d-grid gap-2">
+                  <a href="${resource.link}" class="btn btn-outline-primary btn-sm">
+                    <i class="bi bi-download me-1"></i>Download
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      function renderClassNotes() {
+        const classNotesContainer = document.getElementById('classNotesContainer');
+        classNotesContainer.innerHTML = classNotes.map(note => `
+          <div class="col-md-6">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                  <div>
+                    <h6 class="mb-1">${note.subject}</h6>
+                    <div class="small text-secondary">${note.topic}</div>
+                  </div>
+                  <span class="badge bg-primary">${note.date}</span>
+                </div>
+                <p class="small text-muted mb-3">${note.notes}</p>
+                <div class="small text-secondary">
+                  <i class="bi bi-person me-1"></i>${note.faculty}
+                </div>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      function renderAttendanceHistory() {
+        const attendanceHistoryBody = document.getElementById('attendanceHistoryBody');
+        attendanceHistoryBody.innerHTML = attendanceHistory.map(att => `
+          <tr>
+            <td>${att.date}</td>
+            <td>${att.subject}</td>
+            <td>${att.faculty}</td>
+            <td>${att.time}</td>
+            <td><span class="badge ${getStatusBadge(att.status)}">${att.status}</span></td>
+            <td class="small">${att.remarks}</td>
+          </tr>
+        `).join('');
+      }
+
+      function renderUpcomingClasses() {
+        const upcomingClassesContainer = document.getElementById('upcomingClassesContainer');
+        upcomingClassesContainer.innerHTML = upcomingClasses.map(cls => `
+          <div class="col-md-6">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                  <div>
+                    <h6 class="mb-1">${cls.subject}</h6>
+                    <div class="small text-secondary">${cls.topic}</div>
+                  </div>
+                  <span class="badge ${getTypeBadge(cls.type)}">${cls.type}</span>
+                </div>
+                <div class="row g-2 mb-3">
+                  <div class="col-6">
+                    <div class="small text-secondary">Faculty:</div>
+                    <div class="fw-bold">${cls.faculty}</div>
+                  </div>
+                  <div class="col-6">
+                    <div class="small text-secondary">Room:</div>
+                    <div class="fw-bold">${cls.room}</div>
+                  </div>
+                  <div class="col-6">
+                    <div class="small text-secondary">Time:</div>
+                    <div class="fw-bold text-primary">${cls.time}</div>
+                  </div>
+                  <div class="col-6">
+                    <div class="small text-secondary">Date:</div>
+                    <div class="fw-bold text-warning">${cls.date}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      function showClassNotes() {
+        renderClassNotes();
+        classNotesModal.show();
+      }
+
+      function showAttendanceHistory() {
+        renderAttendanceHistory();
+        attendanceHistoryModal.show();
+      }
+
+      function showUpcomingClasses() {
+        renderUpcomingClasses();
+        upcomingClassesModal.show();
+      }
+
+      // Drag and Drop Functions
+      function addDragAndDropListeners() {
+        const classroomItems = document.querySelectorAll('.classroom-item');
+        
+        classroomItems.forEach(item => {
+          item.addEventListener('dragstart', handleDragStart);
+          item.addEventListener('dragend', handleDragEnd);
+          item.addEventListener('dragover', handleDragOver);
+          item.addEventListener('drop', handleDrop);
+          item.addEventListener('dragenter', handleDragEnter);
+          item.addEventListener('dragleave', handleDragLeave);
+        });
+      }
+
+      function handleDragStart(e) {
+        draggedElement = this;
+        this.classList.add('dragging');
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/html', this.outerHTML);
+      }
+
+      function handleDragEnd(e) {
+        this.classList.remove('dragging');
+        draggedElement = null;
+      }
+
+      function handleDragOver(e) {
+        if (e.preventDefault) {
+          e.preventDefault();
+        }
+        e.dataTransfer.dropEffect = 'move';
+        return false;
+      }
+
+      function handleDragEnter(e) {
+        this.classList.add('drag-over');
+      }
+
+      function handleDragLeave(e) {
+        this.classList.remove('drag-over');
+      }
+
+      function handleDrop(e) {
+        if (e.stopPropagation) {
+          e.stopPropagation();
+        }
+
+        if (draggedElement !== this) {
+          const draggedRoom = draggedElement.getAttribute('data-room');
+          const targetRoom = this.getAttribute('data-room');
+          
+          // Swap positions in classroomOrder array
+          const draggedIndex = classroomOrder.indexOf(draggedRoom);
+          const targetIndex = classroomOrder.indexOf(targetRoom);
+          
+          classroomOrder[draggedIndex] = targetRoom;
+          classroomOrder[targetIndex] = draggedRoom;
+          
+          // Re-render the classroom list
+          renderClassroomInfo();
+        }
+
+        this.classList.remove('drag-over');
+        return false;
+      }
+
+      // Classroom Management Functions
+      function addNewClassroom() {
+        addClassroomModal.show();
+      }
+
+      function saveNewClassroom() {
+        const roomNumber = document.getElementById('newRoomNumber').value;
+        const capacity = document.getElementById('newRoomCapacity').value;
+        const building = document.getElementById('newBuilding').value;
+        const floor = document.getElementById('newFloor').value;
+        
+        // Get selected facilities
+        const facilities = [];
+        document.querySelectorAll('input[type="checkbox"]:checked').forEach(checkbox => {
+          facilities.push(checkbox.value);
+        });
+
+        if (!roomNumber || !capacity || !building || !floor) {
+          alert('Please fill all required fields');
+          return;
+        }
+
+        // Add to classroom order
+        classroomOrder.push(roomNumber);
+        
+        // Create new classroom data
+        const newClassroom = {
+          roomNumber: roomNumber,
+          roomCapacity: parseInt(capacity),
+          building: building,
+          floor: floor,
+          roomFacilities: facilities
+        };
+
+        // Add to class schedule (for demonstration)
+        classSchedule.push({
+          id: classSchedule.length + 1,
+          subject: 'New Subject',
+          faculty: 'TBD',
+          room: roomNumber,
+          roomNumber: roomNumber,
+          roomCapacity: parseInt(capacity),
+          roomFacilities: facilities,
+          building: building,
+          floor: floor,
+          time: 'TBD',
+          day: 'Monday',
+          type: 'Lecture',
+          status: 'upcoming',
+          attendance: null,
+          notes: null
+        });
+
+        // Reset form and close modal
+        document.getElementById('addClassroomForm').reset();
+        addClassroomModal.hide();
+        
+        // Re-render classroom info
+        renderClassroomInfo();
+        
+        alert('Classroom added successfully!');
+      }
+
+      function deleteClassroom(roomNumber) {
+        if (confirm(`Are you sure you want to remove classroom ${roomNumber}?`)) {
+          classroomOrder = classroomOrder.filter(room => room !== roomNumber);
+          renderClassroomInfo();
+        }
+      }
+
+      function saveClassroomOrder() {
+        // Save the current order (in a real app, this would save to server)
+        localStorage.setItem('classroomOrder', JSON.stringify(classroomOrder));
+        alert('Classroom order saved successfully!');
+      }
+
+      // Event listeners
+      weekFilter.addEventListener('change', () => {
+        // Filter logic can be implemented here
+        renderWeeklySchedule();
+      });
+
+      // Initialize
+      // Load saved classroom order
+      const savedOrder = localStorage.getItem('classroomOrder');
+      if (savedOrder) {
+        classroomOrder = JSON.parse(savedOrder);
+      }
+      
+      renderTodaysSchedule();
+      renderClassroomInfo();
+      renderWeeklySchedule();
+      renderScheduleDetails();
+      renderSubjects();
+      renderAttendance();
+      renderResources();
+        <script>
+      // Ensure navigation renders after page load
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+          if (window.navigationManager && document.getElementById('moduleTabs')) {
+            window.navigationManager.renderMainNavigation();
+          }
+        });
+      } else {
+        if (window.navigationManager && document.getElementById('moduleTabs')) {
+          window.navigationManager.renderMainNavigation();
+        }
+      }
+    </script>
+</script>
+{% endblock %}

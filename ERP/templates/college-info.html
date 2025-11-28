@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>College Information | Institution</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="{% static 'styles.css' %}" />
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg bg-white navbar-light shadow-sm sticky-top">
+      <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="{% url 'index' %}">
+          <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f3eb.svg" width="30" class="me-2"/>
+          <span class="fw-bold brand-gradient">Institution</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav" aria-controls="nav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="nav">
+          <ul class="navbar-nav ms-auto align-items-lg-center">
+            <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+            <li class="nav-item"><a class="nav-link" href="#courses">Courses & Fees</a></li>
+            <li class="nav-item"><a class="nav-link" href="#facilities">Facilities</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'syllabus' %}">Syllabus</a></li>
+            <li class="nav-item"><a class="nav-link" href="#hostel">Hostel</a></li>
+            <li class="nav-item"><a class="nav-link" href="#events">Events</a></li>
+            <li class="nav-item"><a class="nav-link" href="#faculty">Faculty</a></li>
+            <li class="nav-item"><a class="nav-link" href="#placements">Placements</a></li>
+            <li class="nav-item"><a class="nav-link" href="#gallery">Gallery</a></li>
+            <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <header class="py-5 bg-light">
+      <div class="container">
+        <div class="row align-items-center g-4">
+          <div class="col-lg-7">
+            <h1 class="fw-bold mb-3">Welcome to Our College</h1>
+            <p class="lead text-secondary">Where innovation meets excellence. Explore programs, faculty, facilities, placements and more all in one place.</p>
+            <div class="d-flex gap-2 mt-2">
+              <a href="#courses" class="btn btn-primary"><i class="bi bi-journal-text me-1"></i>Explore Courses</a>
+              <a href="#contact" class="btn btn-outline-primary"><i class="bi bi-telephone me-1"></i>Contact Us</a>
+            </div>
+          </div>
+          <div class="col-lg-5">
+            <div id="heroCarousel" class="carousel slide rounded overflow-hidden shadow" data-bs-ride="carousel">
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1470&auto=format&fit=crop" class="d-block w-100" alt="Campus" />
+                </div>
+                <div class="carousel-item">
+                  <img src="https://images.unsplash.com/photo-1460518451285-97b6aa326961?q=80&w=1470&auto=format&fit=crop" class="d-block w-100" alt="Library" />
+                </div>
+                <div class="carousel-item">
+                  <img src="https://images.unsplash.com/photo-1556761175-4b46a572b786?q=80&w=1470&auto=format&fit=crop" class="d-block w-100" alt="Lab" />
+                </div>
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section id="about" class="py-5">
+      <div class="container">
+        <div class="row g-4">
+          <div class="col-lg-8">
+            <h2 class="fw-bold mb-3">About the College</h2>
+            <p class="text-secondary">Established in 2008, our Institution is NAAC accredited and AICTE approved. We offer undergraduate and postgraduate programs in Engineering, Management, Computer Applications and Sciences.</p>
+            <div class="row g-3 mt-2">
+              <div class="col-6 col-md-3"><div class="border rounded p-3 text-center"><div class="fw-bold fs-4">12k+</div><div class="text-secondary small">Students</div></div></div>
+              <div class="col-6 col-md-3"><div class="border rounded p-3 text-center"><div class="fw-bold fs-4">650+</div><div class="text-secondary small">Faculty</div></div></div>
+              <div class="col-6 col-md-3"><div class="border rounded p-3 text-center"><div class="fw-bold fs-4">150+</div><div class="text-secondary small">Labs</div></div></div>
+              <div class="col-6 col-md-3"><div class="border rounded p-3 text-center"><div class="fw-bold fs-4">200+</div><div class="text-secondary small">Companies</div></div></div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body">
+                <h5 class="mb-3">Location</h5>
+                <p class="text-secondary">Delhi-Meerut Highway, NH-9, Moradabad, Uttar Pradesh 244001</p>
+                <div class="ratio ratio-4x3 rounded overflow-hidden">
+                  <iframe src="https://www.google.com/maps?q=Teerthanker%20Mahaveer%20University%20Moradabad&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="courses" class="py-5 bg-light">
+      <div class="container">
+        <div class="d-flex align-items-center justify-content-between mb-4">
+          <h2 class="fw-bold mb-0">Courses & Programs</h2>
+          <a href="#contact" class="btn btn-sm btn-outline-primary">Request Prospectus</a>
+        </div>
+        
+        <!-- Course Categories -->
+        <div class="row g-4 mb-5">
+          <div class="col-md-4">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body text-center">
+                <i class="bi bi-laptop text-primary fs-1 mb-3"></i>
+                <h5 class="fw-bold">Engineering</h5>
+                <p class="text-secondary small">Cutting-edge technology programs</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body text-center">
+                <i class="bi bi-graph-up text-success fs-1 mb-3"></i>
+                <h5 class="fw-bold">Management</h5>
+                <p class="text-secondary small">Business leadership programs</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body text-center">
+                <i class="bi bi-code-slash text-info fs-1 mb-3"></i>
+                <h5 class="fw-bold">Computer Applications</h5>
+                <p class="text-secondary small">Software development focus</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Detailed Courses Table -->
+        <div class="table-responsive rounded shadow-sm">
+          <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+              <tr>
+                <th>Program</th>
+                <th>Specializations</th>
+                <th>Duration</th>
+                <th>Eligibility</th>
+                <th>Annual Fees (INR)</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>B.Tech</strong></td>
+                <td>CSE, IT, ME, CE, ECE, EE</td>
+                <td>4 Years</td>
+                <td>10+2 with PCM (50%)</td>
+                <td>1,10,000</td>
+                <td>
+                  <div class="d-flex gap-2">
+                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#courseApplyModal" data-course="B.Tech">Apply</button>
+                    <a class="btn btn-sm btn-primary" href="{% url 'syllabus' %}?program=btech">Syllabus</a>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>BCA</strong></td>
+                <td>Computer Applications</td>
+                <td>3 Years</td>
+                <td>10+2 with Math/Computer</td>
+                <td>65,000</td>
+                <td>
+                  <div class="d-flex gap-2">
+                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#courseApplyModal" data-course="BCA">Apply</button>
+                    <a class="btn btn-sm btn-primary" href="{% url 'syllabus' %}?program=bca">Syllabus</a>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>MCA</strong></td>
+                <td>Computer Applications</td>
+                <td>2 Years</td>
+                <td>Graduate in relevant field</td>
+                <td>85,000</td>
+                <td>
+                  <div class="d-flex gap-2">
+                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#courseApplyModal" data-course="MCA">Apply</button>
+                    <a class="btn btn-sm btn-primary" href="{% url 'syllabus' %}?program=mca">Syllabus</a>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>MBA</strong></td>
+                <td>Marketing, Finance, HR, Operations</td>
+                <td>2 Years</td>
+                <td>Graduate in any discipline</td>
+                <td>1,20,000</td>
+                <td>
+                  <div class="d-flex gap-2">
+                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#courseApplyModal" data-course="MBA">Apply</button>
+                    <a class="btn btn-sm btn-primary" href="{% url 'syllabus' %}?program=mba">Syllabus</a>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>BBA</strong></td>
+                <td>Business Administration</td>
+                <td>3 Years</td>
+                <td>10+2 in any stream</td>
+                <td>75,000</td>
+                <td>
+                  <div class="d-flex gap-2">
+                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#courseApplyModal" data-course="BBA">Apply</button>
+                    <a class="btn btn-sm btn-primary" href="{% url 'syllabus' %}?program=bba">Syllabus</a>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>B.Sc</strong></td>
+                <td>Mathematics, Physics, Chemistry</td>
+                <td>3 Years</td>
+                <td>10+2 with Science</td>
+                <td>55,000</td>
+                <td>
+                  <div class="d-flex gap-2">
+                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#courseApplyModal" data-course="B.Sc">Apply</button>
+                    <a class="btn btn-sm btn-primary" href="{% url 'syllabus' %}?program=bsc">Syllabus</a>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>M.Sc</strong></td>
+                <td>Mathematics, Physics, Chemistry</td>
+                <td>2 Years</td>
+                <td>B.Sc in relevant subject</td>
+                <td>70,000</td>
+                <td>
+                  <div class="d-flex gap-2">
+                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#courseApplyModal" data-course="M.Sc">Apply</button>
+                    <a class="btn btn-sm btn-primary" href="{% url 'syllabus' %}?program=msc">Syllabus</a>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Diploma</strong></td>
+                <td>Engineering (Polytechnic)</td>
+                <td>3 Years</td>
+                <td>10th with Science/Math</td>
+                <td>45,000</td>
+                <td>
+                  <div class="d-flex gap-2">
+                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#courseApplyModal" data-course="Diploma">Apply</button>
+                    <a class="btn btn-sm btn-primary" href="{% url 'syllabus' %}?program=diploma">Syllabus</a>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Additional Information -->
+        <div class="row g-4 mt-4">
+          <div class="col-md-6">
+            <div class="card border-0 shadow-sm">
+              <div class="card-body">
+                <h6 class="fw-bold mb-3"><i class="bi bi-info-circle me-2 text-primary"></i>Admission Process</h6>
+                <ul class="list-unstyled small mb-0">
+                  <li class="mb-2"><i class="bi bi-check-circle me-2 text-success"></i>Online Application Form</li>
+                  <li class="mb-2"><i class="bi bi-check-circle me-2 text-success"></i>Entrance Test/Interview</li>
+                  <li class="mb-2"><i class="bi bi-check-circle me-2 text-success"></i>Document Verification</li>
+                  <li class="mb-2"><i class="bi bi-check-circle me-2 text-success"></i>Fee Payment & Enrollment</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card border-0 shadow-sm">
+              <div class="card-body">
+                <h6 class="fw-bold mb-3"><i class="bi bi-award me-2 text-warning"></i>Scholarships Available</h6>
+                <ul class="list-unstyled small mb-0">
+                  <li class="mb-2"><i class="bi bi-star me-2 text-warning"></i>Merit-based Scholarships</li>
+                  <li class="mb-2"><i class="bi bi-star me-2 text-warning"></i>Sports Scholarships</li>
+                  <li class="mb-2"><i class="bi bi-star me-2 text-warning"></i>Need-based Financial Aid</li>
+                  <li class="mb-2"><i class="bi bi-star me-2 text-warning"></i>Alumni Scholarship Program</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="facilities" class="py-5">
+      <div class="container">
+        <h2 class="fw-bold mb-4">Facilities</h2>
+        <div class="row g-4">
+          <div class="col-md-6 col-lg-3">
+            <div class="feature-tile h-100">
+              <i class="bi bi-building"></i>
+              <h6>Smart Classrooms</h6>
+              <p>Projector-enabled classrooms with digital content delivery.</p>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-3">
+            <div class="feature-tile h-100">
+              <i class="bi bi-cpu"></i>
+              <h6>Modern Labs</h6>
+              <p>State-of-the-art computing and electronics labs.</p>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-3">
+            <div class="feature-tile h-100">
+              <i class="bi bi-book"></i>
+              <h6>Central Library</h6>
+              <p>Over 100,000 volumes and digital resources.</p>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-3">
+            <div class="feature-tile h-100">
+              <i class="bi bi-hospital"></i>
+              <h6>Health & Sports</h6>
+              <p>On-campus clinic and sports facilities.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Hostel Section -->
+    <section id="hostel" class="py-5 bg-light">
+      <div class="container">
+        <div class="text-center mb-5">
+          <h2 class="fw-bold mb-3">Hostel Facilities</h2>
+          <p class="text-secondary">Comfortable accommodation with modern amenities for a home away from home experience.</p>
+        </div>
+
+        <!-- Hostel Overview -->
+        <div class="row g-4 mb-5">
+          <div class="col-md-3">
+            <div class="card border-0 shadow-sm h-100 text-center">
+              <div class="card-body">
+                <div class="icon-circle bg-primary-soft text-primary mx-auto mb-3">
+                  <i class="bi bi-house-door fs-4"></i>
+                </div>
+                <h5 class="fw-bold mb-1">Total Rooms</h5>
+                <div class="h4 text-primary mb-0">156</div>
+                <small class="text-secondary">Across 4 Hostels</small>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card border-0 shadow-sm h-100 text-center">
+              <div class="card-body">
+                <div class="icon-circle bg-success-soft text-success mx-auto mb-3">
+                  <i class="bi bi-people fs-4"></i>
+                </div>
+                <h5 class="fw-bold mb-1">Capacity</h5>
+                <div class="h4 text-success mb-0">312</div>
+                <small class="text-secondary">Students</small>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card border-0 shadow-sm h-100 text-center">
+              <div class="card-body">
+                <div class="icon-circle bg-warning-soft text-warning mx-auto mb-3">
+                  <i class="bi bi-shield-check fs-4"></i>
+                </div>
+                <h5 class="fw-bold mb-1">Security</h5>
+                <div class="h4 text-warning mb-0">24/7</div>
+                <small class="text-secondary">CCTV & Guards</small>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card border-0 shadow-sm h-100 text-center">
+              <div class="card-body">
+                <div class="icon-circle bg-info-soft text-info mx-auto mb-3">
+                  <i class="bi bi-wifi fs-4"></i>
+                </div>
+                <h5 class="fw-bold mb-1">WiFi</h5>
+                <div class="h4 text-info mb-0">High-Speed</div>
+                <small class="text-secondary">Campus Network</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hostel Blocks -->
+        <div class="row g-4 mb-5">
+          <div class="col-lg-6">
+            <h4 class="fw-bold mb-4">Boys Hostels</h4>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <div class="card border-0 shadow-sm h-100">
+                  <div class="card-body">
+                    <div class="d-flex align-items-start gap-3">
+                      <div class="icon-circle bg-primary-soft text-primary">
+                        <i class="bi bi-building"></i>
+                      </div>
+                      <div>
+                        <h6 class="fw-bold mb-1">Block A</h6>
+                        <p class="text-secondary small mb-1">Modern 3-story building</p>
+                        <div class="d-flex gap-3 small">
+                          <span><i class="bi bi-door-open me-1"></i>45 Rooms</span>
+                          <span><i class="bi bi-person me-1"></i>90 Students</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="card border-0 shadow-sm h-100">
+                  <div class="card-body">
+                    <div class="d-flex align-items-start gap-3">
+                      <div class="icon-circle bg-warning-soft text-warning">
+                        <i class="bi bi-building"></i>
+                      </div>
+                      <div>
+                        <h6 class="fw-bold mb-1">Block C</h6>
+                        <p class="text-secondary small mb-1">New construction</p>
+                        <div class="d-flex gap-3 small">
+                          <span><i class="bi bi-door-open me-1"></i>30 Rooms</span>
+                          <span><i class="bi bi-person me-1"></i>60 Students</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <h4 class="fw-bold mb-4">Girls Hostels</h4>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <div class="card border-0 shadow-sm h-100">
+                  <div class="card-body">
+                    <div class="d-flex align-items-start gap-3">
+                      <div class="icon-circle bg-success-soft text-success">
+                        <i class="bi bi-building"></i>
+                      </div>
+                      <div>
+                        <h6 class="fw-bold mb-1">Block B</h6>
+                        <p class="text-secondary small mb-1">Secure 4-story building</p>
+                        <div class="d-flex gap-3 small">
+                          <span><i class="bi bi-door-open me-1"></i>60 Rooms</span>
+                          <span><i class="bi bi-person me-1"></i>120 Students</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="card border-0 shadow-sm h-100">
+                  <div class="card-body">
+                    <div class="d-flex align-items-start gap-3">
+                      <div class="icon-circle bg-info-soft text-info">
+                        <i class="bi bi-building"></i>
+                      </div>
+                      <div>
+                        <h6 class="fw-bold mb-1">Block D</h6>
+                        <p class="text-secondary small mb-1">Premium facility</p>
+                        <div class="d-flex gap-3 small">
+                          <span><i class="bi bi-door-open me-1"></i>21 Rooms</span>
+                          <span><i class="bi bi-person me-1"></i>42 Students</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hostel Facilities -->
+        <div class="row g-4 mb-5">
+          <div class="col-12">
+            <h4 class="fw-bold mb-4">Hostel Amenities</h4>
+          </div>
+          <div class="col-md-3">
+            <div class="d-flex align-items-center gap-3 p-3 border rounded">
+              <i class="bi bi-wifi text-primary fs-4"></i>
+              <div>
+                <div class="fw-semibold">WiFi Internet</div>
+                <div class="text-secondary small">High-speed campus WiFi</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="d-flex align-items-center gap-3 p-3 border rounded">
+              <i class="bi bi-cup-hot text-success fs-4"></i>
+              <div>
+                <div class="fw-semibold">Mess Facility</div>
+                <div class="text-secondary small">3 meals daily</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="d-flex align-items-center gap-3 p-3 border rounded">
+              <i class="bi bi-water text-info fs-4"></i>
+              <div>
+                <div class="fw-semibold">Laundry</div>
+                <div class="text-secondary small">Washing machines</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="d-flex align-items-center gap-3 p-3 border rounded">
+              <i class="bi bi-shield-check text-warning fs-4"></i>
+              <div>
+                <div class="fw-semibold">Security</div>
+                <div class="text-secondary small">24/7 CCTV & Guards</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="d-flex align-items-center gap-3 p-3 border rounded">
+              <i class="bi bi-book text-danger fs-4"></i>
+              <div>
+                <div class="fw-semibold">Study Room</div>
+                <div class="text-secondary small">Quiet study spaces</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="d-flex align-items-center gap-3 p-3 border rounded">
+              <i class="bi bi-tv text-secondary fs-4"></i>
+              <div>
+                <div class="fw-semibold">Common Room</div>
+                <div class="text-secondary small">TV & Recreation</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="d-flex align-items-center gap-3 p-3 border rounded">
+              <i class="bi bi-hospital text-primary fs-4"></i>
+              <div>
+                <div class="fw-semibold">Medical</div>
+                <div class="text-secondary small">First aid & doctor</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="d-flex align-items-center gap-3 p-3 border rounded">
+              <i class="bi bi-bus-front text-success fs-4"></i>
+              <div>
+                <div class="fw-semibold">Transport</div>
+                <div class="text-secondary small">College bus service</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hostel Fees & Rules -->
+        <div class="row g-4">
+          <div class="col-lg-6">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body">
+                <h5 class="fw-bold mb-3"><i class="bi bi-credit-card me-2 text-primary"></i>Hostel Fees Structure</h5>
+                <div class="table-responsive">
+                  <table class="table table-sm">
+                    <thead class="table-light">
+                      <tr>
+                        <th>Fee Type</th>
+                        <th>Amount (₹)</th>
+                        <th>Duration</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Room Rent</td>
+                        <td>15,000</td>
+                        <td>Per Semester</td>
+                      </tr>
+                      <tr>
+                        <td>Mess Charges</td>
+                        <td>8,000</td>
+                        <td>Per Semester</td>
+                      </tr>
+                      <tr>
+                        <td>Security Deposit</td>
+                        <td>5,000</td>
+                        <td>One Time</td>
+                      </tr>
+                      <tr>
+                        <td>Electricity</td>
+                        <td>2,000</td>
+                        <td>Per Semester</td>
+                      </tr>
+                      <tr class="table-success">
+                        <td><strong>Total</strong></td>
+                        <td><strong>25,000</strong></td>
+                        <td><strong>Per Semester</strong></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body">
+                <h5 class="fw-bold mb-3"><i class="bi bi-shield-check me-2 text-warning"></i>Hostel Rules & Guidelines</h5>
+                <ul class="list-unstyled small mb-0">
+                  <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Curfew time: 10:00 PM</li>
+                  <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>No smoking or alcohol consumption</li>
+                  <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Visitor registration required</li>
+                  <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Keep rooms clean and tidy</li>
+                  <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Follow mess timings strictly</li>
+                  <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>No unauthorized electrical appliances</li>
+                  <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Respect fellow residents</li>
+                  <li class="mb-0"><i class="bi bi-check-circle text-success me-2"></i>Report maintenance issues promptly</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hostel Application -->
+        <div class="row g-4 mt-4">
+          <div class="col-12">
+            <div class="card border-0 shadow-sm">
+              <div class="card-body text-center">
+                <h5 class="fw-bold mb-3">Interested in Hostel Accommodation?</h5>
+                <p class="text-secondary mb-4">Apply for hostel accommodation and experience comfortable living with all modern amenities.</p>
+                <div class="d-flex gap-2 justify-content-center flex-wrap">
+                  <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#hostelApplicationModal">
+                    <i class="bi bi-house-add me-2"></i>Apply for Hostel
+                  </button>
+                  <a href="{% url 'hostel' %}" class="btn btn-outline-primary">
+                    <i class="bi bi-info-circle me-2"></i>View Hostel Portal
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="events" class="py-5 bg-light">
+      <div class="container">
+        <div class="row g-4 align-items-center">
+          <div class="col-lg-6">
+            <h2 class="fw-bold mb-3">Events & Demo Classes</h2>
+            <p class="text-secondary">Attend our open house, webinars and demo classes to experience the campus culture and academic rigor.</p>
+            <ul class="list-unstyled small">
+              <li class="mb-2"><i class="bi bi-calendar-event me-2 text-primary"></i>Tech Symposium – 5 Oct</li>
+              <li class="mb-2"><i class="bi bi-calendar-event me-2 text-primary"></i>Management Conclave – 12 Oct</li>
+              <li class="mb-2"><i class="bi bi-calendar-event me-2 text-primary"></i>AI Demo Class – Every Friday</li>
+            </ul>
+          </div>
+          <div class="col-lg-6">
+            <div class="card border-0 shadow-sm">
+              <div class="card-body">
+                <h5 class="mb-2">Register for a Demo Class</h5>
+                <form id="demoForm" class="row g-2">
+                  <div class="col-md-6">
+                    <input type="text" class="form-control" id="demoName" placeholder="Your Name" required />
+                  </div>
+                  <div class="col-md-6">
+                    <input type="email" class="form-control" id="demoEmail" placeholder="Email" required />
+                  </div>
+                  <div class="col-md-6">
+                    <select class="form-select" id="demoProgram" required>
+                      <option value="" selected disabled>Program</option>
+                      <option>B.Tech</option>
+                      <option>BCA</option>
+                      <option>MCA</option>
+                      <option>MBA</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+                    <input type="date" class="form-control" id="demoDate" required />
+                  </div>
+                  <div class="col-12 text-end">
+                    <button class="btn btn-primary" type="submit"><i class="bi bi-send me-1"></i>Submit</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="faculty" class="py-5">
+      <div class="container">
+        <h2 class="fw-bold mb-4">Faculty Qualifications</h2>
+        <div class="row g-4">
+          <div class="col-md-6 col-lg-3">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body text-center">
+                <img class="rounded-circle mb-2" src="https://i.pravatar.cc/100?img=11" width="80" height="80" alt="faculty" />
+                <div class="fw-semibold">Dr. Neha Gupta</div>
+                <div class="text-secondary small">PhD, CSE (IIT Roorkee)</div>
+                <div class="small mt-2">AI, ML, Data Mining</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-3">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body text-center">
+                <img class="rounded-circle mb-2" src="https://i.pravatar.cc/100?img=22" width="80" height="80" alt="faculty" />
+                <div class="fw-semibold">Prof. Rahul Verma</div>
+                <div class="text-secondary small">M.Tech, ECE (NIT Allahabad)</div>
+                <div class="small mt-2">Embedded, VLSI</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-3">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body text-center">
+                <img class="rounded-circle mb-2" src="https://i.pravatar.cc/100?img=36" width="80" height="80" alt="faculty" />
+                <div class="fw-semibold">Dr. Aisha Khan</div>
+                <div class="text-secondary small">PhD, Management (IIM)</div>
+                <div class="small mt-2">Marketing, Strategy</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-3">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body text-center">
+                <img class="rounded-circle mb-2" src="https://i.pravatar.cc/100?img=5" width="80" height="80" alt="faculty" />
+                <div class="fw-semibold">Prof. Karan Mehta</div>
+                <div class="text-secondary small">MCA (DU)</div>
+                <div class="small mt-2">Web, Cloud, DevOps</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="articles" class="py-5 bg-light">
+      <div class="container">
+        <h2 class="fw-bold mb-4">Articles & Blogs</h2>
+        <div class="row g-4">
+          <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+              <img src="https://images.unsplash.com/photo-1555431189-0fabf2667795?q=80&w=1470&auto=format&fit=crop" class="card-img-top" alt="article" />
+              <div class="card-body">
+                <h6 class="card-title">Future of AI in Education</h6>
+                <p class="card-text text-secondary small">By Dr. Neha Gupta • Faculty</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+              <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?q=80&w=1470&auto=format&fit=crop" class="card-img-top" alt="article" />
+              <div class="card-body">
+                <h6 class="card-title">Campus Startup Culture</h6>
+                <p class="card-text text-secondary small">By Ananya • Student</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+              <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=1470&auto=format&fit=crop" class="card-img-top" alt="article" />
+              <div class="card-body">
+                <h6 class="card-title">Top 5 Career Tips</h6>
+                <p class="card-text text-secondary small">By Placement Cell</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="placements" class="py-5">
+      <div class="container">
+        <div class="row g-4 align-items-center">
+          <div class="col-lg-6">
+            <h2 class="fw-bold mb-3">Placements & Records</h2>
+            <p class="text-secondary">Consistent placements with top recruiters. Our highest package last year was 24 LPA with an average of 6.5 LPA across programs.</p>
+            <ul class="list-unstyled small">
+              <li class="mb-2"><i class="bi bi-briefcase me-2 text-success"></i>200+ Recruiters on campus</li>
+              <li class="mb-2"><i class="bi bi-graph-up-arrow me-2 text-success"></i>85% Overall placement</li>
+              <li class="mb-2"><i class="bi bi-award me-2 text-success"></i>Top roles in SDE, Analyst, Marketing</li>
+            </ul>
+          </div>
+          <div class="col-lg-6">
+            <div class="card border-0 shadow-sm">
+              <div class="card-body">
+                <h6 class="mb-3">Toppers & Reviews</h6>
+                <div class="d-flex align-items-center gap-3 mb-3">
+                  <img src="https://i.pravatar.cc/100?img=15" width="44" height="44" class="rounded-circle" alt="topper" />
+                  <div class="small"><div class="fw-semibold">Riya Sharma • CSE</div><div class="text-secondary">Placed at Google • 22 LPA</div></div>
+                </div>
+                <div class="d-flex align-items-center gap-3 mb-3">
+                  <img src="https://i.pravatar.cc/100?img=24" width="44" height="44" class="rounded-circle" alt="topper" />
+                  <div class="small"><div class="fw-semibold">Arjun Mehta • MBA</div><div class="text-secondary">Placed at Deloitte • 12 LPA</div></div>
+                </div>
+                <div class="alert alert-success small mb-0"><i class="bi bi-quote"></i> The mentorship and industry exposure made all the difference! — Alumni</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="gallery" class="py-5 bg-light">
+      <div class="container">
+        <h2 class="fw-bold mb-4">Gallery</h2>
+        <div id="galleryCarousel" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner rounded shadow overflow-hidden">
+            <div class="carousel-item active"><img class="d-block w-100" src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=1470&auto=format&fit=crop" alt="Campus 1"></div>
+            <div class="carousel-item"><img class="d-block w-100" src="https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=1470&auto=format&fit=crop" alt="Campus 2"></div>
+            <div class="carousel-item"><img class="d-block w-100" src="https://images.unsplash.com/photo-1523054567398-8b86a53b38f4?q=80&w=1470&auto=format&fit=crop" alt="Campus 3"></div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#galleryCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#galleryCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="py-5">
+      <div class="container">
+        <div class="row g-4">
+          <div class="col-lg-6">
+            <h2 class="fw-bold mb-3">Get in Touch</h2>
+            <p class="text-secondary">Have questions about admissions, programs, or campus life? Send us a message.</p>
+            <form id="contactForm" class="row g-3">
+              <div class="col-md-6">
+                <input type="text" class="form-control" id="cName" placeholder="Full Name" required />
+              </div>
+              <div class="col-md-6">
+                <input type="email" class="form-control" id="cEmail" placeholder="Email" required />
+              </div>
+              <div class="col-12">
+                <input type="text" class="form-control" id="cSubject" placeholder="Subject" required />
+              </div>
+              <div class="col-12">
+                <textarea class="form-control" id="cMessage" rows="4" placeholder="Message" required></textarea>
+              </div>
+              <div class="col-12 d-flex justify-content-end">
+                <button class="btn btn-primary" type="submit"><i class="bi bi-send me-1"></i>Send</button>
+              </div>
+            </form>
+          </div>
+          <div class="col-lg-6">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body">
+                <h5 class="mb-3">Administrative Contacts</h5>
+                <ul class="list-unstyled small mb-0">
+                  <li class="mb-2"><i class="bi bi-person-gear me-2"></i>Admissions Office: +91 98765 43210</li>
+                  <li class="mb-2"><i class="bi bi-cash-coin me-2"></i>Accounts: +91 99876 54321</li>
+                  <li class="mb-2"><i class="bi bi-building me-2"></i>Hostel Desk: +91 90000 11111</li>
+                  <li class="mb-2"><i class="bi bi-envelope me-2"></i>Email: info@institution.example</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer py-4">
+      <div class="container d-flex flex-column flex-lg-row justify-content-between align-items-center gap-3">
+        <div class="small text-white-50">© <span id="year"></span> Institution. All rights reserved.</div>
+        <div class="d-flex gap-3 small">
+          <a class="text-white-50 hover-white" href="#about">About</a>
+          <a class="text-white-50 hover-white" href="#courses">Courses</a>
+          <a class="text-white-50 hover-white" href="#contact">Contact</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Hostel Application Modal -->
+    <div class="modal fade" id="hostelApplicationModal" tabindex="-1" aria-labelledby="hostelApplicationModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="hostelApplicationModalLabel">Hostel Application Form</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="hostelApplicationForm">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label for="hostelName" class="form-label">Full Name *</label>
+                  <input type="text" class="form-control" id="hostelName" required>
+                </div>
+                <div class="col-md-6">
+                  <label for="hostelEmail" class="form-label">Email Address *</label>
+                  <input type="email" class="form-control" id="hostelEmail" required>
+                </div>
+                <div class="col-md-6">
+                  <label for="hostelPhone" class="form-label">Phone Number *</label>
+                  <input type="tel" class="form-control" id="hostelPhone" required>
+                </div>
+                <div class="col-md-6">
+                  <label for="hostelCourse" class="form-label">Course/Program *</label>
+                  <select class="form-select" id="hostelCourse" required>
+                    <option value="">Select Course</option>
+                    <option value="B.Tech">B.Tech</option>
+                    <option value="BCA">BCA</option>
+                    <option value="MCA">MCA</option>
+                    <option value="MBA">MBA</option>
+                    <option value="BBA">BBA</option>
+                    <option value="B.Sc">B.Sc</option>
+                    <option value="M.Sc">M.Sc</option>
+                    <option value="Diploma">Diploma</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label for="hostelGender" class="form-label">Gender *</label>
+                  <select class="form-select" id="hostelGender" required>
+                    <option value="">Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label for="hostelBlock" class="form-label">Preferred Block *</label>
+                  <select class="form-select" id="hostelBlock" required>
+                    <option value="">Select Block</option>
+                    <option value="Block A">Block A (Boys)</option>
+                    <option value="Block B">Block B (Girls)</option>
+                    <option value="Block C">Block C (Boys)</option>
+                    <option value="Block D">Block D (Girls)</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label for="hostelRoomType" class="form-label">Room Type Preference *</label>
+                  <select class="form-select" id="hostelRoomType" required>
+                    <option value="">Select Room Type</option>
+                    <option value="Single">Single Occupancy</option>
+                    <option value="Double">Double Occupancy</option>
+                    <option value="Triple">Triple Occupancy</option>
+                    <option value="Any">Any Available</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label for="hostelSemester" class="form-label">Semester/Year *</label>
+                  <select class="form-select" id="hostelSemester" required>
+                    <option value="">Select Semester</option>
+                    <option value="I">I</option>
+                    <option value="II">II</option>
+                    <option value="III">III</option>
+                    <option value="IV">IV</option>
+                    <option value="V">V</option>
+                    <option value="VI">VI</option>
+                    <option value="VII">VII</option>
+                    <option value="VIII">VIII</option>
+                  </select>
+                </div>
+                <div class="col-12">
+                  <label for="hostelAddress" class="form-label">Permanent Address *</label>
+                  <textarea class="form-control" id="hostelAddress" rows="3" required></textarea>
+                </div>
+                <div class="col-md-6">
+                  <label for="hostelCity" class="form-label">City *</label>
+                  <input type="text" class="form-control" id="hostelCity" required>
+                </div>
+                <div class="col-md-6">
+                  <label for="hostelState" class="form-label">State *</label>
+                  <input type="text" class="form-control" id="hostelState" required>
+                </div>
+                <div class="col-md-6">
+                  <label for="hostelPincode" class="form-label">Pincode *</label>
+                  <input type="text" class="form-control" id="hostelPincode" pattern="[0-9]{6}" required>
+                </div>
+                <div class="col-md-6">
+                  <label for="hostelParentName" class="form-label">Parent/Guardian Name *</label>
+                  <input type="text" class="form-control" id="hostelParentName" required>
+                </div>
+                <div class="col-md-6">
+                  <label for="hostelParentPhone" class="form-label">Parent/Guardian Phone *</label>
+                  <input type="tel" class="form-control" id="hostelParentPhone" required>
+                </div>
+                <div class="col-md-6">
+                  <label for="hostelParentEmail" class="form-label">Parent/Guardian Email</label>
+                  <input type="email" class="form-control" id="hostelParentEmail">
+                </div>
+                <div class="col-12">
+                  <label for="hostelReason" class="form-label">Reason for Hostel Accommodation *</label>
+                  <textarea class="form-control" id="hostelReason" rows="3" placeholder="Please specify your reason for requiring hostel accommodation..." required></textarea>
+                </div>
+                <div class="col-12">
+                  <label for="hostelMedical" class="form-label">Medical Conditions (if any)</label>
+                  <textarea class="form-control" id="hostelMedical" rows="2" placeholder="Please mention any medical conditions or special requirements..."></textarea>
+                </div>
+                <div class="col-12">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="hostelAgreeTerms" required>
+                    <label class="form-check-label" for="hostelAgreeTerms">
+                      I agree to the hostel rules and regulations and confirm that all information provided is accurate *
+                    </label>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="hostelAgreeFees" required>
+                    <label class="form-check-label" for="hostelAgreeFees">
+                      I understand the hostel fee structure (₹25,000 per semester) and agree to pay the fees as per schedule *
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary" onclick="submitHostelApplication()">Submit Application</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Course Application Modal -->
+    <div class="modal fade" id="courseApplyModal" tabindex="-1" aria-labelledby="courseApplyModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="courseApplyModalLabel">Course Application Form</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="courseApplicationForm">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label for="applicantName" class="form-label">Full Name *</label>
+                  <input type="text" class="form-control" id="applicantName" required>
+                </div>
+                <div class="col-md-6">
+                  <label for="applicantEmail" class="form-label">Email Address *</label>
+                  <input type="email" class="form-control" id="applicantEmail" required>
+                </div>
+                <div class="col-md-6">
+                  <label for="applicantPhone" class="form-label">Phone Number *</label>
+                  <input type="tel" class="form-control" id="applicantPhone" required>
+                </div>
+                <div class="col-md-6">
+                  <label for="applicantDob" class="form-label">Date of Birth *</label>
+                  <input type="date" class="form-control" id="applicantDob" required>
+                </div>
+                <div class="col-md-6">
+                  <label for="selectedCourse" class="form-label">Selected Course *</label>
+                  <input type="text" class="form-control" id="selectedCourse" readonly>
+                </div>
+                <div class="col-md-6">
+                  <label for="qualification" class="form-label">Highest Qualification *</label>
+                  <select class="form-select" id="qualification" required>
+                    <option value="">Select Qualification</option>
+                    <option value="10th">10th Standard</option>
+                    <option value="12th">12th Standard</option>
+                    <option value="diploma">Diploma</option>
+                    <option value="bachelor">Bachelor's Degree</option>
+                    <option value="master">Master's Degree</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label for="percentage" class="form-label">Percentage/Marks *</label>
+                  <input type="number" class="form-control" id="percentage" min="0" max="100" required>
+                </div>
+                <div class="col-md-6">
+                  <label for="yearOfPassing" class="form-label">Year of Passing *</label>
+                  <input type="number" class="form-control" id="yearOfPassing" min="1990" max="2024" required>
+                </div>
+                <div class="col-12">
+                  <label for="address" class="form-label">Address *</label>
+                  <textarea class="form-control" id="address" rows="3" required></textarea>
+                </div>
+                <div class="col-md-6">
+                  <label for="city" class="form-label">City *</label>
+                  <input type="text" class="form-control" id="city" required>
+                </div>
+                <div class="col-md-6">
+                  <label for="state" class="form-label">State *</label>
+                  <input type="text" class="form-control" id="state" required>
+                </div>
+                <div class="col-md-6">
+                  <label for="pincode" class="form-label">Pincode *</label>
+                  <input type="text" class="form-control" id="pincode" pattern="[0-9]{6}" required>
+                </div>
+                <div class="col-md-6">
+                  <label for="parentName" class="form-label">Parent/Guardian Name *</label>
+                  <input type="text" class="form-control" id="parentName" required>
+                </div>
+                <div class="col-md-6">
+                  <label for="parentPhone" class="form-label">Parent/Guardian Phone *</label>
+                  <input type="tel" class="form-control" id="parentPhone" required>
+                </div>
+                <div class="col-md-6">
+                  <label for="parentEmail" class="form-label">Parent/Guardian Email</label>
+                  <input type="email" class="form-control" id="parentEmail">
+                </div>
+                <div class="col-12">
+                  <label for="additionalInfo" class="form-label">Additional Information</label>
+                  <textarea class="form-control" id="additionalInfo" rows="3" placeholder="Any additional information you'd like to share..."></textarea>
+                </div>
+                <div class="col-12">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="agreeTerms" required>
+                    <label class="form-check-label" for="agreeTerms">
+                      I agree to the terms and conditions and confirm that all information provided is accurate *
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary" onclick="submitCourseApplication()">Submit Application</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      const yearEl = document.getElementById('year'); if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+      // Course Application Modal functionality
+      document.addEventListener('DOMContentLoaded', function() {
+        const courseApplyModal = document.getElementById('courseApplyModal');
+        const selectedCourseInput = document.getElementById('selectedCourse');
+        
+        courseApplyModal.addEventListener('show.bs.modal', function (event) {
+          const button = event.relatedTarget;
+          const course = button.getAttribute('data-course');
+          selectedCourseInput.value = course;
+        });
+      });
+
+      function submitCourseApplication() {
+        const form = document.getElementById('courseApplicationForm');
+        if (form.checkValidity()) {
+          alert('Thank you! Your course application has been submitted successfully. We will contact you soon.');
+          form.reset();
+          const modal = bootstrap.Modal.getInstance(document.getElementById('courseApplyModal'));
+          modal.hide();
+        } else {
+          form.reportValidity();
+        }
+      }
+
+      function submitHostelApplication() {
+        const form = document.getElementById('hostelApplicationForm');
+        if (form.checkValidity()) {
+          alert('Thank you! Your hostel application has been submitted successfully. We will contact you soon for room allocation.');
+          form.reset();
+          const modal = bootstrap.Modal.getInstance(document.getElementById('hostelApplicationModal'));
+          modal.hide();
+        } else {
+          form.reportValidity();
+        }
+      }
+
+      document.getElementById('demoForm')?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        alert('Thank you! Your demo class request has been submitted.');
+        e.target.reset();
+      });
+
+      document.getElementById('contactForm')?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        alert('Thanks for contacting us. We will get back to you soon.');
+        e.target.reset();
+      });
+    </script>
+      <!-- Chatbot Component -->
+    {% include 'includes/chatbot.html' %}
+  </body>
+</html>
+
+

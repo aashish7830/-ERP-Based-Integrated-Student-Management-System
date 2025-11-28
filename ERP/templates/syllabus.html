@@ -1,0 +1,38 @@
+{% extends 'base_student.html' %}
+{% load static %}
+
+{% block title %}Course Syllabus | Institution{% endblock %}
+
+{% block content %}
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      const yearEl = document.getElementById('year'); if (yearEl) yearEl.textContent = new Date().getFullYear();
+      // If URL contains ?program=bca etc., scroll to that section
+      const params = new URLSearchParams(window.location.search);
+      const program = params.get('program');
+      if (program) {
+        const el = document.getElementById(program.toLowerCase());
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+        <script>
+      // Ensure navigation renders after page load
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+          if (window.navigationManager && document.getElementById('moduleTabs')) {
+            window.navigationManager.renderMainNavigation();
+          }
+        });
+      } else {
+        if (window.navigationManager && document.getElementById('moduleTabs')) {
+          window.navigationManager.renderMainNavigation();
+        }
+      }
+    </script>
+</script>
+{% endblock %}

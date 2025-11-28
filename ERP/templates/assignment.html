@@ -1,0 +1,850 @@
+{% extends 'base_student.html' %}
+{% load static %}
+
+{% block title %}Assignment Portal | ERP{% endblock %}
+
+{% block content %}
+<div class="row g-4">
+        <!-- Assignment Statistics -->
+        <div class="col-lg-4">
+          <div class="card border-0 shadow-sm">
+            <div class="card-header bg-primary text-white">
+              <h5 class="mb-0"><i class="bi bi-clipboard-data me-2"></i>Assignment Overview</h5>
+            </div>
+            <div class="card-body">
+              <div class="row g-3">
+                <div class="col-6">
+                  <div class="text-center">
+                    <div class="fs-4 fw-bold text-primary" id="totalAssignments">12</div>
+                    <div class="small text-secondary">Total Assignments</div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="text-center">
+                    <div class="fs-4 fw-bold text-success" id="submittedAssignments">8</div>
+                    <div class="small text-secondary">Submitted</div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="text-center">
+                    <div class="fs-4 fw-bold text-warning" id="pendingAssignments">3</div>
+                    <div class="small text-secondary">Pending</div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="text-center">
+                    <div class="fs-4 fw-bold text-danger" id="overdueAssignments">1</div>
+                    <div class="small text-secondary">Overdue</div>
+                  </div>
+                </div>
+              </div>
+              <hr class="my-3">
+              <div class="text-center">
+                <div class="badge bg-success fs-6 mb-2">67% Completion Rate</div>
+                <div class="small text-secondary">Current Semester</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Actions Card -->
+          <div class="card border-0 shadow-sm mt-3">
+            <div class="card-header bg-info text-white">
+              <h6 class="mb-0"><i class="bi bi-lightning me-2"></i>Quick Actions</h6>
+            </div>
+            <div class="card-body">
+              <div class="d-grid gap-2">
+                <button class="btn btn-outline-primary btn-sm" onclick="showSubmitModal()">
+                  <i class="bi bi-upload me-1"></i>Submit Assignment
+                </button>
+                <button class="btn btn-outline-success btn-sm" onclick="showGradeHistory()">
+                  <i class="bi bi-graph-up me-1"></i>View Grades
+                </button>
+                <button class="btn btn-outline-warning btn-sm" onclick="showUpcomingDeadlines()">
+                  <i class="bi bi-calendar-event me-1"></i>Upcoming Deadlines
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Assignment List -->
+        <div class="col-lg-8">
+          <div class="card border-0 shadow-sm">
+            <div class="card-header bg-primary text-white">
+              <div class="row align-items-center">
+                <div class="col-md-6">
+                  <h5 class="mb-0"><i class="bi bi-list-task me-2"></i>My Assignments</h5>
+                </div>
+                <div class="col-md-6">
+                  <select class="form-select form-select-sm" id="assignmentFilter">
+                    <option value="all">All Assignments</option>
+                    <option value="pending">Pending</option>
+                    <option value="submitted">Submitted</option>
+                    <option value="graded">Graded</option>
+                    <option value="overdue">Overdue</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="row g-3" id="assignmentList">
+                <!-- Assignment cards will be populated here -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Assignment Details Tabs -->
+      <div class="card border-0 shadow-sm mt-4">
+        <div class="card-header bg-primary text-white">
+          <ul class="nav nav-tabs card-header-tabs" id="assignmentTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active text-white" id="current-tab" data-bs-toggle="tab" data-bs-target="#current" type="button" role="tab">
+                <i class="bi bi-calendar-week me-1" style="color: #111010;"></i> <span style="color: #111010;">Current Assignments</span>
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link text-white" id="submitted-tab" data-bs-toggle="tab" data-bs-target="#submitted" type="button" role="tab">
+                <i class="bi bi-check-circle me-1" style="color: #111010;"></i> <span style="color: #111010;">Submitted</span>
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link text-white" id="grades-tab" data-bs-toggle="tab" data-bs-target="#grades" type="button" role="tab">
+                <i class="bi bi-star me-1" style="color: #111010;"></i> <span style="color: #111010;">Grades & Feedback</span>
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link text-white" id="resources-tab" data-bs-toggle="tab" data-bs-target="#resources" type="button" role="tab">
+                <i class="bi bi-folder me-1" style="color: #111010;"></i> <span style="color: #111010;">Resources</span>
+              </button>
+            </li>
+          </ul>
+        </div>
+        <div class="card-body">
+          <div class="tab-content" id="assignmentTabContent">
+            <!-- Current Assignments Tab -->
+            <div class="tab-pane fade show active" id="current" role="tabpanel">
+              <div class="table-responsive">
+                <table class="table table-striped align-middle">
+                  <thead>
+                    <tr>
+                      <th>Subject</th>
+                      <th>Assignment</th>
+                      <th>Due Date</th>
+                      <th>Status</th>
+                      <th>Marks</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="currentAssignmentsBody">
+                    <!-- Current assignment data will be populated here -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Submitted Assignments Tab -->
+            <div class="tab-pane fade" id="submitted" role="tabpanel">
+              <div class="table-responsive">
+                <table class="table table-striped align-middle">
+                  <thead>
+                    <tr>
+                      <th>Subject</th>
+                      <th>Assignment</th>
+                      <th>Submitted Date</th>
+                      <th>Status</th>
+                      <th>Grade</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="submittedAssignmentsBody">
+                    <!-- Submitted assignment data will be populated here -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Grades & Feedback Tab -->
+            <div class="tab-pane fade" id="grades" role="tabpanel">
+              <div class="row g-3" id="gradesContainer">
+                <!-- Grades will be populated here -->
+              </div>
+            </div>
+
+            <!-- Resources Tab -->
+            <div class="tab-pane fade" id="resources" role="tabpanel">
+              <div class="row g-3" id="resourcesContainer">
+                <!-- Resources will be populated here -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Assignment Submission Modal -->
+      <div class="modal fade" id="assignmentSubmissionModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+              <h5 class="modal-title"><i class="bi bi-upload me-2"></i>Submit Assignment</h5>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form id="assignmentSubmissionForm">
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="form-label">Subject</label>
+                    <input type="text" class="form-control" id="assignmentSubject" readonly>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Assignment Title</label>
+                    <input type="text" class="form-control" id="assignmentTitle" readonly>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Student Name</label>
+                    <input type="text" class="form-control" id="studentName" readonly>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Enrollment Number</label>
+                    <input type="text" class="form-control" id="enrollmentNumber" readonly>
+                  </div>
+                  <div class="col-12">
+                    <label class="form-label">Assignment File</label>
+                    <input type="file" class="form-control" id="assignmentFile" accept=".pdf,.doc,.docx,.txt" required>
+                    <div class="form-text">Upload your assignment in PDF, DOC, DOCX or TXT format (Max 10MB)</div>
+                  </div>
+                  <div class="col-12">
+                    <label class="form-label">Comments/Notes</label>
+                    <textarea class="form-control" id="assignmentComments" rows="3" placeholder="Add any additional comments or notes about your submission"></textarea>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Submission Date</label>
+                    <input type="datetime-local" class="form-control" id="submissionDate" readonly>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Due Date</label>
+                    <input type="datetime-local" class="form-control" id="dueDate" readonly>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="button" id="submitAssignmentBtn" class="btn btn-primary">
+                <i class="bi bi-send me-1"></i>Submit Assignment
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Grade History Modal -->
+      <div class="modal fade" id="gradeHistoryModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+              <h5 class="modal-title"><i class="bi bi-graph-up me-2"></i>Grade History</h5>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="table-responsive">
+                <table class="table table-striped align-middle">
+                  <thead>
+                    <tr>
+                      <th>Subject</th>
+                      <th>Assignment</th>
+                      <th>Submitted Date</th>
+                      <th>Grade</th>
+                      <th>Marks</th>
+                      <th>Feedback</th>
+                    </tr>
+                  </thead>
+                  <tbody id="gradeHistoryBody">
+                    <!-- Grade history data will be populated here -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-success" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Upcoming Deadlines Modal -->
+      <div class="modal fade" id="upcomingDeadlinesModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header bg-warning text-dark">
+              <h5 class="modal-title"><i class="bi bi-calendar-event me-2"></i>Upcoming Deadlines</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="row g-3" id="upcomingDeadlinesContainer">
+                <!-- Upcoming deadlines will be populated here -->
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      const yearEl = document.getElementById('year'); if (yearEl) yearEl.textContent = new Date().getFullYear();
+      const sessStr = localStorage.getItem('erpSession') || sessionStorage.getItem('erpSession'); if (!sessStr) window.location.replace('/');
+      let sess; try { sess = JSON.parse(sessStr || '{}'); } catch { sess = {}; }
+      const demoUsers = [
+        { enrollment:'TCA2259093', name:'YASH JAIN', course:'BTECH-022', email:'yash.jain@email.com', phone:'9876543210', avatar:'https://i.pravatar.cc/100?img=68' },
+        { enrollment:'21BCA1234', name:'AARAV SHARMA', course:'BCA-001', email:'aarav.sharma@email.com', phone:'9876543211', avatar:'https://i.pravatar.cc/100?img=12' }
+      ];
+      const user = demoUsers.find(u => u.enrollment === sess?.enrollment); if (!user) window.location.replace('/');
+      document.getElementById('userMini').innerHTML = `<div class="d-flex align-items-center gap-2"><img src="${user.avatar}" class="rounded-circle" width="32" height="32"/><div><div class="fw-semibold">${user.name}</div><div class="text-secondary">${user.enrollment}</div></div></div>`;
+      document.getElementById('logoutBtn').addEventListener('click', () => {
+        // Clear all session data
+        localStorage.removeItem('erpSession');
+        localStorage.removeItem('erpSessionEnrollment');
+        sessionStorage.removeItem('erpSession');
+        sessionStorage.removeItem('erpSessionEnrollment');
+        // Redirect to login page
+        window.location.replace('/');
+      });
+
+      // Assignment data
+      const assignments = [
+        {
+          id: 1,
+          subject: 'Data Structures',
+          title: 'Binary Tree Implementation',
+          description: 'Implement a binary tree with insertion, deletion, and traversal operations',
+          dueDate: '2024-02-15T23:59:00',
+          maxMarks: 100,
+          status: 'pending',
+          submittedDate: null,
+          grade: null,
+          feedback: null,
+          file: null,
+          instructor: 'Dr. Neha Gupta',
+          instructions: 'Submit your code files along with a detailed report explaining your implementation approach.'
+        },
+        {
+          id: 2,
+          subject: 'Web Development',
+          title: 'Responsive Portfolio Website',
+          description: 'Create a responsive portfolio website using HTML, CSS, and JavaScript',
+          dueDate: '2024-02-20T23:59:00',
+          maxMarks: 150,
+          status: 'submitted',
+          submittedDate: '2024-02-18T14:30:00',
+          grade: null,
+          feedback: null,
+          file: 'portfolio_website.zip',
+          instructor: 'Prof. Rahul Verma',
+          instructions: 'Include all source files and a live demo link if possible.'
+        },
+        {
+          id: 3,
+          subject: 'Database Management',
+          title: 'E-commerce Database Design',
+          description: 'Design and implement a complete database schema for an e-commerce platform',
+          dueDate: '2024-02-10T23:59:00',
+          maxMarks: 200,
+          status: 'graded',
+          submittedDate: '2024-02-08T16:45:00',
+          grade: 'A',
+          feedback: 'Excellent work! Your database design is well-structured and follows normalization principles. Consider adding more indexes for better performance.',
+          file: 'ecommerce_db.sql',
+          instructor: 'Dr. Priya Singh',
+          instructions: 'Submit SQL scripts and ER diagrams.'
+        },
+        {
+          id: 4,
+          subject: 'Machine Learning',
+          title: 'Linear Regression Analysis',
+          description: 'Implement linear regression from scratch and compare with sklearn implementation',
+          dueDate: '2024-02-12T23:59:00',
+          maxMarks: 120,
+          status: 'overdue',
+          submittedDate: null,
+          grade: null,
+          feedback: null,
+          file: null,
+          instructor: 'Dr. Amit Kumar',
+          instructions: 'Include Jupyter notebook with visualizations and performance comparisons.'
+        },
+        {
+          id: 5,
+          subject: 'Software Engineering',
+          title: 'Agile Project Management',
+          description: 'Create a project plan using Agile methodology for a software development project',
+          dueDate: '2024-02-25T23:59:00',
+          maxMarks: 100,
+          status: 'pending',
+          submittedDate: null,
+          grade: null,
+          feedback: null,
+          file: null,
+          instructor: 'Prof. Sneha Patel',
+          instructions: 'Use tools like Jira or Trello and provide screenshots of your project board.'
+        },
+        {
+          id: 6,
+          subject: 'Computer Networks',
+          title: 'Network Protocol Analysis',
+          description: 'Analyze network traffic using Wireshark and write a detailed report',
+          dueDate: '2024-02-05T23:59:00',
+          maxMarks: 150,
+          status: 'graded',
+          submittedDate: '2024-02-03T11:20:00',
+          grade: 'B+',
+          feedback: 'Good analysis of network protocols. Your report is comprehensive but could benefit from more detailed explanations of the captured packets.',
+          file: 'network_analysis.pdf',
+          instructor: 'Dr. Rajesh Tiwari',
+          instructions: 'Submit the Wireshark capture file and your analysis report.'
+        }
+      ];
+
+      // Grade history data
+      const gradeHistory = [
+        {
+          subject: 'Database Management',
+          assignment: 'E-commerce Database Design',
+          submittedDate: '2024-02-08',
+          grade: 'A',
+          marks: '185/200',
+          feedback: 'Excellent work! Your database design is well-structured and follows normalization principles.'
+        },
+        {
+          subject: 'Computer Networks',
+          assignment: 'Network Protocol Analysis',
+          submittedDate: '2024-02-03',
+          grade: 'B+',
+          marks: '135/150',
+          feedback: 'Good analysis of network protocols. Your report is comprehensive but could benefit from more detailed explanations.'
+        },
+        {
+          subject: 'Operating Systems',
+          assignment: 'Process Scheduling Algorithms',
+          submittedDate: '2024-01-28',
+          grade: 'A-',
+          marks: '88/100',
+          feedback: 'Well-implemented algorithms with good documentation. Consider optimizing the round-robin implementation.'
+        },
+        {
+          subject: 'Computer Graphics',
+          assignment: '3D Transformation Matrix',
+          submittedDate: '2024-01-20',
+          grade: 'B',
+          marks: '75/100',
+          feedback: 'Good understanding of transformation concepts. Work on improving the visualization of the transformations.'
+        }
+      ];
+
+      // Upcoming deadlines data
+      const upcomingDeadlines = [
+        {
+          subject: 'Data Structures',
+          assignment: 'Binary Tree Implementation',
+          dueDate: '2024-02-15',
+          daysLeft: 3,
+          priority: 'high'
+        },
+        {
+          subject: 'Web Development',
+          assignment: 'Responsive Portfolio Website',
+          dueDate: '2024-02-20',
+          daysLeft: 8,
+          priority: 'medium'
+        },
+        {
+          subject: 'Software Engineering',
+          assignment: 'Agile Project Management',
+          dueDate: '2024-02-25',
+          daysLeft: 13,
+          priority: 'low'
+        }
+      ];
+
+      // Resources data
+      const resources = [
+        {
+          title: 'Assignment Guidelines',
+          type: 'Document',
+          description: 'General guidelines for assignment submission and formatting',
+          link: '#',
+          icon: 'bi-file-text'
+        },
+        {
+          title: 'Coding Standards',
+          type: 'Document',
+          description: 'Coding standards and best practices for programming assignments',
+          link: '#',
+          icon: 'bi-code-slash'
+        },
+        {
+          title: 'Late Submission Policy',
+          type: 'Policy',
+          description: 'Information about late submission penalties and extensions',
+          link: '#',
+          icon: 'bi-clock-history'
+        },
+        {
+          title: 'Plagiarism Policy',
+          type: 'Policy',
+          description: 'Academic integrity guidelines and plagiarism detection',
+          link: '#',
+          icon: 'bi-shield-check'
+        },
+        {
+          title: 'Assignment Templates',
+          type: 'Template',
+          description: 'Download assignment templates for different subjects',
+          link: '#',
+          icon: 'bi-download'
+        },
+        {
+          title: 'Submission Help',
+          type: 'Guide',
+          description: 'Step-by-step guide for assignment submission',
+          link: '#',
+          icon: 'bi-question-circle'
+        }
+      ];
+
+      const assignmentList = document.getElementById('assignmentList');
+      const currentAssignmentsBody = document.getElementById('currentAssignmentsBody');
+      const submittedAssignmentsBody = document.getElementById('submittedAssignmentsBody');
+      const gradesContainer = document.getElementById('gradesContainer');
+      const resourcesContainer = document.getElementById('resourcesContainer');
+      const assignmentFilter = document.getElementById('assignmentFilter');
+      const assignmentSubmissionModal = new bootstrap.Modal(document.getElementById('assignmentSubmissionModal'));
+      const gradeHistoryModal = new bootstrap.Modal(document.getElementById('gradeHistoryModal'));
+      const upcomingDeadlinesModal = new bootstrap.Modal(document.getElementById('upcomingDeadlinesModal'));
+
+      function getStatusBadge(status) {
+        const badges = {
+          'pending': 'bg-warning',
+          'submitted': 'bg-info',
+          'graded': 'bg-success',
+          'overdue': 'bg-danger'
+        };
+        return badges[status] || 'bg-secondary';
+      }
+
+      function getPriorityBadge(priority) {
+        const badges = {
+          'high': 'bg-danger',
+          'medium': 'bg-warning',
+          'low': 'bg-success'
+        };
+        return badges[priority] || 'bg-secondary';
+      }
+
+      function formatDate(dateString) {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-US', { 
+          year: 'numeric', 
+          month: 'short', 
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit'
+        });
+      }
+
+      function renderAssignments(filter = 'all') {
+        let filteredAssignments = assignments;
+        
+        if (filter !== 'all') {
+          filteredAssignments = assignments.filter(assignment => assignment.status === filter);
+        }
+
+        if (filteredAssignments.length === 0) {
+          assignmentList.innerHTML = '<div class="col-12 text-center text-muted">No assignments found for selected filter</div>';
+          return;
+        }
+
+        assignmentList.innerHTML = filteredAssignments.map(assignment => `
+          <div class="col-md-6">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                  <div>
+                    <h6 class="mb-1">${assignment.subject}</h6>
+                    <div class="small text-secondary">${assignment.title}</div>
+                  </div>
+                  <span class="badge ${getStatusBadge(assignment.status)}">${assignment.status.toUpperCase()}</span>
+                </div>
+                <p class="small text-muted mb-3">${assignment.description}</p>
+                <div class="row g-2 mb-3">
+                  <div class="col-6">
+                    <div class="small text-secondary">Due Date:</div>
+                    <div class="fw-bold text-warning">${formatDate(assignment.dueDate)}</div>
+                  </div>
+                  <div class="col-6">
+                    <div class="small text-secondary">Max Marks:</div>
+                    <div class="fw-bold text-primary">${assignment.maxMarks}</div>
+                  </div>
+                  <div class="col-6">
+                    <div class="small text-secondary">Instructor:</div>
+                    <div class="fw-bold">${assignment.instructor}</div>
+                  </div>
+                  <div class="col-6">
+                    <div class="small text-secondary">Status:</div>
+                    <div class="fw-bold">${assignment.status.charAt(0).toUpperCase() + assignment.status.slice(1)}</div>
+                  </div>
+                </div>
+                <div class="d-grid gap-2">
+                  ${assignment.status === 'pending' || assignment.status === 'overdue' 
+                    ? `<button class="btn btn-primary btn-sm" onclick="submitAssignment(${assignment.id})">
+                         <i class="bi bi-upload me-1"></i>Submit Assignment
+                       </button>`
+                    : assignment.status === 'submitted'
+                    ? `<button class="btn btn-info btn-sm" onclick="viewSubmission(${assignment.id})">
+                         <i class="bi bi-eye me-1"></i>View Submission
+                       </button>`
+                    : `<button class="btn btn-success btn-sm" onclick="viewGrade(${assignment.id})">
+                         <i class="bi bi-star me-1"></i>View Grade
+                       </button>`
+                  }
+                </div>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      function renderCurrentAssignments() {
+        const currentAssignments = assignments.filter(a => a.status === 'pending' || a.status === 'overdue');
+        currentAssignmentsBody.innerHTML = currentAssignments.map(assignment => `
+          <tr>
+            <td>${assignment.subject}</td>
+            <td>${assignment.title}</td>
+            <td>${formatDate(assignment.dueDate)}</td>
+            <td><span class="badge ${getStatusBadge(assignment.status)}">${assignment.status.toUpperCase()}</span></td>
+            <td>${assignment.maxMarks}</td>
+            <td>
+              <button class="btn btn-sm btn-outline-primary" onclick="submitAssignment(${assignment.id})">
+                <i class="bi bi-upload"></i>
+              </button>
+            </td>
+          </tr>
+        `).join('');
+      }
+
+      function renderSubmittedAssignments() {
+        const submittedAssignments = assignments.filter(a => a.status === 'submitted' || a.status === 'graded');
+        submittedAssignmentsBody.innerHTML = submittedAssignments.map(assignment => `
+          <tr>
+            <td>${assignment.subject}</td>
+            <td>${assignment.title}</td>
+            <td>${assignment.submittedDate ? formatDate(assignment.submittedDate) : 'N/A'}</td>
+            <td><span class="badge ${getStatusBadge(assignment.status)}">${assignment.status.toUpperCase()}</span></td>
+            <td>${assignment.grade || 'Pending'}</td>
+            <td>
+              <button class="btn btn-sm btn-outline-info" onclick="viewSubmission(${assignment.id})">
+                <i class="bi bi-eye"></i>
+              </button>
+            </td>
+          </tr>
+        `).join('');
+      }
+
+      function renderGrades() {
+        const gradedAssignments = assignments.filter(a => a.status === 'graded');
+        gradesContainer.innerHTML = gradedAssignments.map(assignment => `
+          <div class="col-md-6">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                  <div>
+                    <h6 class="mb-1">${assignment.subject}</h6>
+                    <div class="small text-secondary">${assignment.title}</div>
+                  </div>
+                  <span class="badge bg-success">${assignment.grade}</span>
+                </div>
+                <div class="row g-2 mb-3">
+                  <div class="col-6">
+                    <div class="small text-secondary">Marks:</div>
+                    <div class="fw-bold text-success">${assignment.maxMarks}</div>
+                  </div>
+                  <div class="col-6">
+                    <div class="small text-secondary">Submitted:</div>
+                    <div class="fw-bold">${formatDate(assignment.submittedDate)}</div>
+                  </div>
+                </div>
+                <div class="alert alert-info mb-0">
+                  <div class="small fw-bold">Feedback:</div>
+                  <div class="small">${assignment.feedback}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      function renderResources() {
+        resourcesContainer.innerHTML = resources.map(resource => `
+          <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body">
+                <div class="d-flex align-items-center mb-3">
+                  <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                    <i class="${resource.icon}"></i>
+                  </div>
+                  <div>
+                    <h6 class="mb-1">${resource.title}</h6>
+                    <div class="small text-secondary">${resource.type}</div>
+                  </div>
+                </div>
+                <p class="small text-muted mb-3">${resource.description}</p>
+                <div class="d-grid gap-2">
+                  <a href="${resource.link}" class="btn btn-outline-primary btn-sm">
+                    <i class="bi bi-download me-1"></i>Download
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      function renderGradeHistory() {
+        const gradeHistoryBody = document.getElementById('gradeHistoryBody');
+        gradeHistoryBody.innerHTML = gradeHistory.map(grade => `
+          <tr>
+            <td>${grade.subject}</td>
+            <td>${grade.assignment}</td>
+            <td>${grade.submittedDate}</td>
+            <td><span class="badge bg-success">${grade.grade}</span></td>
+            <td class="fw-bold text-success">${grade.marks}</td>
+            <td class="small">${grade.feedback}</td>
+          </tr>
+        `).join('');
+      }
+
+      function renderUpcomingDeadlines() {
+        const upcomingDeadlinesContainer = document.getElementById('upcomingDeadlinesContainer');
+        upcomingDeadlinesContainer.innerHTML = upcomingDeadlines.map(deadline => `
+          <div class="col-md-6">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                  <div>
+                    <h6 class="mb-1">${deadline.subject}</h6>
+                    <div class="small text-secondary">${deadline.assignment}</div>
+                  </div>
+                  <span class="badge ${getPriorityBadge(deadline.priority)}">${deadline.priority.toUpperCase()}</span>
+                </div>
+                <div class="row g-2 mb-3">
+                  <div class="col-6">
+                    <div class="small text-secondary">Due Date:</div>
+                    <div class="fw-bold text-warning">${deadline.dueDate}</div>
+                  </div>
+                  <div class="col-6">
+                    <div class="small text-secondary">Days Left:</div>
+                    <div class="fw-bold text-danger">${deadline.daysLeft}</div>
+                  </div>
+                </div>
+                <div class="d-grid gap-2">
+                  <button class="btn btn-primary btn-sm" onclick="submitAssignment(${deadline.subject})">
+                    <i class="bi bi-upload me-1"></i>Submit Now
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      function submitAssignment(assignmentId) {
+        const assignment = assignments.find(a => a.id === assignmentId);
+        if (!assignment) return;
+
+        document.getElementById('assignmentSubject').value = assignment.subject;
+        document.getElementById('assignmentTitle').value = assignment.title;
+        document.getElementById('studentName').value = user.name;
+        document.getElementById('enrollmentNumber').value = user.enrollment;
+        document.getElementById('submissionDate').value = new Date().toISOString().slice(0, 16);
+        document.getElementById('dueDate').value = assignment.dueDate.slice(0, 16);
+
+        assignmentSubmissionModal.show();
+      }
+
+      function viewSubmission(assignmentId) {
+        const assignment = assignments.find(a => a.id === assignmentId);
+        if (!assignment) return;
+        
+        alert(`Viewing submission for: ${assignment.title}\nFile: ${assignment.file}\nSubmitted: ${formatDate(assignment.submittedDate)}`);
+      }
+
+      function viewGrade(assignmentId) {
+        const assignment = assignments.find(a => a.id === assignmentId);
+        if (!assignment) return;
+        
+        alert(`Grade for ${assignment.title}:\nGrade: ${assignment.grade}\nFeedback: ${assignment.feedback}`);
+      }
+
+      function showSubmitModal() {
+        assignmentSubmissionModal.show();
+      }
+
+      function showGradeHistory() {
+        renderGradeHistory();
+        gradeHistoryModal.show();
+      }
+
+      function showUpcomingDeadlines() {
+        renderUpcomingDeadlines();
+        upcomingDeadlinesModal.show();
+      }
+
+      // Event listeners
+      assignmentFilter.addEventListener('change', () => {
+        renderAssignments(assignmentFilter.value);
+      });
+
+      document.getElementById('submitAssignmentBtn').addEventListener('click', () => {
+        const file = document.getElementById('assignmentFile').files[0];
+        const comments = document.getElementById('assignmentComments').value;
+
+        if (!file) {
+          alert('Please select a file to upload');
+          return;
+        }
+
+        alert('Assignment submitted successfully! You will receive confirmation email shortly.');
+        assignmentSubmissionModal.hide();
+        
+        // Reset form
+        document.getElementById('assignmentSubmissionForm').reset();
+      });
+
+      // Initialize
+      renderAssignments();
+      renderCurrentAssignments();
+      renderSubmittedAssignments();
+      renderGrades();
+      renderResources();
+        <script>
+      // Ensure navigation renders after page load
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+          if (window.navigationManager && document.getElementById('moduleTabs')) {
+            window.navigationManager.renderMainNavigation();
+          }
+        });
+      } else {
+        if (window.navigationManager && document.getElementById('moduleTabs')) {
+          window.navigationManager.renderMainNavigation();
+        }
+      }
+    </script>
+</script>
+{% endblock %}

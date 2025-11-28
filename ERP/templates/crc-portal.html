@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CRC Department Portal | ERP</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="{% static 'styles.css' %}" />
+    <script src="{% static 'navigation.js' %}"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg bg-white navbar-light shadow-sm">
+      <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="{% url 'dashboard' %}">
+          <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f3eb.svg" width="30" class="me-2"/>
+          <span class="fw-bold brand-gradient">Institution ERP</span>
+        </a>
+        <div class="ms-auto d-flex align-items-center gap-3">
+          <div id="userMini" class="small"></div>
+          <button id="logoutBtn" class="btn btn-outline-secondary btn-sm"><i class="bi bi-box-arrow-right me-1"></i>Logout</button>
+        </div>
+      </div>
+    </nav>
+
+    <div class="border-top" style="border-color:#f0ad00 !important"></div>
+
+    <div class="container my-4">
+      <ul class="nav nav-pills flex-wrap gap-2 py-2" id="moduleTabs">
+        <!-- Dynamic navigation will be rendered here -->
+      </ul>
+
+      <!-- Header Section -->
+      <div class="row g-4 mb-4">
+        <div class="col-12">
+          <div class="card border-0 shadow-sm bg-primary text-white">
+            <div class="card-body p-4">
+              <div class="row align-items-center">
+                <div class="col-md-8">
+                  <h2 class="mb-2"><i class="bi bi-briefcase me-2"></i>Career Resource Center (CRC) Department</h2>
+                  <p class="mb-0 opacity-75">Empowering students with career opportunities, skill development, and industry connections</p>
+                </div>
+                <div class="col-md-4 text-end">
+                  <div class="bg-white bg-opacity-20 rounded p-3 d-inline-block">
+                    <div class="fs-3 fw-bold">2024-25</div>
+                    <div class="small">Academic Year</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Statistics Dashboard -->
+      <div class="row g-4 mb-4">
+        <div class="col-md-3">
+          <div class="card border-0 shadow-sm">
+            <div class="card-body text-center">
+              <div class="bg-success bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                <i class="bi bi-people-fill fs-3 text-success"></i>
+              </div>
+              <h3 class="mb-1 text-success">142</h3>
+              <div class="text-secondary small">Placed Students</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card border-0 shadow-sm">
+            <div class="card-body text-center">
+              <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                <i class="bi bi-building fs-3 text-primary"></i>
+              </div>
+              <h3 class="mb-1 text-primary">45</h3>
+              <div class="text-secondary small">Partner Companies</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card border-0 shadow-sm">
+            <div class="card-body text-center">
+              <div class="bg-warning bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                <i class="bi bi-calendar-event fs-3 text-warning"></i>
+              </div>
+              <h3 class="mb-1 text-warning">28</h3>
+              <div class="text-secondary small">Upcoming Drives</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card border-0 shadow-sm">
+            <div class="card-body text-center">
+              <div class="bg-info bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                <i class="bi bi-graph-up fs-3 text-info"></i>
+              </div>
+              <h3 class="mb-1 text-info">8.5 LPA</h3>
+              <div class="text-secondary small">Average Package</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Content Tabs -->
+      <div class="card border-0 shadow-sm">
+        <div class="card-header bg-primary text-white">
+          <ul class="nav nav-tabs card-header-tabs" id="crcTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active text-white" id="placement-tab" data-bs-toggle="tab" data-bs-target="#placement" type="button" role="tab">
+                <i class="bi bi-briefcase me-1"></i>Placement Activities
+              </button>
+            </li>
+          </ul>
+        </div>
+        <div class="card-body">
+          <div class="tab-content" id="crcTabContent">
+            
+            <!-- Placement Activities Tab -->
+            <div class="tab-pane fade show active" id="placement" role="tabpanel">
+              <div class="d-flex justify-content-between align-items-center mb-4">
+                <h5 class="mb-0"><i class="bi bi-briefcase me-2 text-primary"></i>Placement Activities</h5>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCompanyModal">
+                  <i class="bi bi-plus-circle me-1"></i>Add Upcoming Company
+                </button>
+              </div>
+              
+              <!-- Statistics Cards -->
+              <div class="row g-3 mb-4">
+                <div class="col-md-3">
+                  <div class="card border-primary">
+                    <div class="card-body text-center">
+                      <h4 class="text-primary mb-0">{{ total_companies }}</h4>
+                      <small class="text-muted">Total Companies</small>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="card border-warning">
+                    <div class="card-body text-center">
+                      <h4 class="text-warning mb-0">{{ pending }}</h4>
+                      <small class="text-muted">Pending Approval</small>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="card border-success">
+                    <div class="card-body text-center">
+                      <h4 class="text-success mb-0">{{ approved }}</h4>
+                      <small class="text-muted">Approved</small>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="card border-danger">
+                    <div class="card-body text-center">
+                      <h4 class="text-danger mb-0">{{ rejected }}</h4>
+                      <small class="text-muted">Rejected</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Companies List -->
+              <div class="card border-0 shadow-sm mb-4">
+                <div class="card-header bg-primary text-white">
+                  <h6 class="mb-0"><i class="bi bi-building me-2"></i>Company List</h6>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>Company Name</th>
+                          <th>Role</th>
+                          <th>Package (LPA)</th>
+                          <th>Drive Date</th>
+                          <th>Status</th>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for company in companies %}
+                        <tr>
+                          <td>{{ company.company_name }}</td>
+                          <td>{{ company.role }}</td>
+                          <td>{{ company.package }}</td>
+                          <td>{{ company.drive_date|date:"d M Y" }}</td>
+                          <td>
+                            {% if company.status == 'pending' %}
+                              <span class="badge bg-warning">Pending</span>
+                            {% elif company.status == 'approved' %}
+                              <span class="badge bg-success">Approved</span>
+                            {% else %}
+                              <span class="badge bg-danger">Rejected</span>
+                            {% endif %}
+                          </td>
+                          <td>
+                            <button class="btn btn-sm btn-outline-primary" onclick="editCompany({{ company.id }})">
+                              <i class="bi bi-pencil"></i>
+                            </button>
+                            <a href="{% url 'crc-view-applications' company.id %}" class="btn btn-sm btn-outline-info">
+                              <i class="bi bi-eye"></i> Applications
+                            </a>
+                          </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                          <td colspan="6" class="text-center text-muted">No companies added yet. Click "Add Upcoming Company" to add one.</td>
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Student Applications -->
+              <div class="card border-0 shadow-sm">
+                <div class="card-header bg-info text-white">
+                  <h6 class="mb-0"><i class="bi bi-people me-2"></i>Recent Student Applications</h6>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>Student Name</th>
+                          <th>Enrollment No.</th>
+                          <th>Company</th>
+                          <th>Role</th>
+                          <th>Applied Date</th>
+                          <th>Status</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for app in applications %}
+                        <tr>
+                          <td>{{ app.student_name }}</td>
+                          <td>{{ app.enrollment_no }}</td>
+                          <td>{{ app.placement.company_name }}</td>
+                          <td>{{ app.placement.role }}</td>
+                          <td>{{ app.applied_at|date:"d M Y" }}</td>
+                          <td>
+                            <span class="badge bg-info">{{ app.get_status_display }}</span>
+                          </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                          <td colspan="6" class="text-center text-muted">No applications yet.</td>
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="row g-4 mb-4">
+                <div class="col-md-6">
+                  <div class="card border-0 shadow-sm h-100">
+                    <div class="card-header bg-success text-white">
+                      <h6 class="mb-0"><i class="bi bi-calendar-check me-2"></i>Campus Placements</h6>
+                    </div>
+                    <div class="card-body">
+                      <p class="text-muted">Organize campus placements by inviting companies and scheduling placement drives.</p>
+                      <ul class="list-unstyled">
+                        <li><i class="bi bi-check-circle text-success me-2"></i>Company invitations and coordination</li>
+                        <li><i class="bi bi-check-circle text-success me-2"></i>Drive scheduling and management</li>
+                        <li><i class="bi bi-check-circle text-success me-2"></i>Venue and logistics arrangement</li>
+                        <li><i class="bi bi-check-circle text-success me-2"></i>Student eligibility verification</li>
+                      </ul>
+                      <button class="btn btn-success btn-sm mt-2" onclick="managePlacements()">
+                        <i class="bi bi-gear me-1"></i>Manage Placements
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="card border-0 shadow-sm h-100">
+                    <div class="card-header bg-info text-white">
+                      <h6 class="mb-0"><i class="bi bi-megaphone me-2"></i>Pre-Placement Talks (PPT)</h6>
+                    </div>
+                    <div class="card-body">
+                      <p class="text-muted">Arrange Pre-Placement Talks where companies present their profile, roles, and packages.</p>
+                      <ul class="list-unstyled">
+                        <li><i class="bi bi-check-circle text-info me-2"></i>Company profile presentations</li>
+                        <li><i class="bi bi-check-circle text-info me-2"></i>Role and responsibility details</li>
+                        <li><i class="bi bi-check-circle text-info me-2"></i>Package and benefits information</li>
+                        <li><i class="bi bi-check-circle text-info me-2"></i>Q&A sessions with students</li>
+                      </ul>
+                      <button class="btn btn-info btn-sm mt-2" onclick="schedulePPT()">
+                        <i class="bi bi-calendar-plus me-1"></i>Schedule PPT
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row g-4 mb-4">
+                <div class="col-md-6">
+                  <div class="card border-0 shadow-sm h-100">
+                    <div class="card-header bg-warning text-white">
+                      <h6 class="mb-0"><i class="bi bi-clipboard-check me-2"></i>Interview Coordination</h6>
+                    </div>
+                    <div class="card-body">
+                      <p class="text-muted">Coordinate all interview rounds including written tests, GD, personal interviews, and HR rounds.</p>
+                      <ul class="list-unstyled">
+                        <li><i class="bi bi-check-circle text-warning me-2"></i>Written test arrangements</li>
+                        <li><i class="bi bi-check-circle text-warning me-2"></i>Group Discussion (GD) sessions</li>
+                        <li><i class="bi bi-check-circle text-warning me-2"></i>Personal interview scheduling</li>
+                        <li><i class="bi bi-check-circle text-warning me-2"></i>HR round coordination</li>
+                      </ul>
+                      <button class="btn btn-warning btn-sm mt-2" onclick="coordinateInterviews()">
+                        <i class="bi bi-calendar-event me-1"></i>Coordinate Interviews
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="card border-0 shadow-sm h-100">
+                    <div class="card-header bg-primary text-white">
+                      <h6 class="mb-0"><i class="bi bi-file-earmark-text me-2"></i>Placement Records</h6>
+                    </div>
+                    <div class="card-body">
+                      <p class="text-muted">Maintain comprehensive records of placed students, companies, and packages.</p>
+                      <ul class="list-unstyled">
+                        <li><i class="bi bi-check-circle text-primary me-2"></i>Student placement tracking</li>
+                        <li><i class="bi bi-check-circle text-primary me-2"></i>Company-wise records</li>
+                        <li><i class="bi bi-check-circle text-primary me-2"></i>Package details maintenance</li>
+                        <li><i class="bi bi-check-circle text-primary me-2"></i>Annual placement reports</li>
+                      </ul>
+                      <button class="btn btn-primary btn-sm mt-2" onclick="viewPlacementRecords()">
+                        <i class="bi bi-database me-1"></i>View Records
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Upcoming Placement Drives -->
+              <div class="card border-0 shadow-sm mt-4">
+                <div class="card-header bg-primary text-white">
+                  <h6 class="mb-0"><i class="bi bi-calendar-event me-2"></i>Upcoming Placement Drives</h6>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                      <thead>
+                        <tr>
+                          <th>Company</th>
+                          <th>Position</th>
+                          <th>Package</th>
+                          <th>Date</th>
+                          <th>Eligibility</th>
+                          <th>Status</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody id="placementDrivesTable">
+                        <tr>
+                          <td><strong>Infosys</strong></td>
+                          <td>Systems Engineer</td>
+                          <td><span class="badge bg-success">4.5 LPA</span></td>
+                          <td>2024-02-20</td>
+                          <td>CGPA ≥ 7.0</td>
+                          <td><span class="badge bg-success">Open</span></td>
+                          <td><button class="btn btn-sm btn-outline-primary">View</button></td>
+                        </tr>
+                        <tr>
+                          <td><strong>TCS</strong></td>
+                          <td>Software Developer</td>
+                          <td><span class="badge bg-success">5.5 LPA</span></td>
+                          <td>2024-02-25</td>
+                          <td>CGPA ≥ 6.5</td>
+                          <td><span class="badge bg-success">Open</span></td>
+                          <td><button class="btn btn-sm btn-outline-primary">View</button></td>
+                        </tr>
+                        <tr>
+                          <td><strong>Wipro</strong></td>
+                          <td>Project Engineer</td>
+                          <td><span class="badge bg-success">4.8 LPA</span></td>
+                          <td>2024-03-01</td>
+                          <td>CGPA ≥ 7.0</td>
+                          <td><span class="badge bg-warning">Upcoming</span></td>
+                          <td><button class="btn btn-sm btn-outline-primary">View</button></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer py-3 mt-4">
+      <div class="container small text-white-50 d-flex justify-content-between">
+        <div>© <span id="year"></span> Institution ERP</div>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      const yearEl = document.getElementById('year');
+      if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+      // Session check - Only CRC staff can access
+      const sessStr = localStorage.getItem('erpSession') || sessionStorage.getItem('erpSession');
+      if (!sessStr) window.location.replace('/');
+      
+      let sess;
+      try {
+        sess = JSON.parse(sessStr || '{}');
+      } catch {
+        sess = {};
+      }
+
+      // Check if user has CRC role
+      if (sess.type !== 'crc') {
+        alert('Access Denied. Only CRC Department staff can access this portal.');
+        window.location.replace('/');
+      }
+
+      // CRC staff credentials
+      const crcStaff = [
+        { enrollment: 'CRC001', name: 'Dr. Neha Gupta', role: 'CRC Head / TPO', avatar: 'https://i.pravatar.cc/100?img=11' },
+        { enrollment: 'CRC002', name: 'Mr. Rajesh Kumar', role: 'Placement Coordinator', avatar: 'https://i.pravatar.cc/100?img=12' },
+        { enrollment: 'CRC003', name: 'Ms. Priya Sharma', role: 'Placement Coordinator', avatar: 'https://i.pravatar.cc/100?img=13' }
+      ];
+
+      const user = crcStaff.find(u => u.enrollment === sess?.enrollment);
+      if (user) {
+        document.getElementById('userMini').innerHTML = `
+          <div class="d-flex align-items-center gap-2">
+            <img src="${user.avatar}" class="rounded-circle" width="32" height="32"/>
+            <div>
+              <div class="fw-semibold">${user.name}</div>
+              <div class="text-secondary">${user.enrollment} • ${user.role}</div>
+            </div>
+          </div>
+        `;
+      } else {
+        // Fallback for CRC staff
+        document.getElementById('userMini').innerHTML = `
+          <div class="d-flex align-items-center gap-2">
+            <img src="https://i.pravatar.cc/100?img=11" class="rounded-circle" width="32" height="32"/>
+            <div>
+              <div class="fw-semibold">${sess.name || 'CRC Staff'}</div>
+              <div class="text-secondary">${sess.enrollment || 'CRC Department'}</div>
+            </div>
+          </div>
+        `;
+      }
+
+      document.getElementById('logoutBtn').addEventListener('click', () => {
+        localStorage.removeItem('erpSession');
+        sessionStorage.removeItem('erpSession');
+        window.location.replace('/');
+      });
+
+      // Placeholder functions for button actions
+      function managePlacements() {
+        alert('Placement Management feature - Coming soon!');
+      }
+
+      function schedulePPT() {
+        alert('Pre-Placement Talk scheduling - Coming soon!');
+      }
+
+      function coordinateInterviews() {
+        alert('Interview Coordination feature - Coming soon!');
+      }
+
+      function viewPlacementRecords() {
+        alert('Placement Records - Coming soon!');
+      }
+
+      function manageInternships() {
+        alert('Internship Management - Coming soon!');
+      }
+
+      function manageMoUs() {
+        alert('MoU Management - Coming soon!');
+      }
+
+      function organizeTraining() {
+        alert('Training Organization - Coming soon!');
+      }
+
+      function resumeWorkshop() {
+        alert('Resume Building Workshop - Coming soon!');
+      }
+
+      function scheduleMockInterview() {
+        alert('Mock Interview Booking - Coming soon!');
+      }
+
+      function manageTieups() {
+        alert('Industry Tie-ups - Coming soon!');
+      }
+
+      function scheduleVisit() {
+        alert('Campus Visit Scheduling - Coming soon!');
+      }
+
+      function organizeSeminar() {
+        alert('Seminar Organization - Coming soon!');
+      }
+
+      function bookCounseling() {
+        alert('Career Counseling Booking - Coming soon!');
+      }
+
+      function higherEducation() {
+        alert('Higher Education Guidance - Coming soon!');
+      }
+
+      function viewAlumni() {
+        alert('Alumni Network - Coming soon!');
+      }
+
+      function alumniSessions() {
+        alert('Alumni Session Scheduling - Coming soon!');
+      }
+    </script>
+    <!-- Add Company Modal -->
+    <div class="modal fade" id="addCompanyModal" tabindex="-1" aria-labelledby="addCompanyModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header bg-primary text-white">
+            <h5 class="modal-title" id="addCompanyModalLabel">
+              <i class="bi bi-building me-2"></i>Add Upcoming Company
+            </h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <form id="addCompanyForm" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="modal-body">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label">Company Name <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" name="company_name" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Position / Role <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" name="role" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Package (CTC in LPA) <span class="text-danger">*</span></label>
+                  <input type="number" step="0.01" class="form-control" name="package" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Eligibility CGPA (Optional)</label>
+                  <input type="number" step="0.01" min="0" max="10" class="form-control" name="eligibility_cgpa">
+                </div>
+                <div class="col-md-12">
+                  <label class="form-label">Branches Allowed <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" name="branches_allowed" placeholder="e.g., CSE, ECE, IT, ME" required>
+                  <small class="text-muted">Enter comma-separated branch names</small>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Last Date to Apply <span class="text-danger">*</span></label>
+                  <input type="date" class="form-control" name="last_date" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Drive Date <span class="text-danger">*</span></label>
+                  <input type="date" class="form-control" name="drive_date" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Job Location <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" name="job_location" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Mode <span class="text-danger">*</span></label>
+                  <select class="form-select" name="mode" required>
+                    <option value="on-campus">On-campus</option>
+                    <option value="off-campus">Off-campus</option>
+                  </select>
+                </div>
+                <div class="col-md-12">
+                  <label class="form-label">Short Description <span class="text-danger">*</span></label>
+                  <textarea class="form-control" name="description" rows="4" required></textarea>
+                </div>
+                <div class="col-md-12">
+                  <label class="form-label">Job Description (PDF/DOC)</label>
+                  <input type="file" class="form-control" name="job_description_file" accept=".pdf,.doc,.docx">
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary">
+                <i class="bi bi-check-circle me-1"></i>Submit
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Add Company Form Submission
+      document.getElementById('addCompanyForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        
+        try {
+          const response = await fetch('{% url "crc-add-company" %}', {
+            method: 'POST',
+            body: formData,
+            headers: {
+              'X-CSRFToken': formData.get('csrfmiddlewaretoken')
+            }
+          });
+          
+          const data = await response.json();
+          
+          if (data.success) {
+            alert(data.message);
+            location.reload();
+          } else {
+            alert(data.message);
+          }
+        } catch (error) {
+          alert('Error submitting form. Please try again.');
+        }
+      });
+      
+      function editCompany(companyId) {
+        // TODO: Implement edit functionality
+        alert('Edit functionality coming soon!');
+      }
+    </script>
+    
+    <!-- Chatbot Component -->
+    {% include 'includes/chatbot.html' %}
+  </body>
+</html>
+
+
+

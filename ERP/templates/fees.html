@@ -1,0 +1,217 @@
+{% extends 'base_student.html' %}
+{% load static %}
+
+{% block title %}Fee Details | ERP{% endblock %}
+
+{% block content %}
+<div class="col-12">
+  <div class="card border-0 shadow-sm">
+        <div class="card-body">
+          <h4 class="mb-3">Fee Details</h4>
+          <div class="row g-3">
+            <div class="col-sm-4">
+              <label class="form-label">Semester</label>
+              <select class="form-select" id="semesterSelectFee">
+                <option value="VII">VII</option>
+                <option value="VI">VI</option>
+                <option value="V">V</option>
+                <option value="IV">IV</option>
+                <option value="III">III</option>
+                <option value="II">II</option>
+                <option value="I">I</option>
+              </select>
+            </div>
+            <div class="col-sm-8 text-sm-end d-flex flex-wrap justify-content-sm-end align-items-end gap-2">
+              <div class="text-start text-sm-end me-sm-2">
+                <div class="small text-secondary">Pending Due</div>
+                <div class="fs-5 fw-bold" id="pendingDue">₹ 0</div>
+              </div>
+              <button id="payNowBtn" class="btn btn-success mt-3 mt-sm-4"><i class="bi bi-cash-coin me-1"></i>Pay Now</button>
+              <button id="transportFeeBtn" class="btn btn-warning mt-3 mt-sm-4"><i class="bi bi-bus-front me-1"></i>Transport Fee</button>
+              <button class="btn btn-primary mt-3 mt-sm-4"><i class="bi bi-cloud-download me-1"></i>Download Receipt</button>
+            </div>
+          </div>
+          <div class="table-responsive mt-3">
+            <table class="table table-striped align-middle">
+              <thead><tr><th>Date</th><th>Head</th><th>Amount</th><th>Mode</th><th>Receipt</th></tr></thead>
+              <tbody id="feesBody"></tbody>
+              <tfoot><tr><th colspan="2">Total</th><th id="feesTotal">₹ 0</th><th colspan="2"></th></tr></tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+
+      // Fee data per semester (demo)
+      const feeData = {
+        'VII': [
+          { date:'2025-07-10', head:'Tuition Fee', amount:35000, mode:'UPI' },
+          { date:'2025-08-10', head:'Hostel Fee', amount:15000, mode:'NetBanking' }
+        ],
+        'VI': [
+          { date:'2025-01-10', head:'Tuition Fee', amount:34000, mode:'UPI' },
+          { date:'2025-02-05', head:'Exam Fee', amount:1800, mode:'Card' }
+        ],
+        'V': [
+          { date:'2024-08-12', head:'Tuition Fee', amount:33000, mode:'UPI' }
+        ],
+        'IV': [ { date:'2024-02-11', head:'Tuition Fee', amount:32000, mode:'Cash' } ],
+        'III': [ { date:'2023-08-09', head:'Tuition Fee', amount:31000, mode:'UPI' } ],
+        'II': [ { date:'2023-02-10', head:'Tuition Fee', amount:30000, mode:'NetBanking' } ],
+        'I': [ { date:'2022-08-08', head:'Admission Fee', amount:20000, mode:'UPI' } ]
+      };
+      // Target fee per semester (demo value)
+      const feeTargets = { 'VII': 52000, 'VI': 36000, 'V': 33000, 'IV': 32000, 'III': 31000, 'II': 30000, 'I': 20000 };
+      const feesBody = document.getElementById('feesBody');
+      const feesTotal = document.getElementById('feesTotal');
+      const semSelect = document.getElementById('semesterSelectFee');
+      const pendingDueEl = document.getElementById('pendingDue');
+      const payNowBtn = document.getElementById('payNowBtn');
+      const payModal = new bootstrap.Modal(document.getElementById('payModal'));
+      const paySem = document.getElementById('paySem');
+      const payAmount = document.getElementById('payAmount');
+      const amountInput = document.getElementById('amountInput');
+      const confirmPayBtn = document.getElementById('confirmPayBtn');
+      function formatINR(n){ return '₹ ' + n.toLocaleString('en-IN'); }
+      function renderFees(sem){
+        const rows = feeData[sem] || [];
+        let total = 0;
+        feesBody.innerHTML = rows.map(r => {
+          total += r.amount;
+          return `<tr><td>${r.date}</td><td>${r.head}</td><td>${formatINR(r.amount)}</td><td>${r.mode}</td><td><button class=\"btn btn-sm btn-outline-secondary\"><i class=\"bi bi-receipt\"></i></button></td></tr>`;
+        }).join('');
+        feesTotal.textContent = formatINR(total);
+        const target = feeTargets[sem] || total;
+        const due = Math.max(0, target - total);
+        pendingDueEl.textContent = formatINR(due);
+        payNowBtn.disabled = due === 0;
+        payNowBtn.classList.toggle('btn-success', due > 0);
+        payNowBtn.classList.toggle('btn-secondary', due === 0);
+        payNowBtn.setAttribute('title', due === 0 ? 'No dues' : 'Pay pending amount');
+      }
+      semSelect.addEventListener('change', () => renderFees(semSelect.value));
+      renderFees(semSelect.value || 'VII');
+
+      payNowBtn.addEventListener('click', () => {
+        const sem = semSelect.value;
+        paySem.textContent = sem;
+        const currentDue = pendingDueEl.textContent;
+        payAmount.textContent = currentDue;
+        amountInput.value = Number(currentDue.replace(/[^0-9]/g,'')) || 0;
+        payModal.show();
+      });
+
+      confirmPayBtn.addEventListener('click', () => {
+        const sem = semSelect.value;
+        const amount = Math.max(0, Math.floor(Number(amountInput.value || 0)));
+        if (!amount) { alert('Please enter a valid amount'); return; }
+        // Add a mock transaction row
+        const today = new Date().toISOString().slice(0,10);
+        feeData[sem] = feeData[sem] || [];
+        feeData[sem].push({ date: today, head: 'Online Payment', amount: amount, mode: document.querySelector('input[name="payMethod"]:checked').value });
+        renderFees(sem);
+        payModal.hide();
+        // Simple feedback
+        alert('Payment initiated via College Bank Gateway (demo).');
+      }
+      );
+
+      // Transport Fee functionality
+      const transportFeeBtn = document.getElementById('transportFeeBtn');
+      const transportModal = new bootstrap.Modal(document.getElementById('transportModal'));
+      const studentNameEl = document.getElementById('studentName');
+      const enrollmentNumberEl = document.getElementById('enrollmentNumber');
+      const homeAddressEl = document.getElementById('homeAddress');
+      const cityEl = document.getElementById('city');
+      const pincodeEl = document.getElementById('pincode');
+      const distanceEl = document.getElementById('distance');
+      const transportTypeEl = document.getElementById('transportType');
+      const baseFeeEl = document.getElementById('baseFee');
+      const distanceChargeEl = document.getElementById('distanceCharge');
+      const totalTransportFeeEl = document.getElementById('totalTransportFee');
+      const calculateFeeBtn = document.getElementById('calculateFeeBtn');
+      const payTransportBtn = document.getElementById('payTransportBtn');
+
+      // Transport fee rates
+      const transportRates = {
+        bus: { base: 2000, perKm: 50 },
+        metro: { base: 1500, perKm: 30 },
+        other: { base: 1000, perKm: 20 }
+      };
+
+      transportFeeBtn.addEventListener('click', () => {
+        // Populate student details
+        studentNameEl.value = user.name;
+        enrollmentNumberEl.value = user.enrollment;
+        
+        // Reset form
+        document.getElementById('transportForm').reset();
+        studentNameEl.value = user.name;
+        enrollmentNumberEl.value = user.enrollment;
+        baseFeeEl.textContent = '₹ 0';
+        distanceChargeEl.textContent = '₹ 0';
+        totalTransportFeeEl.textContent = '₹ 0';
+        payTransportBtn.disabled = true;
+        
+        transportModal.show();
+      });
+
+      calculateFeeBtn.addEventListener('click', () => {
+        const transportType = transportTypeEl.value;
+        const distance = Number(distanceEl.value) || 0;
+        
+        if (!transportType || !distance) {
+          alert('Please select transport type and enter distance');
+          return;
+        }
+        
+        const rate = transportRates[transportType];
+        const baseFee = rate.base;
+        const distanceCharge = distance * rate.perKm;
+        const totalFee = baseFee + distanceCharge;
+        
+        baseFeeEl.textContent = formatINR(baseFee);
+        distanceChargeEl.textContent = formatINR(distanceCharge);
+        totalTransportFeeEl.textContent = formatINR(totalFee);
+        
+        payTransportBtn.disabled = false;
+        payTransportBtn.setAttribute('data-fee', totalFee);
+      });
+
+      payTransportBtn.addEventListener('click', () => {
+        const homeAddress = homeAddressEl.value.trim();
+        const city = cityEl.value.trim();
+        const pincode = pincodeEl.value.trim();
+        const distance = distanceEl.value;
+        const transportType = transportTypeEl.value;
+        
+        if (!homeAddress || !city || !pincode || !distance || !transportType) {
+          alert('Please fill all required fields');
+          return;
+        }
+        
+        const fee = Number(payTransportBtn.getAttribute('data-fee'));
+        const sem = semSelect.value;
+        const today = new Date().toISOString().slice(0,10);
+        
+        // Add transport fee to fee data
+        feeData[sem] = feeData[sem] || [];
+        feeData[sem].push({ 
+          date: today, 
+          head: `Transport Fee (${transportType})`, 
+          amount: fee, 
+          mode: 'Transport Payment' 
+        });
+        
+        renderFees(sem);
+        transportModal.hide();
+        
+        alert(`Transport fee of ${formatINR(fee)} has been added to your fees. Address: ${homeAddress}, ${city} - ${pincode}`);
+      });
+    </script>
+{% endblock %}

@@ -1,0 +1,1387 @@
+{% extends 'base_student.html' %}
+{% load static %}
+
+{% block title %}Events Portal | ERP{% endblock %}
+
+{% block content %}
+<div class="row g-4">
+        <!-- Events Overview -->
+        <div class="col-lg-4">
+          <div class="card border-0 shadow-sm">
+            <div class="card-header bg-primary text-white">
+              <h5 class="mb-0"><i class="bi bi-calendar-event me-2"></i>Events Overview</h5>
+            </div>
+            <div class="card-body">
+              <div class="row g-3">
+                <div class="col-6">
+                  <div class="text-center">
+                    <div class="fs-4 fw-bold text-primary" id="totalEvents">24</div>
+                    <div class="small text-secondary">Total Events</div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="text-center">
+                    <div class="fs-4 fw-bold text-success" id="upcomingEvents">8</div>
+                    <div class="small text-secondary">Upcoming</div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="text-center">
+                    <div class="fs-4 fw-bold text-warning" id="ongoingEvents">3</div>
+                    <div class="small text-secondary">Ongoing</div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="text-center">
+                    <div class="fs-4 fw-bold text-info" id="attendedEvents">12</div>
+                    <div class="small text-secondary">Attended</div>
+                  </div>
+                </div>
+              </div>
+              <hr class="my-3">
+              <div class="text-center">
+                <div class="badge bg-success fs-6 mb-2">85% Attendance Rate</div>
+                <div class="small text-secondary">This Semester</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Actions Card -->
+          <div class="card border-0 shadow-sm mt-3">
+            <div class="card-header bg-info text-white">
+              <h6 class="mb-0"><i class="bi bi-lightning me-2"></i>Quick Actions</h6>
+            </div>
+            <div class="card-body">
+              <div class="d-grid gap-2">
+                <button class="btn btn-outline-primary btn-sm" onclick="showCreateEventModal()">
+                  <i class="bi bi-plus-circle me-1"></i>Create Event
+                </button>
+                <button class="btn btn-outline-success btn-sm" onclick="showMyEvents()">
+                  <i class="bi bi-person-check me-1"></i>My Events
+                </button>
+                <button class="btn btn-outline-warning btn-sm" onclick="showEventCalendar()">
+                  <i class="bi bi-calendar3 me-1"></i>Calendar View
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Upcoming Events Card -->
+          <div class="card border-0 shadow-sm mt-3">
+            <div class="card-header bg-warning text-dark">
+              <h6 class="mb-0"><i class="bi bi-clock me-2"></i>Next 3 Events</h6>
+            </div>
+            <div class="card-body">
+              <div id="upcomingEventsList">
+                <!-- Upcoming events will be populated here -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Events List -->
+        <div class="col-lg-8">
+          <div class="card border-0 shadow-sm">
+            <div class="card-header bg-primary text-white">
+              <div class="row align-items-center">
+                <div class="col-md-6">
+                  <h5 class="mb-0"><i class="bi bi-list-ul me-2"></i>All Events</h5>
+                </div>
+                <div class="col-md-6">
+                  <select class="form-select form-select-sm" id="eventFilter">
+                    <option value="all">All Events</option>
+                    <option value="upcoming">Upcoming</option>
+                    <option value="ongoing">Ongoing</option>
+                    <option value="completed">Completed</option>
+                    <option value="academic">Academic</option>
+                    <option value="cultural">Cultural</option>
+                    <option value="sports">Sports</option>
+                    <option value="workshop">Workshop</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="row g-3" id="eventsList">
+                <!-- Event cards will be populated here -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Events Details Tabs -->
+      <div class="card border-0 shadow-sm mt-4">
+        <div class="card-header bg-primary text-white">
+          <ul class="nav nav-tabs card-header-tabs" id="eventTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active text-white" id="calendar-tab" data-bs-toggle="tab" data-bs-target="#calendar" type="button" role="tab">
+                <i class="bi bi-calendar3 me-1" style="color: #111010;"></i> <span style="color: #111010;">Calendar View</span>
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link text-white" id="my-events-tab" data-bs-toggle="tab" data-bs-target="#my-events" type="button" role="tab">
+                <i class="bi bi-person-check me-1" style="color: #111010;"></i> <span style="color: #111010;">My Events</span>
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link text-white" id="categories-tab" data-bs-toggle="tab" data-bs-target="#categories" type="button" role="tab">
+                <i class="bi bi-tags me-1" style="color: #111010;"></i> <span style="color: #111010;">Categories</span>
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link text-white" id="organizers-tab" data-bs-toggle="tab" data-bs-target="#organizers" type="button" role="tab">
+                <i class="bi bi-people me-1" style="color: #111010;"></i> <span style="color: #111010;">Organizers</span>
+              </button>
+            </li>
+          </ul>
+        </div>
+        <div class="card-body">
+          <div class="tab-content" id="eventTabContent">
+            <!-- Calendar View Tab -->
+            <div class="tab-pane fade show active" id="calendar" role="tabpanel">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <h6 class="mb-0">Event Calendar</h6>
+                <div class="btn-group" role="group">
+                  <button class="btn btn-outline-primary btn-sm" onclick="previousMonth()">
+                    <i class="bi bi-chevron-left"></i>
+                  </button>
+                  <button class="btn btn-outline-primary btn-sm" onclick="nextMonth()">
+                    <i class="bi bi-chevron-right"></i>
+                  </button>
+                </div>
+              </div>
+              <div id="calendarContainer">
+                <!-- Calendar will be populated here -->
+              </div>
+            </div>
+
+            <!-- My Events Tab -->
+            <div class="tab-pane fade" id="my-events" role="tabpanel">
+              <div class="table-responsive">
+                <table class="table table-striped align-middle">
+                  <thead>
+                    <tr>
+                      <th>Event</th>
+                      <th>Date</th>
+                      <th>Time</th>
+                      <th>Status</th>
+                      <th>Attendance</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="myEventsBody">
+                    <!-- My events data will be populated here -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Categories Tab -->
+            <div class="tab-pane fade" id="categories" role="tabpanel">
+              <div class="row g-3" id="categoriesContainer">
+                <!-- Categories will be populated here -->
+              </div>
+            </div>
+
+            <!-- Organizers Tab -->
+            <div class="tab-pane fade" id="organizers" role="tabpanel">
+              <div class="row g-3" id="organizersContainer">
+                <!-- Organizers will be populated here -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Create Event Modal -->
+      <div class="modal fade" id="createEventModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+              <h5 class="modal-title"><i class="bi bi-plus-circle me-2"></i>Create New Event</h5>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form id="createEventForm">
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="form-label">Event Title</label>
+                    <input type="text" class="form-control" id="eventTitle" placeholder="Enter event title" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Event Type</label>
+                    <select class="form-select" id="eventType" required>
+                      <option value="">Select Type</option>
+                      <option value="academic">Academic</option>
+                      <option value="cultural">Cultural</option>
+                      <option value="sports">Sports</option>
+                      <option value="workshop">Workshop</option>
+                      <option value="seminar">Seminar</option>
+                      <option value="conference">Conference</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Start Date</label>
+                    <input type="date" class="form-control" id="eventStartDate" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">End Date</label>
+                    <input type="date" class="form-control" id="eventEndDate" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Start Time</label>
+                    <input type="time" class="form-control" id="eventStartTime" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">End Time</label>
+                    <input type="time" class="form-control" id="eventEndTime" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Location</label>
+                    <input type="text" class="form-control" id="eventLocation" placeholder="Enter location" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Priority</label>
+                    <select class="form-select" id="eventPriority" required>
+                      <option value="low">Low</option>
+                      <option value="medium">Medium</option>
+                      <option value="high">High</option>
+                    </select>
+                  </div>
+                  <div class="col-12">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-control" id="eventDescription" rows="3" placeholder="Enter event description"></textarea>
+                  </div>
+                  <div class="col-12">
+                    <label class="form-label">Organizer</label>
+                    <input type="text" class="form-control" id="eventOrganizer" placeholder="Enter organizer name" required>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-primary" onclick="saveEvent()">
+                <i class="bi bi-check-circle me-1"></i>Create Event
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Event Details Modal -->
+      <div class="modal fade" id="eventDetailsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+              <h5 class="modal-title"><i class="bi bi-calendar-event me-2"></i>Event Details</h5>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="eventDetailsContent">
+              <!-- Event details will be populated here -->
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-primary" onclick="registerForEvent()">
+                <i class="bi bi-person-plus me-1"></i>Register
+              </button>
+              <button type="button" class="btn btn-success" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- My Events Modal -->
+      <div class="modal fade" id="myEventsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header bg-info text-white">
+              <h5 class="modal-title"><i class="bi bi-person-check me-2"></i>My Events</h5>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="row g-3" id="myEventsContainer">
+                <!-- My events will be populated here -->
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-info" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+<style>
+      .event-card {
+        transition: all 0.3s ease;
+        cursor: pointer;
+      }
+      
+      .event-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      }
+      
+      .calendar-day {
+        min-height: 100px;
+        border: 1px solid #dee2e6;
+        padding: 8px;
+        position: relative;
+      }
+      
+      .calendar-day:hover {
+        background-color: #f8f9fa;
+      }
+      
+      .calendar-day.today {
+        background-color: #e3f2fd;
+        border-color: #2196f3;
+      }
+      
+      .calendar-day.has-events {
+        background-color: #fff3e0;
+      }
+      
+      .event-indicator {
+        position: absolute;
+        top: 2px;
+        right: 2px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: #ff5722;
+      }
+      
+      .event-type-badge {
+        font-size: 0.7rem;
+        padding: 2px 6px;
+      }
+      
+      .event-priority-high {
+        border-left: 4px solid #dc3545;
+      }
+      
+      .event-priority-medium {
+        border-left: 4px solid #ffc107;
+      }
+      
+      .event-priority-low {
+        border-left: 4px solid #28a745;
+      }
+      
+      .event-status-upcoming {
+        background-color: #e3f2fd;
+      }
+      
+      .event-status-ongoing {
+        background-color: #e8f5e8;
+      }
+      
+      .event-status-completed {
+        background-color: #f5f5f5;
+        opacity: 0.7;
+      }
+      
+      .event-status-cancelled {
+        background-color: #ffebee;
+        opacity: 0.7;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg bg-white navbar-light shadow-sm">
+      <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="{% url 'dashboard' %}">
+          <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f3eb.svg" width="30" class="me-2"/>
+          <span class="fw-bold brand-gradient">Institution ERP</span>
+        </a>
+        <div class="ms-auto d-flex align-items-center gap-3">
+          <div id="userMini" class="small"></div>
+          <button id="logoutBtn" class="btn btn-outline-secondary btn-sm"><i class="bi bi-box-arrow-right me-1"></i>Logout</button>
+        </div>
+      </div>
+    </nav>
+
+    <div class="border-top" style="border-color:#f0ad00 !important"></div>
+
+    <div class="container my-4">
+      <ul class="nav nav-pills flex-wrap gap-2 py-2" id="moduleTabs">
+        <!-- Dynamic navigation will be rendered here -->
+      </ul>
+
+      <div class="row g-4">
+        <!-- Events Overview -->
+        <div class="col-lg-4">
+          <div class="card border-0 shadow-sm">
+            <div class="card-header bg-primary text-white">
+              <h5 class="mb-0"><i class="bi bi-calendar-event me-2"></i>Events Overview</h5>
+            </div>
+            <div class="card-body">
+              <div class="row g-3">
+                <div class="col-6">
+                  <div class="text-center">
+                    <div class="fs-4 fw-bold text-primary" id="totalEvents">24</div>
+                    <div class="small text-secondary">Total Events</div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="text-center">
+                    <div class="fs-4 fw-bold text-success" id="upcomingEvents">8</div>
+                    <div class="small text-secondary">Upcoming</div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="text-center">
+                    <div class="fs-4 fw-bold text-warning" id="ongoingEvents">3</div>
+                    <div class="small text-secondary">Ongoing</div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="text-center">
+                    <div class="fs-4 fw-bold text-info" id="attendedEvents">12</div>
+                    <div class="small text-secondary">Attended</div>
+                  </div>
+                </div>
+              </div>
+              <hr class="my-3">
+              <div class="text-center">
+                <div class="badge bg-success fs-6 mb-2">85% Attendance Rate</div>
+                <div class="small text-secondary">This Semester</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Actions Card -->
+          <div class="card border-0 shadow-sm mt-3">
+            <div class="card-header bg-info text-white">
+              <h6 class="mb-0"><i class="bi bi-lightning me-2"></i>Quick Actions</h6>
+            </div>
+            <div class="card-body">
+              <div class="d-grid gap-2">
+                <button class="btn btn-outline-primary btn-sm" onclick="showCreateEventModal()">
+                  <i class="bi bi-plus-circle me-1"></i>Create Event
+                </button>
+                <button class="btn btn-outline-success btn-sm" onclick="showMyEvents()">
+                  <i class="bi bi-person-check me-1"></i>My Events
+                </button>
+                <button class="btn btn-outline-warning btn-sm" onclick="showEventCalendar()">
+                  <i class="bi bi-calendar3 me-1"></i>Calendar View
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Upcoming Events Card -->
+          <div class="card border-0 shadow-sm mt-3">
+            <div class="card-header bg-warning text-dark">
+              <h6 class="mb-0"><i class="bi bi-clock me-2"></i>Next 3 Events</h6>
+            </div>
+            <div class="card-body">
+              <div id="upcomingEventsList">
+                <!-- Upcoming events will be populated here -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Events List -->
+        <div class="col-lg-8">
+          <div class="card border-0 shadow-sm">
+            <div class="card-header bg-primary text-white">
+              <div class="row align-items-center">
+                <div class="col-md-6">
+                  <h5 class="mb-0"><i class="bi bi-list-ul me-2"></i>All Events</h5>
+                </div>
+                <div class="col-md-6">
+                  <select class="form-select form-select-sm" id="eventFilter">
+                    <option value="all">All Events</option>
+                    <option value="upcoming">Upcoming</option>
+                    <option value="ongoing">Ongoing</option>
+                    <option value="completed">Completed</option>
+                    <option value="academic">Academic</option>
+                    <option value="cultural">Cultural</option>
+                    <option value="sports">Sports</option>
+                    <option value="workshop">Workshop</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="row g-3" id="eventsList">
+                <!-- Event cards will be populated here -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Events Details Tabs -->
+      <div class="card border-0 shadow-sm mt-4">
+        <div class="card-header bg-primary text-white">
+          <ul class="nav nav-tabs card-header-tabs" id="eventTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active text-white" id="calendar-tab" data-bs-toggle="tab" data-bs-target="#calendar" type="button" role="tab">
+                <i class="bi bi-calendar3 me-1" style="color: #111010;"></i> <span style="color: #111010;">Calendar View</span>
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link text-white" id="my-events-tab" data-bs-toggle="tab" data-bs-target="#my-events" type="button" role="tab">
+                <i class="bi bi-person-check me-1" style="color: #111010;"></i> <span style="color: #111010;">My Events</span>
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link text-white" id="categories-tab" data-bs-toggle="tab" data-bs-target="#categories" type="button" role="tab">
+                <i class="bi bi-tags me-1" style="color: #111010;"></i> <span style="color: #111010;">Categories</span>
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link text-white" id="organizers-tab" data-bs-toggle="tab" data-bs-target="#organizers" type="button" role="tab">
+                <i class="bi bi-people me-1" style="color: #111010;"></i> <span style="color: #111010;">Organizers</span>
+              </button>
+            </li>
+          </ul>
+        </div>
+        <div class="card-body">
+          <div class="tab-content" id="eventTabContent">
+            <!-- Calendar View Tab -->
+            <div class="tab-pane fade show active" id="calendar" role="tabpanel">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <h6 class="mb-0">Event Calendar</h6>
+                <div class="btn-group" role="group">
+                  <button class="btn btn-outline-primary btn-sm" onclick="previousMonth()">
+                    <i class="bi bi-chevron-left"></i>
+                  </button>
+                  <button class="btn btn-outline-primary btn-sm" onclick="nextMonth()">
+                    <i class="bi bi-chevron-right"></i>
+                  </button>
+                </div>
+              </div>
+              <div id="calendarContainer">
+                <!-- Calendar will be populated here -->
+              </div>
+            </div>
+
+            <!-- My Events Tab -->
+            <div class="tab-pane fade" id="my-events" role="tabpanel">
+              <div class="table-responsive">
+                <table class="table table-striped align-middle">
+                  <thead>
+                    <tr>
+                      <th>Event</th>
+                      <th>Date</th>
+                      <th>Time</th>
+                      <th>Status</th>
+                      <th>Attendance</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="myEventsBody">
+                    <!-- My events data will be populated here -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Categories Tab -->
+            <div class="tab-pane fade" id="categories" role="tabpanel">
+              <div class="row g-3" id="categoriesContainer">
+                <!-- Categories will be populated here -->
+              </div>
+            </div>
+
+            <!-- Organizers Tab -->
+            <div class="tab-pane fade" id="organizers" role="tabpanel">
+              <div class="row g-3" id="organizersContainer">
+                <!-- Organizers will be populated here -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Create Event Modal -->
+      <div class="modal fade" id="createEventModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+              <h5 class="modal-title"><i class="bi bi-plus-circle me-2"></i>Create New Event</h5>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form id="createEventForm">
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="form-label">Event Title</label>
+                    <input type="text" class="form-control" id="eventTitle" placeholder="Enter event title" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Event Type</label>
+                    <select class="form-select" id="eventType" required>
+                      <option value="">Select Type</option>
+                      <option value="academic">Academic</option>
+                      <option value="cultural">Cultural</option>
+                      <option value="sports">Sports</option>
+                      <option value="workshop">Workshop</option>
+                      <option value="seminar">Seminar</option>
+                      <option value="conference">Conference</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Start Date</label>
+                    <input type="date" class="form-control" id="eventStartDate" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">End Date</label>
+                    <input type="date" class="form-control" id="eventEndDate" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Start Time</label>
+                    <input type="time" class="form-control" id="eventStartTime" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">End Time</label>
+                    <input type="time" class="form-control" id="eventEndTime" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Location</label>
+                    <input type="text" class="form-control" id="eventLocation" placeholder="Enter location" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Priority</label>
+                    <select class="form-select" id="eventPriority" required>
+                      <option value="low">Low</option>
+                      <option value="medium">Medium</option>
+                      <option value="high">High</option>
+                    </select>
+                  </div>
+                  <div class="col-12">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-control" id="eventDescription" rows="3" placeholder="Enter event description"></textarea>
+                  </div>
+                  <div class="col-12">
+                    <label class="form-label">Organizer</label>
+                    <input type="text" class="form-control" id="eventOrganizer" placeholder="Enter organizer name" required>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-primary" onclick="saveEvent()">
+                <i class="bi bi-check-circle me-1"></i>Create Event
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Event Details Modal -->
+      <div class="modal fade" id="eventDetailsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+              <h5 class="modal-title"><i class="bi bi-calendar-event me-2"></i>Event Details</h5>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="eventDetailsContent">
+              <!-- Event details will be populated here -->
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-primary" onclick="registerForEvent()">
+                <i class="bi bi-person-plus me-1"></i>Register
+              </button>
+              <button type="button" class="btn btn-success" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- My Events Modal -->
+      <div class="modal fade" id="myEventsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header bg-info text-white">
+              <h5 class="modal-title"><i class="bi bi-person-check me-2"></i>My Events</h5>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="row g-3" id="myEventsContainer">
+                <!-- My events will be populated here -->
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-info" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer py-3 mt-4">
+      <div class="container small text-white-50 d-flex justify-content-between">
+        <div>© <span id="year"></span> Institution ERP</div>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      const yearEl = document.getElementById('year'); if (yearEl) yearEl.textContent = new Date().getFullYear();
+      const sessStr = localStorage.getItem('erpSession') || sessionStorage.getItem('erpSession'); if (!sessStr) window.location.replace('/');
+      let sess; try { sess = JSON.parse(sessStr || '{}'); } catch { sess = {}; }
+      const demoUsers = [
+        { enrollment:'TCA2259093', name:'YASH JAIN', course:'BTECH-022', email:'yash.jain@email.com', phone:'9876543210', avatar:'https://i.pravatar.cc/100?img=68' },
+        { enrollment:'21BCA1234', name:'AARAV SHARMA', course:'BCA-001', email:'aarav.sharma@email.com', phone:'9876543211', avatar:'https://i.pravatar.cc/100?img=12' }
+      ];
+      const user = demoUsers.find(u => u.enrollment === sess?.enrollment); if (!user) window.location.replace('/');
+      document.getElementById('userMini').innerHTML = `<div class="d-flex align-items-center gap-2"><img src="${user.avatar}" class="rounded-circle" width="32" height="32"/><div><div class="fw-semibold">${user.name}</div><div class="text-secondary">${user.enrollment}</div></div></div>`;
+      document.getElementById('logoutBtn').addEventListener('click', () => { localStorage.removeItem('erpSession'); sessionStorage.removeItem('erpSession'); window.location.replace('/'); });
+
+      // Events data
+      const events = [
+        {
+          id: 1,
+          title: 'Tech Fest 2024',
+          type: 'cultural',
+          description: 'Annual technology festival showcasing student innovations and projects',
+          startDate: '2024-03-15',
+          endDate: '2024-03-17',
+          startTime: '09:00',
+          endTime: '18:00',
+          location: 'Main Auditorium',
+          organizer: 'Computer Science Department',
+          priority: 'high',
+          status: 'upcoming',
+          attendees: 150,
+          maxAttendees: 200,
+          registered: false,
+          category: 'Cultural',
+          image: 'https://via.placeholder.com/300x200/007bff/ffffff?text=Tech+Fest'
+        },
+        {
+          id: 2,
+          title: 'Machine Learning Workshop',
+          type: 'workshop',
+          description: 'Hands-on workshop on machine learning algorithms and applications',
+          startDate: '2024-02-20',
+          endDate: '2024-02-20',
+          startTime: '10:00',
+          endTime: '16:00',
+          location: 'CS Lab 101',
+          organizer: 'Dr. Amit Kumar',
+          priority: 'medium',
+          status: 'upcoming',
+          attendees: 25,
+          maxAttendees: 30,
+          registered: true,
+          category: 'Academic',
+          image: 'https://via.placeholder.com/300x200/28a745/ffffff?text=ML+Workshop'
+        },
+        {
+          id: 3,
+          title: 'Cricket Tournament',
+          type: 'sports',
+          description: 'Inter-department cricket tournament',
+          startDate: '2024-02-10',
+          endDate: '2024-02-15',
+          startTime: '08:00',
+          endTime: '17:00',
+          location: 'Sports Ground',
+          organizer: 'Sports Committee',
+          priority: 'medium',
+          status: 'ongoing',
+          attendees: 80,
+          maxAttendees: 100,
+          registered: true,
+          category: 'Sports',
+          image: 'https://via.placeholder.com/300x200/ffc107/ffffff?text=Cricket'
+        },
+        {
+          id: 4,
+          title: 'Data Science Seminar',
+          type: 'seminar',
+          description: 'Industry insights on data science careers and trends',
+          startDate: '2024-01-25',
+          endDate: '2024-01-25',
+          startTime: '14:00',
+          endTime: '17:00',
+          location: 'Conference Hall',
+          organizer: 'Industry Relations Cell',
+          priority: 'high',
+          status: 'completed',
+          attendees: 120,
+          maxAttendees: 150,
+          registered: true,
+          category: 'Academic',
+          image: 'https://via.placeholder.com/300x200/17a2b8/ffffff?text=Data+Science'
+        },
+        {
+          id: 5,
+          title: 'Cultural Night',
+          type: 'cultural',
+          description: 'Annual cultural night with performances and competitions',
+          startDate: '2024-02-28',
+          endDate: '2024-02-28',
+          startTime: '18:00',
+          endTime: '23:00',
+          location: 'Open Air Theatre',
+          organizer: 'Cultural Committee',
+          priority: 'high',
+          status: 'upcoming',
+          attendees: 200,
+          maxAttendees: 300,
+          registered: false,
+          category: 'Cultural',
+          image: 'https://via.placeholder.com/300x200/dc3545/ffffff?text=Cultural+Night'
+        },
+        {
+          id: 6,
+          title: 'Web Development Bootcamp',
+          type: 'workshop',
+          description: 'Intensive web development bootcamp covering modern technologies',
+          startDate: '2024-03-01',
+          endDate: '2024-03-05',
+          startTime: '09:00',
+          endTime: '17:00',
+          location: 'CS Lab 102',
+          organizer: 'Prof. Rahul Verma',
+          priority: 'medium',
+          status: 'upcoming',
+          attendees: 20,
+          maxAttendees: 25,
+          registered: false,
+          category: 'Academic',
+          image: 'https://via.placeholder.com/300x200/6f42c1/ffffff?text=Web+Dev'
+        }
+      ];
+
+      // Categories data
+      const categories = [
+        {
+          name: 'Academic',
+          count: 8,
+          color: 'primary',
+          icon: 'bi-book',
+          description: 'Educational events, seminars, and workshops'
+        },
+        {
+          name: 'Cultural',
+          count: 6,
+          color: 'success',
+          icon: 'bi-music-note',
+          description: 'Cultural events, festivals, and performances'
+        },
+        {
+          name: 'Sports',
+          count: 4,
+          color: 'warning',
+          icon: 'bi-trophy',
+          description: 'Sports tournaments and athletic events'
+        },
+        {
+          name: 'Workshop',
+          count: 5,
+          color: 'info',
+          icon: 'bi-tools',
+          description: 'Hands-on workshops and training sessions'
+        },
+        {
+          name: 'Seminar',
+          count: 3,
+          color: 'secondary',
+          icon: 'bi-chat-dots',
+          description: 'Educational seminars and discussions'
+        },
+        {
+          name: 'Conference',
+          count: 2,
+          color: 'dark',
+          icon: 'bi-people',
+          description: 'Professional conferences and meetings'
+        }
+      ];
+
+      // Organizers data
+      const organizers = [
+        {
+          name: 'Computer Science Department',
+          email: 'cs@college.edu',
+          phone: '9876543210',
+          events: 8,
+          avatar: 'https://i.pravatar.cc/100?img=1',
+          department: 'Computer Science'
+        },
+        {
+          name: 'Sports Committee',
+          email: 'sports@college.edu',
+          phone: '9876543211',
+          events: 4,
+          avatar: 'https://i.pravatar.cc/100?img=2',
+          department: 'Physical Education'
+        },
+        {
+          name: 'Cultural Committee',
+          email: 'cultural@college.edu',
+          phone: '9876543212',
+          events: 6,
+          avatar: 'https://i.pravatar.cc/100?img=3',
+          department: 'Student Affairs'
+        },
+        {
+          name: 'Industry Relations Cell',
+          email: 'irc@college.edu',
+          phone: '9876543213',
+          events: 3,
+          avatar: 'https://i.pravatar.cc/100?img=4',
+          department: 'Placement Cell'
+        }
+      ];
+
+      const eventsList = document.getElementById('eventsList');
+      const upcomingEventsList = document.getElementById('upcomingEventsList');
+      const calendarContainer = document.getElementById('calendarContainer');
+      const myEventsBody = document.getElementById('myEventsBody');
+      const categoriesContainer = document.getElementById('categoriesContainer');
+      const organizersContainer = document.getElementById('organizersContainer');
+      const eventFilter = document.getElementById('eventFilter');
+      const createEventModal = new bootstrap.Modal(document.getElementById('createEventModal'));
+      const eventDetailsModal = new bootstrap.Modal(document.getElementById('eventDetailsModal'));
+      const myEventsModal = new bootstrap.Modal(document.getElementById('myEventsModal'));
+
+      let currentMonth = new Date().getMonth();
+      let currentYear = new Date().getFullYear();
+
+      function getStatusBadge(status) {
+        const badges = {
+          'upcoming': 'bg-primary',
+          'ongoing': 'bg-success',
+          'completed': 'bg-secondary',
+          'cancelled': 'bg-danger'
+        };
+        return badges[status] || 'bg-secondary';
+      }
+
+      function getPriorityBadge(priority) {
+        const badges = {
+          'high': 'bg-danger',
+          'medium': 'bg-warning',
+          'low': 'bg-success'
+        };
+        return badges[priority] || 'bg-secondary';
+      }
+
+      function getTypeBadge(type) {
+        const badges = {
+          'academic': 'bg-primary',
+          'cultural': 'bg-success',
+          'sports': 'bg-warning',
+          'workshop': 'bg-info',
+          'seminar': 'bg-secondary',
+          'conference': 'bg-dark'
+        };
+        return badges[type] || 'bg-secondary';
+      }
+
+      function formatDate(dateString) {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-US', { 
+          year: 'numeric', 
+          month: 'short', 
+          day: 'numeric'
+        });
+      }
+
+      function formatTime(timeString) {
+        return timeString.replace(':', ':');
+      }
+
+      function renderEvents(filter = 'all') {
+        let filteredEvents = events;
+        
+        if (filter !== 'all') {
+          filteredEvents = events.filter(event => event.type === filter || event.status === filter);
+        }
+
+        if (filteredEvents.length === 0) {
+          eventsList.innerHTML = '<div class="col-12 text-center text-muted">No events found for selected filter</div>';
+          return;
+        }
+
+        eventsList.innerHTML = filteredEvents.map(event => `
+          <div class="col-md-6 col-lg-4">
+            <div class="card event-card border-0 shadow-sm h-100 event-priority-${event.priority}" onclick="showEventDetails(${event.id})">
+              <img src="${event.image}" class="card-img-top" style="height: 150px; object-fit: cover;">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                  <h6 class="card-title mb-0">${event.title}</h6>
+                  <span class="badge ${getTypeBadge(event.type)} event-type-badge">${event.type.toUpperCase()}</span>
+                </div>
+                <p class="card-text small text-muted mb-2">${event.description.substring(0, 80)}...</p>
+                <div class="row g-2 mb-2">
+                  <div class="col-6">
+                    <div class="small text-secondary">Date:</div>
+                    <div class="fw-bold text-primary">${formatDate(event.startDate)}</div>
+                  </div>
+                  <div class="col-6">
+                    <div class="small text-secondary">Time:</div>
+                    <div class="fw-bold">${formatTime(event.startTime)}</div>
+                  </div>
+                  <div class="col-6">
+                    <div class="small text-secondary">Location:</div>
+                    <div class="fw-bold">${event.location}</div>
+                  </div>
+                  <div class="col-6">
+                    <div class="small text-secondary">Attendees:</div>
+                    <div class="fw-bold text-info">${event.attendees}/${event.maxAttendees}</div>
+                  </div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                  <span class="badge ${getStatusBadge(event.status)}">${event.status.toUpperCase()}</span>
+                  ${event.registered ? '<span class="badge bg-success">Registered</span>' : '<span class="badge bg-outline-primary">Not Registered</span>'}
+                </div>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      function renderUpcomingEvents() {
+        const upcomingEvents = events.filter(event => event.status === 'upcoming').slice(0, 3);
+        
+        if (upcomingEvents.length === 0) {
+          upcomingEventsList.innerHTML = '<div class="text-center text-muted">No upcoming events</div>';
+          return;
+        }
+
+        upcomingEventsList.innerHTML = upcomingEvents.map(event => `
+          <div class="d-flex align-items-center justify-content-between p-2 border rounded mb-2">
+            <div>
+              <div class="fw-bold">${event.title}</div>
+              <div class="small text-secondary">${event.organizer}</div>
+              <div class="small text-muted">
+                <i class="bi bi-calendar me-1"></i>${formatDate(event.startDate)} • 
+                <i class="bi bi-clock me-1"></i>${formatTime(event.startTime)}
+              </div>
+            </div>
+            <div class="text-end">
+              <span class="badge ${getTypeBadge(event.type)}">${event.type}</span>
+              <div class="small text-muted mt-1">${event.location}</div>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      function renderCalendar() {
+        const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+          'July', 'August', 'September', 'October', 'November', 'December'];
+        
+        const firstDay = new Date(currentYear, currentMonth, 1);
+        const lastDay = new Date(currentYear, currentMonth + 1, 0);
+        const daysInMonth = lastDay.getDate();
+        const startingDay = firstDay.getDay();
+
+        let calendarHTML = `
+          <div class="text-center mb-3">
+            <h5>${monthNames[currentMonth]} ${currentYear}</h5>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th class="text-center">Sun</th>
+                  <th class="text-center">Mon</th>
+                  <th class="text-center">Tue</th>
+                  <th class="text-center">Wed</th>
+                  <th class="text-center">Thu</th>
+                  <th class="text-center">Fri</th>
+                  <th class="text-center">Sat</th>
+                </tr>
+              </thead>
+              <tbody>
+        `;
+
+        let day = 1;
+        for (let week = 0; week < 6; week++) {
+          calendarHTML += '<tr>';
+          for (let dayOfWeek = 0; dayOfWeek < 7; dayOfWeek++) {
+            if (week === 0 && dayOfWeek < startingDay) {
+              calendarHTML += '<td class="calendar-day"></td>';
+            } else if (day > daysInMonth) {
+              calendarHTML += '<td class="calendar-day"></td>';
+            } else {
+              const today = new Date();
+              const isToday = day === today.getDate() && currentMonth === today.getMonth() && currentYear === today.getFullYear();
+              const hasEvents = events.some(event => {
+                const eventDate = new Date(event.startDate);
+                return eventDate.getDate() === day && eventDate.getMonth() === currentMonth && eventDate.getFullYear() === currentYear;
+              });
+              
+              const dayClasses = ['calendar-day'];
+              if (isToday) dayClasses.push('today');
+              if (hasEvents) dayClasses.push('has-events');
+              
+              calendarHTML += `
+                <td class="${dayClasses.join(' ')}">
+                  <div class="d-flex justify-content-between align-items-start">
+                    <span>${day}</span>
+                    ${hasEvents ? '<div class="event-indicator"></div>' : ''}
+                  </div>
+                </td>
+              `;
+              day++;
+            }
+          }
+          calendarHTML += '</tr>';
+        }
+
+        calendarHTML += '</tbody></table></div>';
+        calendarContainer.innerHTML = calendarHTML;
+      }
+
+      function renderMyEvents() {
+        const myEvents = events.filter(event => event.registered);
+        myEventsBody.innerHTML = myEvents.map(event => `
+          <tr>
+            <td>${event.title}</td>
+            <td>${formatDate(event.startDate)}</td>
+            <td>${formatTime(event.startTime)}</td>
+            <td><span class="badge ${getStatusBadge(event.status)}">${event.status.toUpperCase()}</span></td>
+            <td><span class="badge bg-success">Attending</span></td>
+            <td>
+              <button class="btn btn-sm btn-outline-primary" onclick="showEventDetails(${event.id})">
+                <i class="bi bi-eye"></i>
+              </button>
+            </td>
+          </tr>
+        `).join('');
+      }
+
+      function renderCategories() {
+        categoriesContainer.innerHTML = categories.map(category => `
+          <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body text-center">
+                <div class="bg-${category.color} text-white rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3" style="width: 60px; height: 60px;">
+                  <i class="${category.icon} fs-4"></i>
+                </div>
+                <h6 class="fw-bold">${category.name}</h6>
+                <div class="text-primary fw-bold fs-4">${category.count}</div>
+                <div class="small text-secondary">Events</div>
+                <p class="small text-muted mt-2">${category.description}</p>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      function renderOrganizers() {
+        organizersContainer.innerHTML = organizers.map(organizer => `
+          <div class="col-md-6 col-lg-3">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body text-center">
+                <img src="${organizer.avatar}" class="rounded-circle mb-3" width="60" height="60">
+                <h6 class="fw-bold">${organizer.name}</h6>
+                <div class="small text-secondary">${organizer.department}</div>
+                <div class="text-primary fw-bold">${organizer.events}</div>
+                <div class="small text-secondary">Events</div>
+                <div class="mt-3">
+                  <a href="mailto:${organizer.email}" class="btn btn-outline-primary btn-sm">
+                    <i class="bi bi-envelope me-1"></i>Contact
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      function showEventDetails(eventId) {
+        const event = events.find(e => e.id === eventId);
+        if (!event) return;
+
+        const eventDetailsContent = document.getElementById('eventDetailsContent');
+        eventDetailsContent.innerHTML = `
+          <div class="row g-3">
+            <div class="col-md-6">
+              <img src="${event.image}" class="img-fluid rounded" alt="${event.title}">
+            </div>
+            <div class="col-md-6">
+              <h5>${event.title}</h5>
+              <div class="row g-2 mb-3">
+                <div class="col-6">
+                  <div class="small text-secondary">Type:</div>
+                  <span class="badge ${getTypeBadge(event.type)}">${event.type.toUpperCase()}</span>
+                </div>
+                <div class="col-6">
+                  <div class="small text-secondary">Priority:</div>
+                  <span class="badge ${getPriorityBadge(event.priority)}">${event.priority.toUpperCase()}</span>
+                </div>
+                <div class="col-6">
+                  <div class="small text-secondary">Status:</div>
+                  <span class="badge ${getStatusBadge(event.status)}">${event.status.toUpperCase()}</span>
+                </div>
+                <div class="col-6">
+                  <div class="small text-secondary">Attendees:</div>
+                  <div class="fw-bold">${event.attendees}/${event.maxAttendees}</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12">
+              <h6>Event Details</h6>
+              <div class="row g-2 mb-3">
+                <div class="col-md-3">
+                  <div class="small text-secondary">Start Date:</div>
+                  <div class="fw-bold">${formatDate(event.startDate)}</div>
+                </div>
+                <div class="col-md-3">
+                  <div class="small text-secondary">End Date:</div>
+                  <div class="fw-bold">${formatDate(event.endDate)}</div>
+                </div>
+                <div class="col-md-3">
+                  <div class="small text-secondary">Start Time:</div>
+                  <div class="fw-bold">${formatTime(event.startTime)}</div>
+                </div>
+                <div class="col-md-3">
+                  <div class="small text-secondary">End Time:</div>
+                  <div class="fw-bold">${formatTime(event.endTime)}</div>
+                </div>
+                <div class="col-md-6">
+                  <div class="small text-secondary">Location:</div>
+                  <div class="fw-bold"><i class="bi bi-geo-alt me-1"></i>${event.location}</div>
+                </div>
+                <div class="col-md-6">
+                  <div class="small text-secondary">Organizer:</div>
+                  <div class="fw-bold"><i class="bi bi-person me-1"></i>${event.organizer}</div>
+                </div>
+              </div>
+              <div class="mb-3">
+                <div class="small text-secondary mb-1">Description:</div>
+                <p class="mb-0">${event.description}</p>
+              </div>
+            </div>
+          </div>
+        `;
+
+        eventDetailsModal.show();
+      }
+
+      function showCreateEventModal() {
+        createEventModal.show();
+      }
+
+      function showMyEvents() {
+        renderMyEvents();
+        myEventsModal.show();
+      }
+
+      function showEventCalendar() {
+        // Switch to calendar tab
+        const calendarTab = document.getElementById('calendar-tab');
+        calendarTab.click();
+      }
+
+      function saveEvent() {
+        const title = document.getElementById('eventTitle').value;
+        const type = document.getElementById('eventType').value;
+        const startDate = document.getElementById('eventStartDate').value;
+        const endDate = document.getElementById('eventEndDate').value;
+        const startTime = document.getElementById('eventStartTime').value;
+        const endTime = document.getElementById('eventEndTime').value;
+        const location = document.getElementById('eventLocation').value;
+        const priority = document.getElementById('eventPriority').value;
+        const description = document.getElementById('eventDescription').value;
+        const organizer = document.getElementById('eventOrganizer').value;
+
+        if (!title || !type || !startDate || !endDate || !startTime || !endTime || !location || !organizer) {
+          alert('Please fill all required fields');
+          return;
+        }
+
+        // Create new event
+        const newEvent = {
+          id: events.length + 1,
+          title: title,
+          type: type,
+          description: description,
+          startDate: startDate,
+          endDate: endDate,
+          startTime: startTime,
+          endTime: endTime,
+          location: location,
+          organizer: organizer,
+          priority: priority,
+          status: 'upcoming',
+          attendees: 0,
+          maxAttendees: 50,
+          registered: false,
+          category: type.charAt(0).toUpperCase() + type.slice(1),
+          image: `https://via.placeholder.com/300x200/007bff/ffffff?text=${encodeURIComponent(title)}`
+        };
+
+        events.push(newEvent);
+
+        // Reset form and close modal
+        document.getElementById('createEventForm').reset();
+        createEventModal.hide();
+
+        // Re-render events
+        renderEvents();
+        renderUpcomingEvents();
+        renderCalendar();
+
+        alert('Event created successfully!');
+      }
+
+      function registerForEvent() {
+        alert('Registration successful! You will receive confirmation email shortly.');
+        eventDetailsModal.hide();
+      }
+
+      function previousMonth() {
+        currentMonth--;
+        if (currentMonth < 0) {
+          currentMonth = 11;
+          currentYear--;
+        }
+        renderCalendar();
+      }
+
+      function nextMonth() {
+        currentMonth++;
+        if (currentMonth > 11) {
+          currentMonth = 0;
+          currentYear++;
+        }
+        renderCalendar();
+      }
+
+      // Event listeners
+      eventFilter.addEventListener('change', () => {
+        renderEvents(eventFilter.value);
+      });
+
+      // Initialize
+      renderEvents();
+      renderUpcomingEvents();
+      renderCalendar();
+      renderMyEvents();
+      renderCategories();
+      renderOrganizers();
+        <script>
+      // Ensure navigation renders after page load
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+          if (window.navigationManager && document.getElementById('moduleTabs')) {
+            window.navigationManager.renderMainNavigation();
+          }
+        });
+      } else {
+        if (window.navigationManager && document.getElementById('moduleTabs')) {
+          window.navigationManager.renderMainNavigation();
+        }
+      }
+    </script>
+</script>
+{% endblock %}

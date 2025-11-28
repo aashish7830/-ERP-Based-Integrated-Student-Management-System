@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Vice-Chancellor Portal | ERP</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="../../styles.css" />
+    <script src="{% static 'navigation.js' %}?v=2.0"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg bg-white navbar-light shadow-sm">
+      <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="{% url 'index' %}">
+          <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f3eb.svg" width="30" class="me-2"/>
+          <span class="fw-bold brand-gradient">Institution ERP</span>
+        </a>
+        <div class="ms-auto d-flex align-items-center gap-3">
+          <div id="userMini" class="small"></div>
+          <button id="logoutBtn" class="btn btn-outline-secondary btn-sm"><i class="bi bi-box-arrow-right me-1"></i>Logout</button>
+        </div>
+      </div>
+    </nav>
+
+    <div class="border-top" style="border-color:#f0ad00 !important"></div>
+
+    <div class="container my-4">
+      <ul class="nav nav-pills flex-wrap gap-2 py-2" id="moduleTabs">
+        <!-- Dynamic navigation will be rendered here -->
+      </ul>
+
+      <!-- Header Section -->
+      <div class="row g-4 mb-4">
+        <div class="col-12">
+          <div class="card border-0 shadow-sm bg-success text-white">
+            <div class="card-body p-4">
+              <div class="row align-items-center">
+                <div class="col-md-8">
+                  <h2 class="mb-2"><i class="bi bi-person-badge me-2"></i>Vice-Chancellor Office</h2>
+                  <p class="mb-0 opacity-75">Academic and administrative operations leadership, strategic planning, and institutional excellence</p>
+                </div>
+                <div class="col-md-4 text-end">
+                  <div class="bg-white bg-opacity-20 rounded p-3 d-inline-block">
+                    <div class="fs-3 fw-bold">2024-25</div>
+                    <div class="small">Academic Year</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Statistics Dashboard -->
+      <div class="row g-4 mb-4">
+        <div class="col-md-3">
+          <div class="card border-0 shadow-sm">
+            <div class="card-body text-center">
+              <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                <i class="bi bi-people-fill fs-3 text-primary"></i>
+              </div>
+              <h3 class="mb-1 text-primary">12,450</h3>
+              <div class="text-secondary small">Total Students</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card border-0 shadow-sm">
+            <div class="card-body text-center">
+              <div class="bg-success bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                <i class="bi bi-person-badge fs-3 text-success"></i>
+              </div>
+              <h3 class="mb-1 text-success">650</h3>
+              <div class="text-secondary small">Faculty Members</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card border-0 shadow-sm">
+            <div class="card-body text-center">
+              <div class="bg-warning bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                <i class="bi bi-building fs-3 text-warning"></i>
+              </div>
+              <h3 class="mb-1 text-warning">12</h3>
+              <div class="text-secondary small">Departments</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card border-0 shadow-sm">
+            <div class="card-body text-center">
+              <div class="bg-info bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                <i class="bi bi-graph-up fs-3 text-info"></i>
+              </div>
+              <h3 class="mb-1 text-info">94%</h3>
+              <div class="text-secondary small">Placement Rate</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Content Tabs -->
+      <div class="card border-0 shadow-sm">
+        <div class="card-header bg-success text-white">
+          <ul class="nav nav-tabs card-header-tabs" id="vcTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active text-white" id="overview-tab" data-bs-toggle="tab" data-bs-target="#overview" type="button" role="tab">
+                <i class="bi bi-speedometer2 me-1"></i>Overview
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link text-white" id="academic-tab" data-bs-toggle="tab" data-bs-target="#academic" type="button" role="tab">
+                <i class="bi bi-mortarboard me-1"></i>Academic Affairs
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link text-white" id="admin-tab" data-bs-toggle="tab" data-bs-target="#admin" type="button" role="tab">
+                <i class="bi bi-gear me-1"></i>Administration
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link text-white" id="strategic-tab" data-bs-toggle="tab" data-bs-target="#strategic" type="button" role="tab">
+                <i class="bi bi-diagram-3 me-1"></i>Strategic Planning
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link text-white" id="approvals-tab" data-bs-toggle="tab" data-bs-target="#approvals" type="button" role="tab">
+                <i class="bi bi-check-circle me-1"></i>Approvals
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link text-white" id="reports-tab" data-bs-toggle="tab" data-bs-target="#reports" type="button" role="tab">
+                <i class="bi bi-file-earmark-bar-graph me-1"></i>Reports
+              </button>
+            </li>
+          </ul>
+        </div>
+        <div class="card-body">
+          <div class="tab-content" id="vcTabContent">
+            
+            <!-- Overview Tab -->
+            <div class="tab-pane fade show active" id="overview" role="tabpanel">
+              <h5 class="mb-4"><i class="bi bi-speedometer2 me-2 text-success"></i>Institutional Overview</h5>
+              
+              <div class="row g-4 mb-4">
+                <div class="col-md-6">
+                  <div class="card border-0 shadow-sm h-100">
+                    <div class="card-header bg-primary text-white">
+                      <h6 class="mb-0"><i class="bi bi-calendar-event me-2"></i>Recent Activities</h6>
+                    </div>
+                    <div class="card-body">
+                      <div class="list-group list-group-flush">
+                        <div class="list-group-item d-flex justify-content-between align-items-start">
+                          <div class="ms-2 me-auto">
+                            <div class="fw-bold">New Faculty Appointment</div>
+                            <div class="text-secondary small">Dr. Neha Gupta joined Computer Science department</div>
+                          </div>
+                          <small class="text-muted">2 hours ago</small>
+                        </div>
+                        <div class="list-group-item d-flex justify-content-between align-items-start">
+                          <div class="ms-2 me-auto">
+                            <div class="fw-bold">Academic Council Meeting</div>
+                            <div class="text-secondary small">Scheduled for February 25, 2024</div>
+                          </div>
+                          <small class="text-muted">1 day ago</small>
+                        </div>
+                        <div class="list-group-item d-flex justify-content-between align-items-start">
+                          <div class="ms-2 me-auto">
+                            <div class="fw-bold">Accreditation Review</div>
+                            <div class="text-secondary small">NAAC visit scheduled for March 2024</div>
+                          </div>
+                          <small class="text-muted">3 days ago</small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="card border-0 shadow-sm h-100">
+                    <div class="card-header bg-success text-white">
+                      <h6 class="mb-0"><i class="bi bi-clipboard-check me-2"></i>Pending Approvals</h6>
+                    </div>
+                    <div class="card-body">
+                      <div class="list-group list-group-flush">
+                        <div class="list-group-item d-flex justify-content-between align-items-start">
+                          <div class="ms-2 me-auto">
+                            <div class="fw-bold">Budget Proposal</div>
+                            <div class="text-secondary small">Research & Innovation Department</div>
+                          </div>
+                          <button class="btn btn-sm btn-outline-primary">Review</button>
+                        </div>
+                        <div class="list-group-item d-flex justify-content-between align-items-start">
+                          <div class="ms-2 me-auto">
+                            <div class="fw-bold">New Program Proposal</div>
+                            <div class="text-secondary small">M.Tech in AI & Machine Learning</div>
+                          </div>
+                          <button class="btn btn-sm btn-outline-primary">Review</button>
+                        </div>
+                        <div class="list-group-item d-flex justify-content-between align-items-start">
+                          <div class="ms-2 me-auto">
+                            <div class="fw-bold">Infrastructure Project</div>
+                            <div class="text-secondary small">New Laboratory Building</div>
+                          </div>
+                          <button class="btn btn-sm btn-outline-primary">Review</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card border-0 shadow-sm">
+                <div class="card-header bg-info text-white">
+                  <h6 class="mb-0"><i class="bi bi-graph-up me-2"></i>Key Performance Indicators</h6>
+                </div>
+                <div class="card-body">
+                  <div class="row g-3">
+                    <div class="col-md-3">
+                      <div class="text-center p-3 bg-light rounded">
+                        <div class="fs-4 fw-bold text-primary">94%</div>
+                        <div class="text-secondary small">Placement Rate</div>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="text-center p-3 bg-light rounded">
+                        <div class="fs-4 fw-bold text-success">8.5</div>
+                        <div class="text-secondary small">Average CGPA</div>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="text-center p-3 bg-light rounded">
+                        <div class="fs-4 fw-bold text-warning">156</div>
+                        <div class="text-secondary small">Research Papers</div>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="text-center p-3 bg-light rounded">
+                        <div class="fs-4 fw-bold text-info">A+</div>
+                        <div class="text-secondary small">NAAC Grade</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Academic Affairs Tab -->
+            <div class="tab-pane fade" id="academic" role="tabpanel">
+              <h5 class="mb-4"><i class="bi bi-mortarboard me-2 text-success"></i>Academic Affairs Management</h5>
+              
+              <div class="row g-4 mb-4">
+                <div class="col-md-6">
+                  <div class="card border-0 shadow-sm h-100">
+                    <div class="card-header bg-primary text-white">
+                      <h6 class="mb-0"><i class="bi bi-book me-2"></i>Program Management</h6>
+                    </div>
+                    <div class="card-body">
+                      <p class="text-muted">Oversee academic programs, curriculum development, and program accreditation.</p>
+                      <ul class="list-unstyled">
+                        <li><i class="bi bi-check-circle text-primary me-2"></i>Program approval and review</li>
+                        <li><i class="bi bi-check-circle text-primary me-2"></i>Curriculum development</li>
+                        <li><i class="bi bi-check-circle text-primary me-2"></i>Academic quality assurance</li>
+                        <li><i class="bi bi-check-circle text-primary me-2"></i>Program accreditation</li>
+                      </ul>
+                      <button class="btn btn-primary btn-sm mt-2" onclick="managePrograms()">
+                        <i class="bi bi-gear me-1"></i>Manage Programs
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="card border-0 shadow-sm h-100">
+                    <div class="card-header bg-success text-white">
+                      <h6 class="mb-0"><i class="bi bi-person-badge me-2"></i>Faculty Management</h6>
+                    </div>
+                    <div class="card-body">
+                      <p class="text-muted">Manage faculty appointments, promotions, and professional development.</p>
+                      <ul class="list-unstyled">
+                        <li><i class="bi bi-check-circle text-success me-2"></i>Faculty recruitment</li>
+                        <li><i class="bi bi-check-circle text-success me-2"></i>Promotion and appraisal</li>
+                        <li><i class="bi bi-check-circle text-success me-2"></i>Professional development</li>
+                        <li><i class="bi bi-check-circle text-success me-2"></i>Research support</li>
+                      </ul>
+                      <button class="btn btn-success btn-sm mt-2" onclick="manageFaculty()">
+                        <i class="bi bi-people me-1"></i>Manage Faculty
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card border-0 shadow-sm">
+                <div class="card-header bg-info text-white">
+                  <h6 class="mb-0"><i class="bi bi-calendar-event me-2"></i>Academic Calendar & Events</h6>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>Event</th>
+                          <th>Date</th>
+                          <th>Department</th>
+                          <th>Status</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Academic Council Meeting</td>
+                          <td>2024-02-25</td>
+                          <td>All Departments</td>
+                          <td><span class="badge bg-warning">Scheduled</span></td>
+                          <td><button class="btn btn-sm btn-outline-primary">View</button></td>
+                        </tr>
+                        <tr>
+                          <td>NAAC Visit</td>
+                          <td>2024-03-15</td>
+                          <td>IQAC</td>
+                          <td><span class="badge bg-info">Upcoming</span></td>
+                          <td><button class="btn btn-sm btn-outline-primary">View</button></td>
+                        </tr>
+                        <tr>
+                          <td>Convocation Ceremony</td>
+                          <td>2024-04-10</td>
+                          <td>Administration</td>
+                          <td><span class="badge bg-success">Confirmed</span></td>
+                          <td><button class="btn btn-sm btn-outline-primary">View</button></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Administration Tab -->
+            <div class="tab-pane fade" id="admin" role="tabpanel">
+              <h5 class="mb-4"><i class="bi bi-gear me-2 text-success"></i>Administrative Operations</h5>
+              
+              <div class="row g-4 mb-4">
+                <div class="col-md-6">
+                  <div class="card border-0 shadow-sm h-100">
+                    <div class="card-header bg-primary text-white">
+                      <h6 class="mb-0"><i class="bi bi-building me-2"></i>Infrastructure Management</h6>
+                    </div>
+                    <div class="card-body">
+                      <p class="text-muted">Oversee infrastructure development, maintenance, and facility management.</p>
+                      <ul class="list-unstyled">
+                        <li><i class="bi bi-check-circle text-primary me-2"></i>Infrastructure planning</li>
+                        <li><i class="bi bi-check-circle text-primary me-2"></i>Facility maintenance</li>
+                        <li><i class="bi bi-check-circle text-primary me-2"></i>Resource allocation</li>
+                        <li><i class="bi bi-check-circle text-primary me-2"></i>Project management</li>
+                      </ul>
+                      <button class="btn btn-primary btn-sm mt-2" onclick="manageInfrastructure()">
+                        <i class="bi bi-building me-1"></i>View Infrastructure
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="card border-0 shadow-sm h-100">
+                    <div class="card-header bg-success text-white">
+                      <h6 class="mb-0"><i class="bi bi-people me-2"></i>Staff Management</h6>
+                    </div>
+                    <div class="card-body">
+                      <p class="text-muted">Manage administrative staff, HR policies, and organizational structure.</p>
+                      <ul class="list-unstyled">
+                        <li><i class="bi bi-check-circle text-success me-2"></i>Staff recruitment</li>
+                        <li><i class="bi bi-check-circle text-success me-2"></i>Performance management</li>
+                        <li><i class="bi bi-check-circle text-success me-2"></i>Policy implementation</li>
+                        <li><i class="bi bi-check-circle text-success me-2"></i>Organizational development</li>
+                      </ul>
+                      <button class="btn btn-success btn-sm mt-2" onclick="manageStaff()">
+                        <i class="bi bi-person-badge me-1"></i>Manage Staff
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Strategic Planning Tab -->
+            <div class="tab-pane fade" id="strategic" role="tabpanel">
+              <h5 class="mb-4"><i class="bi bi-diagram-3 me-2 text-success"></i>Strategic Planning & Development</h5>
+              
+              <div class="row g-4 mb-4">
+                <div class="col-md-6">
+                  <div class="card border-0 shadow-sm h-100">
+                    <div class="card-header bg-primary text-white">
+                      <h6 class="mb-0"><i class="bi bi-bullseye me-2"></i>Strategic Goals</h6>
+                    </div>
+                    <div class="card-body">
+                      <ul class="list-unstyled">
+                        <li class="mb-2"><i class="bi bi-check-circle text-primary me-2"></i>Enhance academic excellence</li>
+                        <li class="mb-2"><i class="bi bi-check-circle text-primary me-2"></i>Improve research output</li>
+                        <li class="mb-2"><i class="bi bi-check-circle text-primary me-2"></i>Strengthen industry partnerships</li>
+                        <li class="mb-2"><i class="bi bi-check-circle text-primary me-2"></i>Enhance student employability</li>
+                        <li class="mb-2"><i class="bi bi-check-circle text-primary me-2"></i>International collaborations</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="card border-0 shadow-sm h-100">
+                    <div class="card-header bg-success text-white">
+                      <h6 class="mb-0"><i class="bi bi-graph-up me-2"></i>Institutional Development</h6>
+                    </div>
+                    <div class="card-body">
+                      <ul class="list-unstyled">
+                        <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Infrastructure expansion</li>
+                        <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Technology upgradation</li>
+                        <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Faculty development programs</li>
+                        <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Research infrastructure</li>
+                        <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Student support services</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Approvals Tab -->
+            <div class="tab-pane fade" id="approvals" role="tabpanel">
+              <h5 class="mb-4"><i class="bi bi-check-circle me-2 text-success"></i>Pending Approvals</h5>
+              
+              <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>Request ID</th>
+                          <th>Type</th>
+                          <th>Department</th>
+                          <th>Description</th>
+                          <th>Date</th>
+                          <th>Priority</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>REQ-2024-001</td>
+                          <td>Budget</td>
+                          <td>Research & Innovation</td>
+                          <td>Research Equipment Purchase</td>
+                          <td>2024-02-15</td>
+                          <td><span class="badge bg-danger">High</span></td>
+                          <td>
+                            <button class="btn btn-sm btn-success me-1">Approve</button>
+                            <button class="btn btn-sm btn-danger">Reject</button>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>REQ-2024-002</td>
+                          <td>Program</td>
+                          <td>Computer Science</td>
+                          <td>New M.Tech Program Proposal</td>
+                          <td>2024-02-14</td>
+                          <td><span class="badge bg-warning">Medium</span></td>
+                          <td>
+                            <button class="btn btn-sm btn-success me-1">Approve</button>
+                            <button class="btn btn-sm btn-danger">Reject</button>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>REQ-2024-003</td>
+                          <td>Infrastructure</td>
+                          <td>Administration</td>
+                          <td>New Laboratory Building</td>
+                          <td>2024-02-13</td>
+                          <td><span class="badge bg-info">Low</span></td>
+                          <td>
+                            <button class="btn btn-sm btn-success me-1">Approve</button>
+                            <button class="btn btn-sm btn-danger">Reject</button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Reports Tab -->
+            <div class="tab-pane fade" id="reports" role="tabpanel">
+              <h5 class="mb-4"><i class="bi bi-file-earmark-bar-graph me-2 text-success"></i>Institutional Reports</h5>
+              
+              <div class="row g-4">
+                <div class="col-md-6">
+                  <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                      <h6 class="mb-3">Academic Reports</h6>
+                      <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-decoration-none"><i class="bi bi-file-earmark-pdf me-2 text-danger"></i>Student Enrollment Report</a></li>
+                        <li class="mb-2"><a href="#" class="text-decoration-none"><i class="bi bi-file-earmark-pdf me-2 text-danger"></i>Academic Performance Report</a></li>
+                        <li class="mb-2"><a href="#" class="text-decoration-none"><i class="bi bi-file-earmark-pdf me-2 text-danger"></i>Faculty Performance Report</a></li>
+                        <li class="mb-2"><a href="#" class="text-decoration-none"><i class="bi bi-file-earmark-pdf me-2 text-danger"></i>Research Output Report</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                      <h6 class="mb-3">Administrative Reports</h6>
+                      <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-decoration-none"><i class="bi bi-file-earmark-pdf me-2 text-danger"></i>Financial Summary Report</a></li>
+                        <li class="mb-2"><a href="#" class="text-decoration-none"><i class="bi bi-file-earmark-pdf me-2 text-danger"></i>Infrastructure Status Report</a></li>
+                        <li class="mb-2"><a href="#" class="text-decoration-none"><i class="bi bi-file-earmark-pdf me-2 text-danger"></i>HR Statistics Report</a></li>
+                        <li class="mb-2"><a href="#" class="text-decoration-none"><i class="bi bi-file-earmark-pdf me-2 text-danger"></i>Compliance Report</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer py-3 mt-4">
+      <div class="container small text-white-50 d-flex justify-content-between">
+        <div>© <span id="year"></span> Institution ERP</div>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      const yearEl = document.getElementById('year');
+      if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+      // Session check
+      const sessStr = localStorage.getItem('erpSession') || sessionStorage.getItem('erpSession');
+      if (!sessStr) window.location.replace('/');
+      
+      let sess;
+      try {
+        sess = JSON.parse(sessStr || '{}');
+      } catch {
+        sess = {};
+      }
+
+      // VC credentials
+      const vcStaff = [
+        { enrollment: 'VC001', name: 'Dr. Rajesh Kumar', role: 'Vice-Chancellor', avatar: 'https://i.pravatar.cc/100?img=51' },
+        { enrollment: 'VC002', name: 'Dr. Priya Sharma', role: 'Deputy Vice-Chancellor', avatar: 'https://i.pravatar.cc/100?img=52' }
+      ];
+
+      const user = vcStaff.find(u => u.enrollment === sess?.enrollment);
+      if (user) {
+        document.getElementById('userMini').innerHTML = `
+          <div class="d-flex align-items-center gap-2">
+            <img src="${user.avatar}" class="rounded-circle" width="32" height="32"/>
+            <div>
+              <div class="fw-semibold">${user.name}</div>
+              <div class="text-secondary">${user.enrollment} • ${user.role}</div>
+            </div>
+          </div>
+        `;
+      } else {
+        document.getElementById('userMini').innerHTML = `
+          <div class="d-flex align-items-center gap-2">
+            <img src="https://i.pravatar.cc/100?img=51" class="rounded-circle" width="32" height="32"/>
+            <div>
+              <div class="fw-semibold">${sess.name || 'Vice-Chancellor'}</div>
+              <div class="text-secondary">Vice-Chancellor Office</div>
+            </div>
+          </div>
+        `;
+      }
+
+      document.getElementById('logoutBtn').addEventListener('click', () => {
+        localStorage.removeItem('erpSession');
+        sessionStorage.removeItem('erpSession');
+        window.location.replace('/');
+      });
+
+      // Placeholder functions
+      function managePrograms() { alert('Program Management - Coming soon!'); }
+      function manageFaculty() { alert('Faculty Management - Coming soon!'); }
+      function manageInfrastructure() { alert('Infrastructure Management - Coming soon!'); }
+      function manageStaff() { alert('Staff Management - Coming soon!'); }
+    </script>
+      <!-- Chatbot Component -->
+    {% include 'includes/chatbot.html' %}
+  </body>
+</html>
+
+
+
